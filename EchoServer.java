@@ -95,9 +95,34 @@ public class EchoServer extends AbstractServer
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 		      Statement stmt=con.createStatement();  
 		      ResultSet rs=stmt.executeQuery("select * from Products");  
+		      client.sendToClient("ID\tNAME\tPrice");
 		      while(rs.next())  
-		    	  client.sendToClient(rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getInt(5));  
+		    	  client.sendToClient(rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getInt(5));  
 		      con.close();  
+		  }catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
+	  }
+	  if(msg.toString().startsWith("#changeprice "))
+	  {
+		  try {
+		      // This will load the MySQL driver, each DB has its own driver
+		      //Class.forName("com.mysql.jdbc.Driver");
+		      // Setup the connection with the DB
+			  if(msg.toString().split(" ").length != 3)
+			  {
+				  System.out.println("usage: #changeprice [id] [price]");
+				  return;
+			  }
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+		      int id = Integer.parseInt(msg.toString().split(" ")[1]);
+		      double price = Double.parseDouble(msg.toString().split(" ")[2]);
+		      stmt.executeUpdate("UPDATE `Products` SET price='" + price + "' WHERE `id`='" + id + "'");  
+		      con.close();
+		      client.sendToClient("UPDATED Successfully");
 		  }catch(Exception e) {
 			  System.out.println("a");
 			  System.out.println(e);

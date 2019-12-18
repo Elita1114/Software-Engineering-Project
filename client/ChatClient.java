@@ -199,6 +199,16 @@ public class ChatClient extends AbstractClient
 			e.printStackTrace();
 		}
     }
+    else if (message.equalsIgnoreCase("#productslist"))
+    {
+    	System.out.println("product list");
+    	try {
+			sendToServer("#productslist");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
   }
   
   /**

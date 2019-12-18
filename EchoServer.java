@@ -2,6 +2,16 @@
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import javax.net.ssl.SSLException;
 import java.io.*;
 import ocsf.server.*;
 import common.*;
@@ -25,6 +35,14 @@ public class EchoServer extends AbstractServer
    */
   final public static int DEFAULT_PORT =5555;
   
+  private Connection con = null;
+  private Statement statement = null;
+  private PreparedStatement preparedStatement = null;
+  private ResultSet resultSet = null;
+  final private static String DB = "RjSNNgTF3H";
+  final private static String DB_URL = "jdbc:mysql://remotemysql.com/"+ DB + "?useSSL=false";
+  final private static String USER = "RjSNNgTF3H";
+  final private static String PASS = "F4l71Ldtkw";
   /**
    * The interface type variable. It allows the implementation of 
    * the display method in the client.
@@ -68,6 +86,24 @@ public class EchoServer extends AbstractServer
   public void handleMessageFromClient
     (Object msg, ConnectionToClient client)
   {
+	  if(msg.toString().startsWith("#productslist"))
+	  {
+		  try {
+		      // This will load the MySQL driver, each DB has its own driver
+		      //Class.forName("com.mysql.jdbc.Driver");
+		      // Setup the connection with the DB
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+		      ResultSet rs=stmt.executeQuery("select * from Products");  
+		      while(rs.next())  
+		    	  client.sendToClient(rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getInt(5));  
+		      con.close();  
+		  }catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
+	  }
     if (msg.toString().startsWith("#login "))
     {
       if (client.getInfo("loginID") != null)

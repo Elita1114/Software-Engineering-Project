@@ -86,12 +86,9 @@ public class EchoServer extends AbstractServer
   public void handleMessageFromClient
     (Object msg, ConnectionToClient client)
   {
-	  if(msg.toString().startsWith("#productslist"))
+	  if(msg.toString().equalsIgnoreCase("#productslist"))
 	  {
 		  try {
-		      // This will load the MySQL driver, each DB has its own driver
-		      //Class.forName("com.mysql.jdbc.Driver");
-		      // Setup the connection with the DB
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 		      Statement stmt=con.createStatement();  
 		      ResultSet rs=stmt.executeQuery("select * from Products");  
@@ -108,9 +105,6 @@ public class EchoServer extends AbstractServer
 	  if(msg.toString().startsWith("#changeprice "))
 	  {
 		  try {
-		      // This will load the MySQL driver, each DB has its own driver
-		      //Class.forName("com.mysql.jdbc.Driver");
-		      // Setup the connection with the DB
 			  if(msg.toString().split(" ").length != 3)
 			  {
 				  System.out.println("usage: #changeprice [id] [price]");

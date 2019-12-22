@@ -189,21 +189,20 @@ public class ChatClient extends AbstractClient
     {
       clientUI.display("Current port: " + Integer.toString(getPort()));
     }
-    else if (message.equalsIgnoreCase("#send"))
-    {
-    	   try {
-			sendToServer("name: Ameer kadi ID: 209023969 address: Majdal shams \n"
-			    		+ "name: Fidaa Shkeer ID: 318483971 address: Majdal shams");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
     else if (message.equalsIgnoreCase("#productslist"))
     {
     	System.out.println("product list");
     	try {
 			sendToServer("#productslist");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    else if (message.toString().startsWith("#changeprice "))
+    {
+    	try {
+			sendToServer(message);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

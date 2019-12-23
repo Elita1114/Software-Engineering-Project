@@ -39,6 +39,7 @@ public class EchoServer extends AbstractServer
   private Statement statement = null;
   private PreparedStatement preparedStatement = null;
   private ResultSet resultSet = null;
+  // DB details
   final private static String DB = "RjSNNgTF3H";
   final private static String DB_URL = "jdbc:mysql://remotemysql.com/"+ DB + "?useSSL=false";
   final private static String USER = "RjSNNgTF3H";

@@ -1,3 +1,4 @@
+package client;
 // This file contains material supporting section 3.7 of the textbook:
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
@@ -12,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 
 /**
  * This class constructs the UI for a chat client.  It implements the
@@ -41,9 +43,7 @@ public class ClientConsole extends Application implements ChatIF
 
   
   //Constructors ****************************************************
-  public ClientConsole() 
-  {}
-  
+
   /**
    * Constructs an instance of the ClientConsole UI.
    *
@@ -116,7 +116,6 @@ public class ClientConsole extends Application implements ChatIF
    */
   public static void main(String[] args) 
   {
-	
     String host = "";
     int port = 0;  //The port number
     String loginID = "";
@@ -143,17 +142,14 @@ public class ClientConsole extends Application implements ChatIF
       port = DEFAULT_PORT;
     }
     ClientConsole chat= new ClientConsole(loginID, host, port);
-    
-    launch(args);
     chat.accept();  //Wait for console data
-    
+    launch(args);
     
   }
- 
   
   @Override
 	public void start(Stage primaryStage) throws IOException {
-		URL url=getClass().getResource("LoginScene.fxml");
+		URL url=getClass().getResource("/LoginScene.fxml");
 		if(url==null)
 			System.out.println("null");
 		AnchorPane pane=FXMLLoader.load(url);
@@ -165,5 +161,7 @@ public class ClientConsole extends Application implements ChatIF
 		primaryStage.show();
 		
 	}
+
+
 }
 //End of ConsoleChat class

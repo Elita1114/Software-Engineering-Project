@@ -7,9 +7,11 @@ import java.io.*;
 import java.net.URL;
 
 import client.*;
+import client.Controllers.CatalogController;
 import common.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -150,17 +152,36 @@ public class ClientConsole extends Application implements ChatIF
   
   @Override
 	public void start(Stage primaryStage) throws IOException {
-		URL url=getClass().getResource("/client/fxml/LoginScene.fxml");
+		
+	  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/CatalogScene.fxml"));     
+
+	  Parent root = (Parent)fxmlLoader.load(); 
+	  
+	  CatalogController controller = fxmlLoader.<CatalogController>getController();
+	controller.setX(5);
+			
+	
+	Scene scene = new Scene(root); 
+
+	primaryStage.setScene(scene);    
+
+	primaryStage.show(); 
+	  /*
+	  	URL url=getClass().getResource("/client/fxml/CatalogScene.fxml");
 		if(url==null)
 			System.out.println("null");
 		AnchorPane pane=FXMLLoader.load(url);
+		
+		
+		
+		
 		Scene scence= new Scene(pane);
 		
 		
 		primaryStage.setScene(scence);
 		primaryStage.setTitle("Calculator - 322244575; 212267959");
 		primaryStage.show();
-		
+		*/
 	}
 
 

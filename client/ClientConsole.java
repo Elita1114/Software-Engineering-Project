@@ -43,7 +43,7 @@ public class ClientConsole extends Application implements ChatIF
 
   
   //Constructors ****************************************************
-
+  public ClientConsole() {}
   /**
    * Constructs an instance of the ClientConsole UI.
    *
@@ -116,6 +116,7 @@ public class ClientConsole extends Application implements ChatIF
    */
   public static void main(String[] args) 
   {
+	launch(args);
     String host = "";
     int port = 0;  //The port number
     String loginID = "";
@@ -143,13 +144,13 @@ public class ClientConsole extends Application implements ChatIF
     }
     ClientConsole chat= new ClientConsole(loginID, host, port);
     chat.accept();  //Wait for console data
-    launch(args);
+    
     
   }
   
   @Override
 	public void start(Stage primaryStage) throws IOException {
-		URL url=getClass().getResource("/LoginScene.fxml");
+		URL url=getClass().getResource("/client/fxml/LoginScene.fxml");
 		if(url==null)
 			System.out.println("null");
 		AnchorPane pane=FXMLLoader.load(url);

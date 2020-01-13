@@ -2,7 +2,7 @@
  * Sample Skeleton for 'LoginScene.fxml' Controller Class
  */
 
-package client;
+package client.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;

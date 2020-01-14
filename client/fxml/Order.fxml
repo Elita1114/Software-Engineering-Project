@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="717.0" prefWidth="539.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="client.Controllers.OrderController">
+   <children>
+      <Label layoutX="13.0" layoutY="14.0" prefHeight="32.0" prefWidth="207.0" text="Order">
+         <font>
+            <Font size="51.0" />
+         </font>
+      </Label>
+      <ListView layoutX="149.0" layoutY="88.0" prefHeight="179.0" prefWidth="319.0" />
+      <Label layoutX="14.0" layoutY="88.0" prefHeight="21.0" prefWidth="144.0" text="items to order:" />
+      <Label layoutX="15.0" layoutY="374.0" prefHeight="21.0" prefWidth="110.0" text="add a greeting:" />
+      <TextField layoutX="156.0" layoutY="367.0" prefHeight="86.0" prefWidth="319.0" />
+      <Label layoutX="15.0" layoutY="481.0" prefHeight="21.0" prefWidth="144.0" text="time to be delivered:" />
+      <DatePicker layoutX="156.0" layoutY="476.0" />
+      <TextField layoutX="158.0" layoutY="525.0" />
+      <Label layoutX="112.0" layoutY="530.0" prefHeight="21.0" prefWidth="44.0" text="hour:" />
+      <Label layoutX="15.0" layoutY="582.0" prefHeight="21.0" prefWidth="57.0" text="address:" />
+      <Label layoutX="13.0" layoutY="633.0" text="name:" />
+      <Label layoutX="13.0" layoutY="682.0" text="phoen:" />
+      <Label layoutX="134.0" layoutY="304.0" prefHeight="21.0" prefWidth="57.0" text="price:" />
+      <TextField layoutX="156.0" layoutY="577.0" />
+      <TextField layoutX="158.0" layoutY="628.0" />
+      <TextField layoutX="156.0" layoutY="677.0" />
+      <Label layoutX="280.0" layoutY="304.0" text="(price)" />
+      <Button layoutX="408.0" layoutY="662.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="buy" />
+   </children>
+</AnchorPane>

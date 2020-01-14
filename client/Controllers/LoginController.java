@@ -4,6 +4,7 @@
 
 package client.Controllers;
 
+import client.ClientConsole;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
@@ -19,5 +20,9 @@ public class LoginController {
 
     @FXML // fx:id="idBar"
     private ContextMenu idBar; // Value injected by FXMLLoader
-
+    
+    
+    public void blabla() {
+    //a	ClientConsole.setRoot("CatalogScene");
+    }
 }

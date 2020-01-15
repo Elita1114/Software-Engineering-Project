@@ -1,29 +1,23 @@
+package server;
 // This file contains material supporting section 3.7 of the textbook:
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
 import java.io.*;
-import java.net.URL;
-
 import client.*;
 import common.*;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 /**
- * This class constructs the UI for a chat client.  It implements the
+ * This class constructs the UI for a chat server.  It implements the
  * chat interface in order to activate the display() method.
- * Warning: Some of the code here is cloned in ServerConsole 
  *
  * @author Fran&ccedil;ois B&eacute;langer
  * @author Dr Timothy C. Lethbridge  
  * @author Dr Robert Lagani&egrave;re
- * @version July 2000
+ * @author Benjamin Bergman
+ * @version Oct 2009
  */
-public class ClientConsole extends Application implements ChatIF 
+public class ServerConsole implements ChatIF 
 {
   //Class variables *************************************************
   
@@ -35,33 +29,38 @@ public class ClientConsole extends Application implements ChatIF
   //Instance variables **********************************************
   
   /**
-   * The instance of the client that created this ConsoleChat.
+   * The instance of the server that created this EchoServer.
    */
-  ChatClient client;
+  EchoServer server;
 
   
   //Constructors ****************************************************
-  public ClientConsole() 
-  {}
-  
+
   /**
-   * Constructs an instance of the ClientConsole UI.
+   * Constructs an instance of the ServerConsole UI.
    *
-   * @param host The host to connect to.
    * @param port The port to connect on.
-   * @param loginID The user's ID.
    */
-  public ClientConsole(String loginID, String host, int port) 
+  public ServerConsole(int port) 
   {
     try 
     {
-      client= new ChatClient(loginID, host, port, this);
+      server = new EchoServer(port, this);
     } 
     catch(IOException exception) 
     {
       System.out.println("Error: Can't setup connection!"
                 + " Terminating client.");
       System.exit(1);
+    }
+    
+    try
+    {
+      server.listen(); //Start listening for connections
+    }
+    catch (Exception ex)
+    {
+      System.out.println("ERROR - Could not listen for clients!");
     }
   }
 
@@ -83,7 +82,7 @@ public class ClientConsole extends Application implements ChatIF
       while (true) 
       {
         message = fromConsole.readLine();
-        client.handleMessageFromClientUI(message);
+        server.handleMessageFromServerUI(message);
       }
     } 
     catch (Exception ex) 
@@ -101,69 +100,33 @@ public class ClientConsole extends Application implements ChatIF
    */
   public void display(String message) 
   {
-    System.out.println(message);
+    System.out.println("> " + message);
   }
-
+  public void getData(Object data) {System.out.println("in server get data\n");}
   
   //Class methods ***************************************************
   
   /**
-   * This method is responsible for the creation of the Client UI.
+   * This method is responsible for the creation of the Server UI.
    *
-   * @param args[0] The user ID.
-   * @param args[1] The host to connect to.
-   * @param args[2] The port to connect to.
+   * @param args[0] The port to connect to.
    */
   public static void main(String[] args) 
   {
-	
     String host = "";
     int port = 0;  //The port number
-    String loginID = "";
+
     try
     {
-      loginID = args[0];
+      port = Integer.parseInt(args[0]);
     }
-    catch(ArrayIndexOutOfBoundsException e)
+    catch(Throwable e)
     {
-      System.out.println("usage: java ClientConsole loginID [host [port]]");
-      System.exit(1);
-    }
-    try
-    {
-      host = args[1];
-    }
-    catch(ArrayIndexOutOfBoundsException e)
-    {
-      host = "localhost";
-    }
-    try {
-      port = Integer.parseInt(args[2]);
-    } catch (ArrayIndexOutOfBoundsException e){
       port = DEFAULT_PORT;
     }
-    ClientConsole chat= new ClientConsole(loginID, host, port);
-    
-    launch(args);
-    chat.accept();  //Wait for console data
-    
-    
+    ServerConsole server = new ServerConsole(port);
+    server.accept();  //Wait for console data
   }
- 
-  
-  @Override
-	public void start(Stage primaryStage) throws IOException {
-		URL url=getClass().getResource("LoginScene.fxml");
-		if(url==null)
-			System.out.println("null");
-		AnchorPane pane=FXMLLoader.load(url);
-		Scene scence= new Scene(pane);
-		
-		
-		primaryStage.setScene(scence);
-		primaryStage.setTitle("Calculator - 322244575; 212267959");
-		primaryStage.show();
-		
-	}
 }
-//End of ConsoleChat class
+//End of ServerConsole class
+

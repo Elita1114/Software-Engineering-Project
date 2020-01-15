@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pane" prefHeight="195.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="Title" layoutX="56.0" layoutY="8.0" prefHeight="46.0" prefWidth="185.0" text="Label" />
+      <Label fx:id="Description" layoutX="56.0" layoutY="44.0" prefHeight="46.0" prefWidth="185.0" text="Label" />
+      <Label fx:id="Color" layoutX="56.0" layoutY="98.0" prefHeight="46.0" prefWidth="185.0" text="Label" />
+   </children>
+</AnchorPane>

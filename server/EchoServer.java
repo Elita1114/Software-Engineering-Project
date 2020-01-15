@@ -1,3 +1,4 @@
+package server;
 // This file contains material supporting section 3.7 of the textbook:
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
@@ -10,11 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.net.ssl.SSLException;
 import java.io.*;
-import ocsf.server.*;
+
 import common.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * This class overrides some of the methods in the abstract 
@@ -30,7 +34,8 @@ public class EchoServer extends AbstractServer
 {
   //Class variables *************************************************
   
-  /**
+
+/**
    * The default port to listen on.
    */
   final public static int DEFAULT_PORT =5555;
@@ -95,7 +100,7 @@ public class EchoServer extends AbstractServer
 		      ResultSet rs=stmt.executeQuery("select * from Products");  
 		      client.sendToClient("ID\tNAME\tPrice");
 		      while(rs.next())  
-		    	  client.sendToClient(rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getInt(5));  
+		    	  client.sendToClient(rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getFloat(5));  
 		      con.close();  
 		  }catch(Exception e) {
 			  System.out.println("a");
@@ -114,7 +119,7 @@ public class EchoServer extends AbstractServer
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 		      Statement stmt=con.createStatement();  
 		      int id = Integer.parseInt(msg.toString().split(" ")[1]);
-		      double price = Double.parseDouble(msg.toString().split(" ")[2]);
+		      float price = Float.parseFloat(msg.toString().split(" ")[2]);
 		      stmt.executeUpdate("UPDATE `Products` SET price='" + price + "' WHERE `id`='" + id + "'");  
 		      con.close();
 		      client.sendToClient("UPDATED Successfully");
@@ -138,6 +143,45 @@ public class EchoServer extends AbstractServer
         return;
       }
       client.setInfo("loginID", msg.toString().substring(7));
+    }
+    else if(msg.toString().equalsIgnoreCase("#test")) {
+    	Item item=new Item("title","desc","color");
+    	try {
+			client.sendToClient("testing #test");
+			client.sendToClient(item);
+			client.sendToClient("after test");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    else if (msg.toString().equalsIgnoreCase("#getCatalog"))
+    {
+    	try {
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+		      ResultSet rs=stmt.executeQuery("select * from Products"); 
+		      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
+		      
+		      
+		      client.sendToClient("getting catalog");
+		      while(rs.next()) { 
+		    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1)));
+		    	  System.out.println("getting item");
+		      }
+		      con.close();  
+		      Catalog catalog=new Catalog(itemList,true);
+		      System.out.println(catalog.getList().get(0).getColor());
+		      client.sendToClient(catalog);  
+		      System.out.println("after send catalog\n");
+		      client.sendToClient("after send catalog\n");  
+		      
+		      
+		  }catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
     }
     else 
     {

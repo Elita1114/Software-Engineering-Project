@@ -1,6 +1,9 @@
 package client.Controllers;
 
 
+import java.io.IOException;
+
+import client.ClientConsole;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -35,6 +38,13 @@ public class SignUpController {
     /*	else
      * sign up
     	*/	
+    	try {
+    		ClientConsole.setRoot("CatlogScene");
+  		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
     }
 
     private String checkPassLen(String pass) {

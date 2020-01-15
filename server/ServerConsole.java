@@ -102,7 +102,7 @@ public class ServerConsole implements ChatIF
   {
     System.out.println("> " + message);
   }
-
+  public void getData(Object data) {System.out.println("in server get data\n");}
   
   //Class methods ***************************************************
   

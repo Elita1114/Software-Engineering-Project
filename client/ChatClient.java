@@ -82,7 +82,12 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromServer(Object msg) 
   {
-    clientUI.display(msg.toString());
+	  	if(msg.toString().equals("#gotCatalog")) {
+	  		clientUI.getData(msg);
+	  	}
+	  	else{
+	  		clientUI.display(msg.toString());
+	  	}
   }
 
    /**
@@ -203,6 +208,19 @@ public class ChatClient extends AbstractClient
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    else {
+    	try
+        {
+    		System.out.println("in chat client: "+message);
+    		sendToServer(message);
+        }
+        catch(IOException e)
+        {
+          clientUI.display
+            ("Could not send message to server.  Terminating client.");
+          quit();
+        }
     }
   }
   

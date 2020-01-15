@@ -5,6 +5,7 @@ package client;
 
 import java.io.*;
 import java.net.URL;
+import java.util.List;
 
 import client.*;
 import client.Controllers.CatalogController;
@@ -35,13 +36,16 @@ public class ClientConsole extends Application implements ChatIF
    * The default port to connect on.
    */
   final public static int DEFAULT_PORT = 5555;
-  
+  public boolean flagCatalog;
+  public static boolean flag;
+  private Catalog catalog;
+
   //Instance variables **********************************************
   
   /**
    * The instance of the client that created this ConsoleChat.
    */
-  ChatClient client;
+  public ChatClient client;
 
   
   //Constructors ****************************************************
@@ -65,6 +69,8 @@ public class ClientConsole extends Application implements ChatIF
                 + " Terminating client.");
       System.exit(1);
     }
+    flagCatalog=false;
+    flag=true;
   }
 
   
@@ -107,8 +113,19 @@ public class ClientConsole extends Application implements ChatIF
   }
 
   
+  public void getData(Object data) {
+	  System.out.println("got catalog");
+	  if(data.toString().equals("#gotCatalog")) {
+		  catalog=(Catalog)data;
+		  flagCatalog=true;
+		  System.out.println("set flag");
+		  
+	  }
+  }
+  
   //Class methods ***************************************************
   
+ 
   /**
    * This method is responsible for the creation of the Client UI.
    *
@@ -118,7 +135,8 @@ public class ClientConsole extends Application implements ChatIF
    */
   public static void main(String[] args) 
   {
-	launch(args);
+	 launch(args);
+	/*
     String host = "";
     int port = 0;  //The port number
     String loginID = "";
@@ -145,27 +163,96 @@ public class ClientConsole extends Application implements ChatIF
       port = DEFAULT_PORT;
     }
     ClientConsole chat= new ClientConsole(loginID, host, port);
+
+
     chat.accept();  //Wait for console data
     
-    
+    */
   }
   
   @Override
 	public void start(Stage primaryStage) throws IOException {
-		
-	  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/CatalogScene.fxml"));     
-
-	  Parent root = (Parent)fxmlLoader.load(); 
 	  
-	  CatalogController controller = fxmlLoader.<CatalogController>getController();
-	controller.setX(5);
-			
+	  Parameters params = getParameters();
+	  List<String> args = params.getRaw();
+	  
+	  String host = "";
+	   int port = 0;  //The port number
+	    String loginID = "";
+	    try
+	    {
+	      loginID = args.get(0);
+	    }
+	    catch(IndexOutOfBoundsException e)
+	    {
+	      System.out.println("usage: java ClientConsole loginID [host [port]]");
+	      System.exit(1);
+	    }
+	    try
+	    {
+	      host = args.get(1);
+	    }
+	    catch(IndexOutOfBoundsException e)
+	    {
+	      host = "localhost";
+	    }
+	    try {
+	      port = Integer.parseInt(args.get(2));
+	    } catch (IndexOutOfBoundsException e){
+	      port = DEFAULT_PORT;
+	    }
+	  ClientConsole chat= new ClientConsole(loginID, host, port);
+	  chat.client.handleMessageFromClientUI("#getCatalog");
+	  
+	  do {
+		  try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println(chat.flagCatalog);  
+	  }
+	  while(!chat.flagCatalog);
+
+	  /*MyThread thread=new MyThread();
+	  thread.start();
+			try {
+				thread.join();
+			}catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		*/
+	  
+	  
+	  
+	  
+	  
+	  System.out.println("after send");
+	  
+	  
+	  
+	  
+	  System.out.println("after flag");
+
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/CatalogScene.fxml"));     
+			  
+			Parent root = (Parent)fxmlLoader.load(); 
+						  
+			CatalogController controller = fxmlLoader.<CatalogController>getController();
+			controller.setX(5);
+			controller.setCatalog(chat.catalog.getList());	
+						
+			Scene scene = new Scene(root); 
+					
+			primaryStage.setScene(scene);    
+					
+			primaryStage.show(); 
+			flagCatalog=false;
+		
 	
-	Scene scene = new Scene(root); 
 
-	primaryStage.setScene(scene);    
-
-	primaryStage.show(); 
+	
 	  /*
 	  	URL url=getClass().getResource("/client/fxml/CatalogScene.fxml");
 		if(url==null)

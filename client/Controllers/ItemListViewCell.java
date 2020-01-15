@@ -3,6 +3,7 @@ package client.Controllers;
 
 import java.io.IOException;
 
+import common.CatalogItem;
 import common.Item;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.AnchorPane;
 
-public class ItemListViewCell extends ListCell<Item>{
+public class ItemListViewCell extends ListCell<CatalogItem>{
 	@FXML private Label Title;
 	@FXML private Label Description;
 	@FXML private Label Color;
@@ -21,7 +22,7 @@ public class ItemListViewCell extends ListCell<Item>{
 	
 	
 	@Override
-    protected void updateItem(Item item, boolean empty) {
+    protected void updateItem(CatalogItem item, boolean empty) {
         super.updateItem(item, empty);
 
         if(empty || item == null) {

@@ -1,8 +1,11 @@
 package client.Controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import common.Catalog;
+import common.CatalogItem;
 import common.Item;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -19,8 +22,8 @@ import javafx.scene.control.ListView;
 public class CatalogController implements Initializable {
 
     @FXML // fx:id="lvItems"
-    private ListView<Item> lvItems; // Value injected by FXMLLoader
-    private ObservableList<Item> itemObservableList;
+    private ListView<CatalogItem> lvItems; // Value injected by FXMLLoader
+    private ObservableList<CatalogItem> itemObservableList;
     private int x;
     
     public CatalogController()  {
@@ -28,11 +31,11 @@ public class CatalogController implements Initializable {
         itemObservableList = FXCollections.observableArrayList();
 
         //add some Students
-        itemObservableList.addAll(
+        /*itemObservableList.addAll(
                 new Item("John Doe1", "trhrg","blue"),
                 new Item("John Doe2", "abcd","red"),
                 new Item("John Doe3", "efgh","orange"));
-        
+        */
         if(!itemObservableList.isEmpty()) {
         	System.out.println("not empty\n");
         }
@@ -48,7 +51,11 @@ public class CatalogController implements Initializable {
     	System.out.println(Integer.toString(x));
     }
     
-
+    public void setCatalog(ArrayList<CatalogItem> itemList_) {
+    	for (CatalogItem item : itemList_) { 		      
+    		itemObservableList.add(item);
+       }
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	

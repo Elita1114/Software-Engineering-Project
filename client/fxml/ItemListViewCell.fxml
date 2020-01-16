@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -7,8 +9,13 @@
 
 <AnchorPane fx:id="pane" prefHeight="195.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="Title" layoutX="56.0" layoutY="8.0" prefHeight="46.0" prefWidth="185.0" text="Label" />
-      <Label fx:id="Description" layoutX="56.0" layoutY="44.0" prefHeight="46.0" prefWidth="185.0" text="Label" />
-      <Label fx:id="Color" layoutX="56.0" layoutY="98.0" prefHeight="46.0" prefWidth="185.0" text="Label" />
+      <Label fx:id="Title" layoutX="14.0" layoutY="14.0" prefHeight="28.0" prefWidth="185.0" text="Label" textAlignment="CENTER">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font></Label>
+      <Label fx:id="Description" layoutX="14.0" layoutY="44.0" prefHeight="46.0" prefWidth="185.0" text="Label" />
+      <Label fx:id="Color" layoutX="107.0" layoutY="84.0" prefHeight="46.0" prefWidth="185.0" text="Label" />
+      <ImageView fx:id="ivIm1" fitHeight="150.0" fitWidth="200.0" layoutX="157.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="tvColor" layoutX="14.0" layoutY="98.0" text="Primary Color:" />
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package client.Controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -10,14 +11,20 @@ import common.Item;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 
 /**
  * Sample Skeleton for 'CatalogScene.fxml' Controller Class
  */
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 public class CatalogController implements Initializable {
 
@@ -56,6 +63,29 @@ public class CatalogController implements Initializable {
     		itemObservableList.add(item);
        }
     }
+    
+
+    @FXML
+    void openloginscene(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Login.fxml"));     
+		Parent root = (Parent)fxmlLoader.load();
+		Scene scene = new Scene(root); 
+		Stage appstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appstage.setScene(scene);    	
+		appstage.show(); 
+    }
+
+    @FXML
+    void opensignupscene(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/SignUp.fxml"));     
+		Parent root = (Parent)fxmlLoader.load();
+		Scene scene = new Scene(root); 
+		Stage appstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		appstage.setScene(scene);    	
+		appstage.show(); 
+    }
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	

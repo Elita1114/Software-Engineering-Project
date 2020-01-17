@@ -17,6 +17,7 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
 	@FXML private Label Title;
 	@FXML private Label Description;
 	@FXML private Label Color;
+	@FXML private Label Price;
 	@FXML private ImageView ivIm1;
 	
 	@FXML private AnchorPane pane;
@@ -49,6 +50,7 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
             Title.setText(String.valueOf(item.getName()));
             Description.setText(String.valueOf(item.getDescription()));
             Color.setText(String.valueOf(item.getColor()));
+            Price.setText(String.valueOf(item.getPrice()));
             ivIm1.setImage(new Image(item.getImagePath()));
 
             setText(null);

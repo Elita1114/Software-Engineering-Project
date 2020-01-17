@@ -46,7 +46,6 @@ public class ClientConsole extends Application implements ChatIF
    * The instance of the client that created this ConsoleChat.
    */
   public ChatClient client;
-  private static Scene scene;
   
   //Constructors ****************************************************
   public ClientConsole() {}
@@ -271,14 +270,6 @@ public class ClientConsole extends Application implements ChatIF
 		*/
 	}
 
-  public static void setRoot(String fxml) throws IOException {
-	  scene.setRoot(loadFXML(fxml));
-	  scene.getWindow().sizeToScene();
-  }
-  
-  private static Parent loadFXML(String fxml) throws IOException {
-	  FXMLLoader loader = new FXMLLoader(ClientConsole.class.getResource("/client/fxml/" + fxml + ".fxml"));
-	  return loader.load();
-  }
+
 }
 //End of ConsoleChat class

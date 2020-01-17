@@ -46,7 +46,6 @@ public class ClientConsole extends Application implements ChatIF
    * The instance of the client that created this ConsoleChat.
    */
   public ChatClient client;
-
   
   //Constructors ****************************************************
   public ClientConsole() {}

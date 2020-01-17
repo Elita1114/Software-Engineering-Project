@@ -12,7 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 public class ConsoleTabController {
-
+/*
 	@FXML
 	private TextArea missionOverviewText;
 	@FXML
@@ -67,4 +67,5 @@ public class ConsoleTabController {
 	private TextArea getLog() {
 		return mainController.getVisualLog();
 	}
+*/
 }

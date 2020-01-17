@@ -32,6 +32,7 @@ public class CatalogController implements Initializable {
     private ListView<CatalogItem> lvItems; // Value injected by FXMLLoader
     private ObservableList<CatalogItem> itemObservableList;
     private int x;
+    private MainController mainController;
     
     public CatalogController()  {
     	
@@ -52,6 +53,10 @@ public class CatalogController implements Initializable {
         
         
     }
+    
+    public void injectMainController(MainController mainController_) {
+		mainController = mainController_;
+	}
     
     public void setX(int x_) {
     	x=x_;

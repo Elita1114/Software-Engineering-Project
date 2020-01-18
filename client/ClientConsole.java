@@ -39,7 +39,7 @@ public class ClientConsole extends Application implements ChatIF
   final public static int DEFAULT_PORT = 5555;
   public boolean flagCatalog;
   public static boolean flag;
-  private Catalog catalog;
+  public Catalog catalog;
 
   //Instance variables **********************************************
   
@@ -205,7 +205,7 @@ public class ClientConsole extends Application implements ChatIF
 	  ClientConsole chat= new ClientConsole(loginID, host, port);
 	  
 	  //get data for catalog
-	  chat.client.handleMessageFromClientUI("#getCatalog");
+	  chat.client.handleMessageFromClientUI("#getCatalog 0");
 	  // wait for response
 	  do {
 		  try {
@@ -231,6 +231,9 @@ public class ClientConsole extends Application implements ChatIF
 	  MainController controller = fxmlLoader.<MainController>getController();
 	  controller.setCatalog(chat.catalog.getList());
 	  
+	  chat.flagCatalog=false;
+	  
+	  controller.setClient(chat);
 	  Scene scene = new Scene(root); 		
 	  primaryStage.setScene(scene);    	
 	  primaryStage.show(); 

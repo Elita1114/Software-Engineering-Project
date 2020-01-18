@@ -155,12 +155,22 @@ public class EchoServer extends AbstractServer
 			e.printStackTrace();
 		}
     }
-    else if (msg.toString().equalsIgnoreCase("#getCatalog"))
+    else if (msg.toString().startsWith("#getCatalog"))
     {
     	try {
+    		  int type= Integer.parseInt(msg.toString().split(" ")[1]);
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 		      Statement stmt=con.createStatement();  
-		      ResultSet rs=stmt.executeQuery("select * from Products"); 
+		      ResultSet rs = null;
+		      if(type==0) {
+		    	  rs=stmt.executeQuery("select * from Products"); 
+		      }
+		      else {
+		    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+		    	  prep_stmt.setInt(1, type);
+		    	  rs = prep_stmt.executeQuery();
+		      }
+		      
 		      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
 		      
 		      
@@ -171,7 +181,7 @@ public class EchoServer extends AbstractServer
 		      }
 		      con.close();  
 		      Catalog catalog=new Catalog(itemList,true);
-		      System.out.println(catalog.getList().get(0).getColor());
+		      
 		      client.sendToClient(catalog);  
 		      System.out.println("after send catalog\n");
 		      client.sendToClient("after send catalog\n");  

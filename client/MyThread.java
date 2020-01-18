@@ -1,8 +1,17 @@
 package client;
 
+import client.Controllers.CatalogController;
+
 public class MyThread extends Thread {
 	
-
+	private ClientConsole chat;
+	private CatalogController catalogController;
+	private String msg;
+	public MyThread(ClientConsole chat_,String msg_,CatalogController catalogController_) {
+		chat=chat_;
+		msg=msg_;
+		catalogController=catalogController_;
+	}
 	/*
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -24,14 +33,23 @@ public class MyThread extends Thread {
 
 	}
 	*/
+	
 	public void run() {
-
-		try {
-			wait(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		/*
+		chat.client.handleMessageFromClientUI(msg);
+		while(!chat.flagCatalog) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		catalogController.setCatalog(chat.catalog.getList());
+		catalogController.updateCatalog();
+		chat.flagCatalog=false;
+		System.out.println("finished");
+		*/
 	}
 	
 	

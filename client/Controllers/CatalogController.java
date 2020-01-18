@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import client.MyThread;
 import common.Catalog;
 import common.CatalogItem;
 import common.Item;
@@ -23,7 +24,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class CatalogController implements Initializable {
@@ -34,6 +38,42 @@ public class CatalogController implements Initializable {
     private int x;
     private MainController mainController;
     
+    @FXML
+    private Button btnMix; //5
+
+    @FXML
+    private Button btnWedding; //7
+
+    @FXML
+    private Button btnAll; //0
+
+
+    @FXML
+    private Button btnDaisy; //1
+
+    @FXML
+    private Button btnLily; //4
+
+    @FXML
+    private Button btnOrchid; //6
+
+    @FXML
+    private Button btnCacti; //11
+
+    @FXML
+    private Button btnArrang; //2
+
+    @FXML
+    private Button btnIris; //3
+
+    @FXML
+    private Button btnOffice; //9
+
+    @FXML
+    private Button btnBonsai; //8
+
+    @FXML
+    private Button btnGreen; //10
     public CatalogController()  {
     	
         itemObservableList = FXCollections.observableArrayList();
@@ -64,9 +104,12 @@ public class CatalogController implements Initializable {
     }
     
     public void setCatalog(ArrayList<CatalogItem> itemList_) {
-    	for (CatalogItem item : itemList_) { 		      
-    		itemObservableList.add(item);
-       }
+    	itemObservableList.clear();
+    	if(!itemList_.isEmpty()) {
+    		for (CatalogItem item : itemList_) { 		      
+	    		itemObservableList.add(item);
+    		}
+    	}
     }
     
 
@@ -103,4 +146,100 @@ public class CatalogController implements Initializable {
         });
     	
     }
+    
+    public void updateCatalog() {
+    	//lvItems.getItems().clear();
+    	lvItems.setItems(itemObservableList);
+    	lvItems.setCellFactory(itemListView  -> new ItemListViewCell());
+    }
+    
+    
+    
+    private void updateButtonPressed(String msg) {
+    	Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	mainController.getClient().flagCatalog=false;
+    	    	mainController.getClient().client.handleMessageFromClientUI(msg);
+    			while(!mainController.getClient().flagCatalog) {
+    				try {
+    					Thread.sleep(100);
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    			setCatalog(mainController.getClient().catalog.getList());
+    			updateCatalog();
+    			mainController.getClient().flagCatalog=false;
+    	    }
+    	});
+		
+    }
+    
+    @FXML
+    void daisyPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 1");
+    	
+    }
+
+    @FXML
+    void arrangPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 2");
+    	
+    }
+
+    @FXML
+    void irisPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 3");
+    	
+    }
+
+    @FXML
+    void lilyPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 4");
+    }
+
+    @FXML
+    void mixPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 5");
+    }
+
+    @FXML
+    void orchidPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 6");
+    }
+
+    @FXML
+    void weddingPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 7");
+    }
+
+    @FXML
+    void bonsaiPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 8");
+    }
+
+    @FXML
+    void officePressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 9");
+    }
+
+    @FXML
+    void greenPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 10");
+    }
+
+    @FXML
+    void cactiPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 11");
+    }
+    
+    @FXML
+    void allPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 0");
+    }
+    
+    
+    
 }

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -7,10 +11,59 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.CatalogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="811.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.CatalogController">
    <children>
-      <ListView fx:id="lvItems" layoutX="49.0" layoutY="77.0" prefHeight="272.0" prefWidth="523.0" />
-      <Button layoutX="397.0" layoutY="24.0" mnemonicParsing="false" onAction="#openloginscene" text="Login" />
-      <Button layoutX="501.0" layoutY="24.0" mnemonicParsing="false" onAction="#opensignupscene" text="SignUP" />
+      <ListView fx:id="lvItems" prefHeight="400.0" prefWidth="616.0" />
+      <Button layoutX="678.0" layoutY="361.0" mnemonicParsing="false" onAction="#openloginscene" text="Login" />
+      <Button layoutX="734.0" layoutY="361.0" mnemonicParsing="false" onAction="#opensignupscene" text="SignUP" />
+      <Accordion layoutX="624.0" layoutY="14.0" minWidth="-Infinity" prefHeight="289.0" prefWidth="173.0">
+        <panes>
+          <TitledPane animated="false" prefHeight="178.0" prefWidth="173.0" text="Flowers">
+               <content>
+                  <VBox minHeight="-Infinity" prefHeight="73.0" prefWidth="171.0">
+                     <children>
+                        <Button fx:id="btnDaisy" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#daisyPressed" prefHeight="25.0" prefWidth="204.0" text="Daisies Bouquets" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnArrang" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#arrangPressed" prefHeight="25.0" prefWidth="204.0" text="Flower Arrangements" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnIris" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#irisPressed" prefHeight="25.0" prefWidth="204.0" text="Irises Bouquets" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnLily" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#lilyPressed" prefHeight="25.0" prefWidth="204.0" text="Lilies Bouquets" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnMix" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#mixPressed" prefHeight="25.0" prefWidth="204.0" text="Mixed Bouquetss" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnOrchid" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#orchidPressed" prefHeight="25.0" prefWidth="204.0" text="Orchid Bouquetss" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnWedding" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#weddingPressed" prefHeight="25.0" prefWidth="204.0" text="Wedding Bouquetss" textOverrun="CLIP" />
+                     </children>
+                  </VBox>
+               </content>
+          </TitledPane>
+          <TitledPane animated="false" prefHeight="217.0" prefWidth="173.0" text="Plants">
+               <content>
+                  <VBox prefHeight="674.0" prefWidth="171.0">
+                     <children>
+                        <Button fx:id="btnBonsai" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#bonsaiPressed" prefHeight="25.0" prefWidth="204.0" text="Bonsai Trees" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnOffice" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#officePressed" prefHeight="25.0" prefWidth="204.0" text="Office Plants" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnGreen" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#greenPressed" prefHeight="25.0" prefWidth="204.0" text="Green Plants" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnCacti" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#cactiPressed" prefHeight="25.0" prefWidth="204.0" text="Succulents &amp; Cacti" textOverrun="CLIP" />
+                     </children>
+                  </VBox>
+               </content>
+          </TitledPane>
+            <TitledPane animated="false" text="All">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Button fx:id="btnAll" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#allPressed" prefHeight="25.0" prefWidth="204.0" text="All items" textOverrun="CLIP" />
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+        </panes>
+      </Accordion>
    </children>
 </AnchorPane>

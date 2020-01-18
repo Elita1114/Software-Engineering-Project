@@ -2,6 +2,7 @@ package client.Controllers;
 
 import java.util.ArrayList;
 
+import client.ClientConsole;
 import common.CatalogItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -12,7 +13,7 @@ public class MainController {
 	@FXML private CatalogController catalogController;
 	@FXML private SignUpController signUpController;
 	@FXML private LoginController loginController;
-	
+	private ClientConsole client;
 
 	
 	@FXML
@@ -20,8 +21,17 @@ public class MainController {
 		catalogController.injectMainController(this);
 	}
 	
+	public ClientConsole getClient() {
+		return client;
+	}
+	public void setFlag(boolean flag_) {
+		client.flagCatalog=flag_;
+	}
 	public void setCatalog(ArrayList<CatalogItem> list) {
 		catalogController.setCatalog(list);
+	}
+	public void setClient(ClientConsole client_) {
+		client=client_;
 	}
 	
 /*

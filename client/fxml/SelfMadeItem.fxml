@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="450.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.SelfMadeItemController">
+   <children>
+      <Button fx:id="btnFinished" layoutX="655.0" layoutY="400.0" mnemonicParsing="false" onAction="#finishedPressed" text="Finished" />
+      <Text layoutX="266.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Your Own" textAlignment="CENTER" wrappingWidth="287.13671875">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Text>
+      <Text layoutX="266.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Flowers" textAlignment="CENTER" wrappingWidth="287.13671875">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="266.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Design &amp; Container" textAlignment="CENTER" wrappingWidth="287.13671875">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <ScrollPane layoutX="145.0" layoutY="93.0" prefHeight="177.0" prefWidth="529.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="526.0">
+               <children>
+                  <GridPane prefHeight="409.0" prefWidth="519.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fx:id="ivDaisy" cache="true" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/daisy.jpg" />
+                           </image>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Daisy">
+                           <GridPane.margin>
+                              <Insets bottom="50.0" left="155.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$5/Unit">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="155.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="105.0" top="60.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Button fx:id="btnDaisyMinus" mnemonicParsing="false" onAction="#daisyMinusPressed" prefHeight="25.0" prefWidth="25.0" text="-">
+                           <GridPane.margin>
+                              <Insets left="135.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="btnDaisyPlus" mnemonicParsing="false" onAction="#daisyPlusPressed" prefHeight="25.0" prefWidth="25.0" text="+">
+                           <GridPane.margin>
+                              <Insets left="199.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <TextField fx:id="tvDaisy" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0">
+                           <GridPane.margin>
+                              <Insets left="162.0" top="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="tvIris" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="162.0" top="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Button fx:id="btnIrisPlus" mnemonicParsing="false" onAction="#irisPlusPressed" prefHeight="25.0" prefWidth="25.0" text="+" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="199.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="btnIrisMinus" mnemonicParsing="false" onAction="#irisMinusPressed" prefHeight="25.0" prefWidth="25.0" text="-" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="135.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="105.0" top="60.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$6/Unit" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="155.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Iris" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="50.0" left="165.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <ImageView fx:id="ivIris" cache="true" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@../images/iris.jpg" />
+                           </image>
+                        </ImageView>
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    <TextField fx:id="tvLily" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="162.0" top="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Button fx:id="btnLilyPlus" mnemonicParsing="false" onAction="#lilyPlusPressed" prefHeight="25.0" prefWidth="25.0" text="+" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="199.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="btnLilyMinus" mnemonicParsing="false" onAction="#lilyMinusPressed" prefHeight="25.0" prefWidth="25.0" text="-" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="135.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="105.0" top="60.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$8/Unit" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="155.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lily" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="50.0" left="165.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <ImageView fx:id="ivLily" cache="true" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../images/lily.jpg" />
+                           </image>
+                        </ImageView>
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        <TextField fx:id="tvOrchid" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="162.0" top="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Button fx:id="btnOrchidPlus" mnemonicParsing="false" onAction="#orchidPlusPressed" prefHeight="25.0" prefWidth="25.0" text="+" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="199.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="btnOrchidMinus" mnemonicParsing="false" onAction="#orchidMinusPressed" prefHeight="25.0" prefWidth="25.0" text="-" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="135.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="105.0" top="60.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$50/Unit" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="150.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Orchid" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="50.0" left="150.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <ImageView fx:id="ivOrchid" cache="true" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                           <image>
+                              <Image url="@../images/orchid.jpg" />
+                           </image>
+                        </ImageView>
+            
+                                    
+                                    
+                        
+                                    
+                        <TextField fx:id="tvRose" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="162.0" top="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Button fx:id="btnRosePlus" mnemonicParsing="false" onAction="#rosePlusPressed" prefHeight="25.0" prefWidth="25.0" text="+" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="199.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="btnRoseMinus" mnemonicParsing="false" onAction="#roseMinusPressed" prefHeight="25.0" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="135.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="105.0" top="60.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$5/Unit" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="155.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rose" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="50.0" left="160.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <ImageView fx:id="ivRose" cache="true" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@../images/rose.jpg" />
+                           </image>
+                        </ImageView>
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    <TextField fx:id="tvHydrangea" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="162.0" top="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Button fx:id="btnHydrangeaPlus" mnemonicParsing="false" onAction="#hydrangeaPlusPressed" prefHeight="25.0" prefWidth="25.0" text="+" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="199.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="btnHydrangeaMinus" mnemonicParsing="false" onAction="#hydrangeaMinusPressed" prefHeight="25.0" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="135.0" top="60.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="105.0" top="60.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$6/Unit" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="155.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hydrangea" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="50.0" left="135.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <ImageView fx:id="ivHydrangea" cache="true" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../images/hydrangea.jpg" />
+                           </image>
+                        </ImageView>
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                        
+                                    
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <RadioButton fx:id="radioGlass" layoutX="444.0" layoutY="335.0" mnemonicParsing="false" onAction="#glassPressed" text="Arrangement in a Glass Container - 35$">
+         <toggleGroup>
+            <ToggleGroup fx:id="group" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="radioPaper" layoutX="145.0" layoutY="335.0" mnemonicParsing="false" onAction="#paperPressed" selected="true" text="Classic Wrapping Paper Bouquet - 15$" toggleGroup="$group" />
+      <RadioButton fx:id="radioPlastic" layoutX="145.0" layoutY="368.0" mnemonicParsing="false" onAction="#plasticPressed" text="Arrangement in a Plastic Container - 25$" toggleGroup="$group" />
+      <RadioButton fx:id="radioVase" layoutX="445.0" layoutY="368.0" mnemonicParsing="false" onAction="#vasePressed" text="Arrangement in a Tall Glass Vase - 40$" toggleGroup="$group" />
+      <Text fx:id="tvPrice" layoutX="266.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price: 15$" textAlignment="CENTER" wrappingWidth="287.13671875">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnCancel" layoutX="725.0" layoutY="400.0" mnemonicParsing="false" onAction="#cancelPressed" text="Cancel" />
+   </children>
+</AnchorPane>

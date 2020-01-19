@@ -44,30 +44,31 @@ public class SignUpController {
     	
     	String pass=passText.getText(),passValidate=oassAgainText.getText();
     	
-    	// validate signup input 
+    	// validate sign-up input 
     	try {
     		checkInput(pass, passValidate);
     	} catch(IOException e) {
     		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
     		return;
     	}
-   
+    	/*
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
     	    	mainController.getClient().client.handleMessageFromClientUI("#signup "+);
     	    }
     	});
+    	*/
     	
     	
-    	/*
+    	
     	try{
     		openCatalogscene(event);
   		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		*/
+		
     
     }
 

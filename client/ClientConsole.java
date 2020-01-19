@@ -172,6 +172,8 @@ public class ClientConsole extends Application implements ChatIF
 	  }
 	  ClientConsole chat= new ClientConsole(loginID, host, port);
 	  
+	  
+	  
 	  //get data for catalog
 	  chat.client.handleMessageFromClientUI("#getCatalog 0");
 	  // wait for response
@@ -190,10 +192,7 @@ public class ClientConsole extends Application implements ChatIF
 
 	  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Main.fxml"));     
 	  Parent root = (Parent)fxmlLoader.load(); 
-			/*			  
-	  CatalogController controller = fxmlLoader.<CatalogController>getController();
-	  controller.setCatalog(chat.catalog.getList());	
-		*/				
+				
 	  
 					  
 	  MainController controller = fxmlLoader.<MainController>getController();
@@ -208,24 +207,6 @@ public class ClientConsole extends Application implements ChatIF
 	
 		
 	
-
-	
-	  /*
-	  	URL url=getClass().getResource("/client/fxml/CatalogScene.fxml");
-		if(url==null)
-			System.out.println("null");
-		AnchorPane pane=FXMLLoader.load(url);
-		
-		
-		
-		
-		Scene scence= new Scene(pane);
-		
-		
-		primaryStage.setScene(scence);
-		primaryStage.setTitle("Calculator - 322244575; 212267959");
-		primaryStage.show();
-		*/
 	}
 
 

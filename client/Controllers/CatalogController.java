@@ -38,41 +38,45 @@ public class CatalogController implements Initializable {
     private int x;
     private MainController mainController;
     
-    @FXML
-    private Button btnMix; //5
-
-    @FXML
-    private Button btnWedding; //7
-
+    
+    
     @FXML
     private Button btnAll; //0
 
     @FXML
     private Button btnDaisy; //1
-
-    @FXML
-    private Button btnLily; //4
-
-    @FXML
-    private Button btnOrchid; //6
-
-    @FXML
-    private Button btnCacti; //11
-
     @FXML
     private Button btnArrang; //2
-
     @FXML
     private Button btnIris; //3
-
     @FXML
-    private Button btnOffice; //9
-
+    private Button btnLily; //4
     @FXML
-    private Button btnBonsai; //8
-
+    private Button btnMix; //5
     @FXML
-    private Button btnGreen; //10
+    private Button btnOrchid; //6
+    @FXML
+    private Button btnRose; //7
+    @FXML
+    private Button btnWedding; //8
+    @FXML
+    private Button btnBonsai; //9
+    @FXML
+    private Button btnOffice; //10
+    @FXML
+    private Button btnGreen; //11
+    @FXML
+    private Button btnCacti; //12
+
+    
+
+    
+
+    
+
+    
+
+    
     public CatalogController()  {
     	
         itemObservableList = FXCollections.observableArrayList();
@@ -208,30 +212,35 @@ public class CatalogController implements Initializable {
     void orchidPressed(ActionEvent event) {
     	updateButtonPressed("#getCatalog 6");
     }
-
+    
     @FXML
-    void weddingPressed(ActionEvent event) {
+    void rosePressed(ActionEvent event) {
     	updateButtonPressed("#getCatalog 7");
     }
 
     @FXML
-    void bonsaiPressed(ActionEvent event) {
+    void weddingPressed(ActionEvent event) {
     	updateButtonPressed("#getCatalog 8");
     }
 
     @FXML
-    void officePressed(ActionEvent event) {
+    void bonsaiPressed(ActionEvent event) {
     	updateButtonPressed("#getCatalog 9");
     }
 
     @FXML
-    void greenPressed(ActionEvent event) {
+    void officePressed(ActionEvent event) {
     	updateButtonPressed("#getCatalog 10");
     }
 
     @FXML
-    void cactiPressed(ActionEvent event) {
+    void greenPressed(ActionEvent event) {
     	updateButtonPressed("#getCatalog 11");
+    }
+
+    @FXML
+    void cactiPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 12");
     }
     
     @FXML

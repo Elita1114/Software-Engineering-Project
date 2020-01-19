@@ -4,6 +4,7 @@ package client.Controllers;
 import java.io.IOException;
 
 import client.ClientConsole;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class SignUpController {
+
+    private MainController mainController;
 
     @FXML
     private Button signUpbtn;
@@ -32,29 +35,43 @@ public class SignUpController {
     @FXML
     private TextField payDetailsText;
 
+    public void injectMainController(MainController mainController_) {
+		mainController = mainController_;
+	}
+    
     @FXML
     void signUp(ActionEvent event) {
-    	String pass=passText.getText(),passAgain=oassAgainText.getText();
-    	String flag1=checkPassLen(pass);
-    	String flag2=checkPassAgain(pass,passAgain);
-    	String errors= flag1+flag2;
-    	if(!(errors.length()==0))
-    		new Alert(Alert.AlertType.ERROR, errors).showAndWait();
-    	else {
-	     /* sign up
-	    	*/	
-	    	try {
-	    		openCatalogscene(event);
-	  		} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+    	
+    	String pass=passText.getText(),passValidate=oassAgainText.getText();
+    	
+    	// validate signup input 
+    	try {
+    		checkInput(pass, passValidate);
+    	} catch(IOException e) {
+    		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+    		return;
     	}
+   
+    	Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	mainController.getClient().client.handleMessageFromClientUI("#signup "+);
+    	    }
+    	});
+    	
+    	
+    	/*
+    	try{
+    		openCatalogscene(event);
+  		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		*/
+    
     }
 
-    
-    
-    
+        
     void openCatalogscene(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/CatalogScene.fxml"));     
 		Parent root = (Parent)fxmlLoader.load();
@@ -64,16 +81,19 @@ public class SignUpController {
 		appstage.show(); 
     }
     
-    private String checkPassLen(String pass) {
+    
+    private void checkInput(String pass,  String secondPass) throws IOException {
+    	String error_message = "";
     	if(!(pass.length()>4))
-    		return "Your password is short\n";
-    	return "";
+    		error_message += "Your password is short\n";
+    	if(!pass.equals(secondPass))
+    		error_message += "Your two enterd passwords are not equal\n";
+  
+    	if(error_message.length() > 0)
+    		throw(new IOException(error_message));
+    		
     }
-    private String checkPassAgain(String pass, String passAgain) {
-    	if(!pass.equals(passAgain))
-    		return "Your two enterd passwords are not equal\n";
-    	return "";
-    }
+
     
     
     

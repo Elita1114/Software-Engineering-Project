@@ -16,7 +16,7 @@
       <ListView fx:id="lvItems" prefHeight="400.0" prefWidth="616.0" />
       <Button layoutX="678.0" layoutY="361.0" mnemonicParsing="false" onAction="#openloginscene" text="Login" />
       <Button layoutX="734.0" layoutY="361.0" mnemonicParsing="false" onAction="#opensignupscene" text="SignUP" />
-      <Accordion layoutX="624.0" layoutY="14.0" minWidth="-Infinity" prefHeight="289.0" prefWidth="173.0">
+      <Accordion layoutX="624.0" layoutY="14.0" minWidth="-Infinity" prefHeight="323.0" prefWidth="173.0">
         <panes>
           <TitledPane animated="false" prefHeight="178.0" prefWidth="173.0" text="Flowers">
                <content>
@@ -33,6 +33,8 @@
                         <Button fx:id="btnMix" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#mixPressed" prefHeight="25.0" prefWidth="204.0" text="Mixed Bouquetss" textOverrun="CLIP" />
                         <Separator prefWidth="200.0" />
                         <Button fx:id="btnOrchid" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#orchidPressed" prefHeight="25.0" prefWidth="204.0" text="Orchid Bouquetss" textOverrun="CLIP" />
+                        <Separator prefWidth="200.0" />
+                        <Button fx:id="btnRose" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#rosePressed" prefHeight="25.0" prefWidth="204.0" text="Roses Bouquetss" textOverrun="CLIP" />
                         <Separator prefWidth="200.0" />
                         <Button fx:id="btnWedding" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#weddingPressed" prefHeight="25.0" prefWidth="204.0" text="Wedding Bouquetss" textOverrun="CLIP" />
                      </children>

@@ -16,6 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -24,7 +26,7 @@ import javafx.stage.Stage;
 public class SignUpController {
 
     private MainController mainController;
-
+    
     @FXML
     private RadioButton MonthlySubRadio;
 
@@ -55,9 +57,21 @@ public class SignUpController {
     @FXML
     private TextField IDText;
     
+    @FXML
+    private MenuButton storeselector;
+    
     public void injectMainController(MainController mainController_) {
 		mainController = mainController_;
 	}
+    @FXML
+	private void initialize() {
+		MenuItem menuItem1 = new MenuItem("Option 1");
+         MenuItem menuItem2 = new MenuItem("Option 2");
+         MenuItem menuItem3 = new MenuItem("Option 3");
+
+         storeselector.getItems().add(menuItem1);
+    }
+   
     
     @FXML
     void signUp(ActionEvent event) {

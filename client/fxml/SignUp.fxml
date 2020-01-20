@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -12,10 +15,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="825.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.SignUpController">
+<AnchorPane prefHeight="825.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.SignUpController">
    <children>
       <Label layoutX="26.0" layoutY="24.0" text="Sign up" />
-      <GridPane layoutX="103.0" layoutY="70.0" prefHeight="292.0" prefWidth="556.0">
+      <GridPane layoutX="103.0" layoutY="70.0" prefHeight="620.0" prefWidth="1028.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,6 +29,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -42,21 +46,23 @@
             <Label text="ID" GridPane.rowIndex="3" />
             <Label text="Card Number" GridPane.rowIndex="4" />
             <TextField fx:id="CardNumberText" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <RadioButton fx:id="AnnualSubRadio" mnemonicParsing="false" text="Annual Subscription" GridPane.rowIndex="6">
+            <RadioButton fx:id="AnnualSubRadio" mnemonicParsing="false" text="Annual Subscription" GridPane.rowIndex="7">
                <toggleGroup>
                   <ToggleGroup fx:id="tgPayMethod" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="MonthlySubRadio" mnemonicParsing="false" text="Monthly Subscripton" toggleGroup="$tgPayMethod" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <RadioButton fx:id="PayPErOrderRadio" mnemonicParsing="false" text="Pay Per Order" toggleGroup="$tgPayMethod" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Button fx:id="signUpbtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#signUp" text="signUp" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-            <Label text="Store" GridPane.rowIndex="5" />
-            <MenuButton fx:id="storeselector" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <RadioButton fx:id="MonthlySubRadio" mnemonicParsing="false" text="Monthly Subscripton" toggleGroup="$tgPayMethod" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <RadioButton fx:id="PayPErOrderRadio" mnemonicParsing="false" text="Pay Per Order" toggleGroup="$tgPayMethod" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Button fx:id="signUpbtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#signUp" text="signUp" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+            <Label text="Store" GridPane.rowIndex="6" />
+            <MenuButton fx:id="storeselector" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
                 <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
             </MenuButton>
+            <TextField fx:id="PhoneNumberText" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label prefHeight="35.0" prefWidth="184.0" text="Phone Number" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>

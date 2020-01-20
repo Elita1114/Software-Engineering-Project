@@ -9,19 +9,24 @@ public class User implements Serializable {
 	public String password;
 	public String id;
 	public String credit_card_number;
-	public PayingMethod pay_method;
+	public int pay_method;
+	public String phone_number;
+	public String store;
 	public int user_id;
+	
 
-	public User(String username, String password, String id, String credit_card_number, PayingMethod pay_method) {
+	public User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, String store) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.id = id;
 		this.credit_card_number = credit_card_number;
 		this.pay_method = pay_method;
-		user_id = -1;
+		this.phone_number = phone_number;
+		this.store = store;
 	}
-	
+
+
 	public String toString()
 	{
 		return 	"User: "+ username + 

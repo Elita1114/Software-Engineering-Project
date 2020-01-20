@@ -1,7 +1,7 @@
 package common;
 
-public enum PayingMethod {
-	pay_per_order,
-	annual_subscription,
-	monthly_subscription
+public class PayingMethod {
+	public static final int pay_per_order=3;
+	public static final int  annual_subscription=1;
+	public static final int monthly_subscription=2;
 }

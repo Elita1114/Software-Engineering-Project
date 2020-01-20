@@ -189,6 +189,10 @@ public class ClientConsole extends Application implements ChatIF
 	  while(!chat.flagCatalog);
 
 
+	  // get critical initializtaion data 
+	  
+	  chat.client.handleMessageFromClientUI("#getStores 0");
+
 
 	  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Main.fxml"));     
 	  Parent root = (Parent)fxmlLoader.load(); 

@@ -11,11 +11,11 @@ public class User implements Serializable {
 	public String credit_card_number;
 	public int pay_method;
 	public String phone_number;
-	public String store;
+	public int store;
 	public int user_id;
 	
 
-	public User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, String store) {
+	public User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store) {
 		super();
 		this.username = username;
 		this.password = password;

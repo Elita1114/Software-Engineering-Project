@@ -97,41 +97,64 @@ public class EchoServer extends AbstractServer
   {
 	  if(request instanceof UserRequest) {
 		  UserRequest user_request = (UserRequest) request;
-		  try { 
-			  // execute command 
+		  
 			  if(user_request.get_request_str().equalsIgnoreCase("#signup"))
 			  {
-				  User new_user = (User) user_request.get_request_args().get(0);
-				  System.out.println("Adding user: ");
-				  System.out.println(new_user);
-				  
-			      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				  PreparedStatement checkusername = con.prepareStatement("SELECT * FROM `Users` WHERE `Username`=?");
-			      checkusername.setString(1, new_user.username);
-			      ResultSet rs = checkusername.executeQuery();
-			      int cuser = rs.last() ? rs.getRow() : 0;
-			      System.out.println("Cuser");
-			      System.out.println(cuser);
-			      if(cuser == 0){
-				      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`) VALUES (?,?,?,?,?,?,?)");
-				      insertuser.setString(1, new_user.username); // User name
-				      insertuser.setString(2, generate_md5_hash(new_user.password));  // Password
-				      insertuser.setString(3, "new_user.paymentdetails"); // payment details
-				      insertuser.setInt(4, 0); // store
-				      insertuser.setString(5, "new_user.phonenumber"); 	// phoneNumber
-				      insertuser.setInt(6, 0); // subscription
-				      insertuser.setString(7, new_user.id);  // ID
-				      insertuser.executeUpdate();
-			      }
-			      else {
-			    	  	new Alert(Alert.AlertType.ERROR,"client already exists").showAndWait();
-			    		return;
-			      }
+				  try { 
+					  User new_user = (User) user_request.get_request_args().get(0);
+					  System.out.println("Adding user: ");
+					  System.out.println(new_user);
+					  
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					  PreparedStatement checkusername = con.prepareStatement("SELECT * FROM `Users` WHERE `Username`=?");
+				      checkusername.setString(1, new_user.username);
+				      ResultSet rs = checkusername.executeQuery();
+				      int cuser = rs.last() ? rs.getRow() : 0;
+				      System.out.println("Cuser");
+				      System.out.println(cuser);
+				      if(cuser == 0){
+					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`) VALUES (?,?,?,?,?,?,?)");
+					      insertuser.setString(1, new_user.username); // User name
+					      insertuser.setString(2, generate_md5_hash(new_user.password));  // Password
+					      insertuser.setString(3, "new_user.paymentdetails"); // payment details
+					      insertuser.setInt(4, 0); // store
+					      insertuser.setString(5, "new_user.phonenumber"); 	// phoneNumber
+					      insertuser.setInt(6, 0); // subscription
+					      insertuser.setString(7, new_user.id);  // ID
+					      insertuser.executeUpdate();
+				      }
+				      else {
+				    	  	new Alert(Alert.AlertType.ERROR,"client already exists").showAndWait();
+				    		return;
+				      }
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }else if(user_request.get_request_str().equalsIgnoreCase("#login"))
+			  {
+				  try { 
+					  User new_user = (User) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					  PreparedStatement checkusername = con.prepareStatement("SELECT * FROM `Users` WHERE `Username`=? AND `Password`=?");
+					  checkusername.setString(1, new_user.username);
+					  checkusername.setString(2, generate_md5_hash(new_user.password));
+				      ResultSet rs = checkusername.executeQuery();
+				      int cuser = rs.last() ? rs.getRow() : 0;
+
+				      if(cuser == 1){
+				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"));
+				    	  client.sendToClient(loggedUser); 
+				      }
+				      else {
+				    	  	new Alert(Alert.AlertType.ERROR,"User doesn't exist").showAndWait();
+				    		return;
+				      }
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
 			  }
-		  }	catch(Exception e) {
-			  System.out.println("a");
-			  System.out.println(e);
-		  }
+		  
 		  return;
 		  
 			  

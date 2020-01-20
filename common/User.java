@@ -1,12 +1,4 @@
-package utility;
-
-
-
-enum PayingMethod{
-	pay_per_order,
-	annual_subscription,
-	monthly_subscription
-}
+package common;
 
 public class User {
 	
@@ -15,6 +7,7 @@ public class User {
 	String id;
 	String credit_card_number;
 	PayingMethod pay_method;
+	int user_id;
 
 	public User(String username, String password, String id, String credit_card_number, PayingMethod pay_method) {
 		super();
@@ -23,6 +16,6 @@ public class User {
 		this.id = id;
 		this.credit_card_number = credit_card_number;
 		this.pay_method = pay_method;
+		user_id = -1;
 	}
-
 }

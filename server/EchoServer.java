@@ -4,7 +4,7 @@ package server;
 // license found at www.lloseng.com 
 
 
-
+import common.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,10 +15,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.net.ssl.SSLException;
 import java.io.*;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import common.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 /**
  * This class overrides some of the methods in the abstract 
@@ -93,16 +97,42 @@ public class EchoServer extends AbstractServer
   {
 	  if(request instanceof UserRequest) {
 		  UserRequest user_request = (UserRequest) request;
-		  
-		  // execute command 
-		  if(user_request.get_request_str().equalsIgnoreCase("#signup"))
-		  {
-			  User new_user = (User) user_request.get_request_args().get(0);
-			  System.out.println("Adding user: ");
-			  System.out.println(new_user);
-			  
-			  
+		  try { 
+			  // execute command 
+			  if(user_request.get_request_str().equalsIgnoreCase("#signup"))
+			  {
+				  User new_user = (User) user_request.get_request_args().get(0);
+				  System.out.println("Adding user: ");
+				  System.out.println(new_user);
+				  
+			      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				  PreparedStatement checkusername = con.prepareStatement("SELECT * FROM `Users` WHERE `Username`=?");
+			      checkusername.setString(1, new_user.username);
+			      ResultSet rs = checkusername.executeQuery();
+			      int cuser = rs.last() ? rs.getRow() : 0;
+			      System.out.println("Cuser");
+			      System.out.println(cuser);
+			      if(cuser == 0){
+				      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`) VALUES (?,?,?,?,?,?,?)");
+				      insertuser.setString(1, new_user.username); // User name
+				      insertuser.setString(2, generate_md5_hash(new_user.password));  // Password
+				      insertuser.setString(3, "new_user.paymentdetails"); // payment details
+				      insertuser.setInt(4, 0); // store
+				      insertuser.setString(5, "new_user.phonenumber"); 	// phoneNumber
+				      insertuser.setInt(6, 0); // subscription
+				      insertuser.setString(7, new_user.id);  // ID
+				      insertuser.executeUpdate();
+			      }
+			      else {
+			    	  	new Alert(Alert.AlertType.ERROR,"client already exists").showAndWait();
+			    		return;
+			      }
+			  }
+		  }	catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
 		  }
+		  return;
 		  
 			  
 	  }
@@ -431,5 +461,32 @@ public class EchoServer extends AbstractServer
       System.out.println("ERROR - Could not listen for clients!");
     }
   }
+  
+  public static String generate_md5_hash(String input)
+	{
+		try { 	  
+          // Static getInstance method is called with hashing MD5 
+          MessageDigest md = MessageDigest.getInstance("MD5"); 
+
+          // digest() method is called to calculate message digest 
+          //  of an input digest() return array of byte 
+          byte[] messageDigest = md.digest(input.getBytes()); 
+
+          // Convert byte array into signum representation 
+          BigInteger no = new BigInteger(1, messageDigest); 
+
+          // Convert message digest into hex value 
+          String hashtext = no.toString(16); 
+          while (hashtext.length() < 32) { 
+              hashtext = "0" + hashtext; 
+          } 
+          return hashtext; 
+      }  
+      // For specifying wrong message digest algorithms 
+      catch (NoSuchAlgorithmException e) { 
+          throw new RuntimeException(e); 
+      } 
+		  
+	}
 }
 //End of EchoServer class

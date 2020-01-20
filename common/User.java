@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 276134203467033903L;
-	String username;
-	String password;
-	String id;
-	String credit_card_number;
-	PayingMethod pay_method;
-	int user_id;
+	public String username;
+	public String password;
+	public String id;
+	public String credit_card_number;
+	public PayingMethod pay_method;
+	public int user_id;
 
 	public User(String username, String password, String id, String credit_card_number, PayingMethod pay_method) {
 		super();

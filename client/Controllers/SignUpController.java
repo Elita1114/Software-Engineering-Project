@@ -76,14 +76,14 @@ public class SignUpController {
     		pay_method = PayingMethod.monthly_subscription;
     	if(AnnualSubRadio.isSelected())
     		pay_method = PayingMethod.annual_subscription;
-    	/*
+    	
     	try {
     		checkInput(passwd, passValidate);
     	} catch(IOException e) {
     		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
     		return;
     	}
-    	*/
+    	
     	User new_user =  new User(user_name, passwd, I_D,cardNumber,pay_method);
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(new_user);
@@ -127,7 +127,7 @@ public class SignUpController {
     
     private void checkInput(String pass,  String secondPass) throws IOException {
     	String error_message = "";
-    	if(!(pass.length()>4))
+    	if(!(pass.length()>1))
     		error_message += "Your password is short\n";
     	if(!pass.equals(secondPass))
     		error_message += "Your two enterd passwords are not equal\n";

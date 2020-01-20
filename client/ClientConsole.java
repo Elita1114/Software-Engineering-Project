@@ -44,8 +44,8 @@ public class ClientConsole extends Application implements ChatIF
   //Instance variables **********************************************
   
   /**
-   * The instance of the client that created this ConsoleChat.
-   */
+   * The instance of the client that created this ConsoleChat. 
+   **/
   public ChatClient client;
   
   //Constructors ****************************************************
@@ -61,7 +61,7 @@ public class ClientConsole extends Application implements ChatIF
   {
     try 
     {
-      client= new ChatClient(loginID, host, port, this);
+      client = new ChatClient(loginID, host, port, this);
     } 
     catch(IOException exception) 
     {

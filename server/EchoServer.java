@@ -91,45 +91,19 @@ public class EchoServer extends AbstractServer
    */
   public void handleMessageFromClient (Object request, ConnectionToClient client)
   {
-	  System.out.println("entered 1");
 	  if(request instanceof UserRequest) {
-		  System.out.println("entered 3");
 		  UserRequest user_request = (UserRequest) request;
+		  
+		  // execute command 
 		  if(user_request.get_request_str().equalsIgnoreCase("#signup"))
 		  {
-			  System.out.println("in server handle message frrom client - success");  
-		  }
-		  
-		  if(user_request.get_request_str().equalsIgnoreCase("#productslist"))
-		  {
-			  try {
-			      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-			      Statement stmt=con.createStatement();  
-			      ResultSet rs=stmt.executeQuery("select * from Products");  
-			      client.sendToClient("ID\tNAME\tPrice");
-			      while(rs.next())  
-			    	  client.sendToClient(rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getFloat(5));  
-			      con.close();  
-			  }	catch(Exception e) {
-				  
-			  }
-			  return;
-		  }
-		  
-		  if(user_request.get_request_str().equalsIgnoreCase("#changeprice"))
-		  {
+			  User new_user = (User) user_request.get_request_args().get(0);
+			  System.out.println("Adding user: ");
+			  System.out.println(new_user);
+			  
 			  
 		  }
 		  
-		  if(user_request.get_request_str().equalsIgnoreCase("#login"))
-		  {
-			  
-		  }
-		  
-		  if(user_request.get_request_str().equalsIgnoreCase("#getCatalog"))
-		  {
-			  
-		  }
 			  
 	  }
 	  if(request.toString().equalsIgnoreCase("#productslist"))

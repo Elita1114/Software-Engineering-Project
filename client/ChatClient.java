@@ -95,6 +95,18 @@ public class ChatClient extends AbstractClient
    *
    * @param message The message from the UI.    
    */
+  public void handleMessageFromClientUI(UserRequest user_request)
+  {
+	  System.out.println("trying to send to server");
+	  try {
+    	  sendToServer(user_request);
+      }
+      catch(IOException e){
+        clientUI.display("Could not send message to server.  Terminating client.");
+        quit();
+      }
+  }
+  
   public void handleMessageFromClientUI(String message)
   {
     // detect commands
@@ -104,14 +116,11 @@ public class ChatClient extends AbstractClient
     }
     else
     {
-      try
-      {
+      try{
     	  sendToServer(message);
       }
-      catch(IOException e)
-      {
-        clientUI.display
-          ("Could not send message to server.  Terminating client.");
+      catch(IOException e){
+        clientUI.display("Could not send message to server.  Terminating client.");
         quit();
       }
     }

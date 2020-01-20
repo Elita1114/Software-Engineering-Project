@@ -89,10 +89,50 @@ public class EchoServer extends AbstractServer
    * @param msg The message received from the client.
    * @param client The connection from which the message originated.
    */
-  public void handleMessageFromClient
-    (Object msg, ConnectionToClient client)
+  public void handleMessageFromClient (Object request, ConnectionToClient client)
   {
-	  if(msg.toString().equalsIgnoreCase("#productslist"))
+	  System.out.println("entered 1");
+	  if(request instanceof UserRequest) {
+		  System.out.println("entered 3");
+		  UserRequest user_request = (UserRequest) request;
+		  if(user_request.get_request_str().equalsIgnoreCase("#signup"))
+		  {
+			  System.out.println("in server handle message frrom client - success");  
+		  }
+		  
+		  if(user_request.get_request_str().equalsIgnoreCase("#productslist"))
+		  {
+			  try {
+			      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+			      Statement stmt=con.createStatement();  
+			      ResultSet rs=stmt.executeQuery("select * from Products");  
+			      client.sendToClient("ID\tNAME\tPrice");
+			      while(rs.next())  
+			    	  client.sendToClient(rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getFloat(5));  
+			      con.close();  
+			  }	catch(Exception e) {
+				  
+			  }
+			  return;
+		  }
+		  
+		  if(user_request.get_request_str().equalsIgnoreCase("#changeprice"))
+		  {
+			  
+		  }
+		  
+		  if(user_request.get_request_str().equalsIgnoreCase("#login"))
+		  {
+			  
+		  }
+		  
+		  if(user_request.get_request_str().equalsIgnoreCase("#getCatalog"))
+		  {
+			  
+		  }
+			  
+	  }
+	  if(request.toString().equalsIgnoreCase("#productslist"))
 	  {
 		  try {
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
@@ -108,18 +148,18 @@ public class EchoServer extends AbstractServer
 		  }
 		  return;
 	  }
-	  if(msg.toString().startsWith("#changeprice "))
+	  if(request.toString().startsWith("#changeprice "))
 	  {
 		  try {
-			  if(msg.toString().split(" ").length != 3)
+			  if(request.toString().split(" ").length != 3)
 			  {
 				  System.out.println("usage: #changeprice [id] [price]");
 				  return;
 			  }
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 		      Statement stmt=con.createStatement();  
-		      int id = Integer.parseInt(msg.toString().split(" ")[1]);
-		      float price = Float.parseFloat(msg.toString().split(" ")[2]);
+		      int id = Integer.parseInt(request.toString().split(" ")[1]);
+		      float price = Float.parseFloat(request.toString().split(" ")[2]);
 		      stmt.executeUpdate("UPDATE `Products` SET price='" + price + "' WHERE `id`='" + id + "'");  
 		      con.close();
 		      client.sendToClient("UPDATED Successfully");
@@ -129,7 +169,7 @@ public class EchoServer extends AbstractServer
 		  }
 		  return;
 	  }
-    if (msg.toString().startsWith("#login "))
+    if (request.toString().startsWith("#login "))
     {
       if (client.getInfo("loginID") != null)
       {
@@ -142,9 +182,9 @@ public class EchoServer extends AbstractServer
         }
         return;
       }
-      client.setInfo("loginID", msg.toString().substring(7));
+      client.setInfo("loginID", request.toString().substring(7));
     }
-    else if(msg.toString().equalsIgnoreCase("#test")) {
+    else if(request.toString().equalsIgnoreCase("#test")) {
     	Item item=new Item("title","desc","color");
     	try {
 			client.sendToClient("testing #test");
@@ -155,10 +195,10 @@ public class EchoServer extends AbstractServer
 			e.printStackTrace();
 		}
     }
-    else if (msg.toString().startsWith("#getCatalog"))
+    else if (request.toString().startsWith("#getCatalog"))
     {
     	try {
-    		  int type= Integer.parseInt(msg.toString().split(" ")[1]);
+    		  int type= Integer.parseInt(request.toString().split(" ")[1]);
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 		      Statement stmt=con.createStatement();  
 		      ResultSet rs = null;
@@ -205,9 +245,9 @@ public class EchoServer extends AbstractServer
         catch (IOException e) {}
         return;
       }
-      System.out.println("Message received: " + msg + " from \"" + 
+      System.out.println("Message received: " + request + " from \"" + 
         client.getInfo("loginID") + "\" " + client);
-      this.sendToAllClients(client.getInfo("loginID") + "> " + msg);
+      this.sendToAllClients(client.getInfo("loginID") + "> " + request);
     }
   }
 
@@ -218,6 +258,7 @@ public class EchoServer extends AbstractServer
    */
   public void handleMessageFromServerUI(String message)
   {
+	System.out.println("entered2");
     if (message.charAt(0) == '#')
     {
       runCommand(message);

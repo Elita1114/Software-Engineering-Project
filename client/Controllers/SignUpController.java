@@ -2,8 +2,11 @@ package client.Controllers;
 
 
 import java.io.IOException;
-
+import java.util.*;
 import client.ClientConsole;
+import common.PayingMethod;
+import common.User;
+import common.UserRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,12 +16,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class SignUpController {
 
     private MainController mainController;
+
+    @FXML
+    private RadioButton MonthlySubRadio;
+
+    @FXML
+    private TextField CardNumberText;
 
     @FXML
     private Button signUpbtn;
@@ -27,14 +38,23 @@ public class SignUpController {
     private TextField passText;
 
     @FXML
+    private ToggleGroup tgPayMethod;
+
+    @FXML
     private TextField oassAgainText;
+
+    @FXML
+    private RadioButton AnnualSubRadio;
 
     @FXML
     private TextField nameText;
 
     @FXML
-    private TextField payDetailsText;
+    private RadioButton PayPErOrderRadio;
 
+    @FXML
+    private TextField IDText;
+    
     public void injectMainController(MainController mainController_) {
 		mainController = mainController_;
 	}
@@ -42,32 +62,54 @@ public class SignUpController {
     @FXML
     void signUp(ActionEvent event) {
     	
-    	String pass=passText.getText(),passValidate=oassAgainText.getText();
     	
-    	// validate sign-up input 
+    	String user_name = nameText.getText();
+    	String I_D = IDText.getText();
+    	String passwd = passText.getText();
+    	String passValidate = oassAgainText.getText();
+    	String cardNumber = CardNumberText.getText();
+    	PayingMethod pay_method = PayingMethod.pay_per_order;
+    	
+    	if(PayPErOrderRadio.isSelected())
+    		pay_method = PayingMethod.pay_per_order;
+    	if(MonthlySubRadio.isSelected())
+    		pay_method = PayingMethod.monthly_subscription;
+    	if(AnnualSubRadio.isSelected())
+    		pay_method = PayingMethod.annual_subscription;
+    	/*
     	try {
-    		checkInput(pass, passValidate);
+    		checkInput(passwd, passValidate);
     	} catch(IOException e) {
     		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
     		return;
     	}
-    	/*
+    	*/
+    	User new_user =  new User(user_name, passwd, I_D,cardNumber,pay_method);
+    	ArrayList<Object> args =  new ArrayList<Object>();
+    	args.add(new_user);
+    	UserRequest user_request = new UserRequest("#signup",  args);
+
+    	System.out.println("sending request to server");
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
-    	    	mainController.getClient().client.handleMessageFromClientUI("#signup "+);
+    	    	System.out.println(mainController);
+    	    	System.out.println("entered");
+    	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
+    	    	System.out.println("finished_1");
     	    }
     	});
-    	*/
+    	System.out.println("finished");
     	
     	
-    	
+    	/*
     	try{
     		openCatalogscene(event);
   		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		*/
 		
     
     }

@@ -5,18 +5,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="387.0" prefWidth="511.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="client.Controllers.SignUpController">
+<AnchorPane prefHeight="825.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.SignUpController">
    <children>
       <Label layoutX="26.0" layoutY="24.0" text="Sign up" />
-      <Label layoutX="31.0" layoutY="98.0" text="name:" />
-      <Label layoutX="34.0" layoutY="136.0" text="password:" />
-      <Label layoutX="34.0" layoutY="173.0" text="enter password again:" />
-      <Label layoutX="34.0" layoutY="226.0" text="Payment details:" />
-      <TextField fx:id="nameText" layoutX="205.0" layoutY="83.0" />
-      <TextField fx:id="passText" layoutX="205.0" layoutY="131.0" />
-      <TextField fx:id="oassAgainText" layoutX="205.0" layoutY="178.0" />
-      <TextField fx:id="payDetailsText" layoutX="205.0" layoutY="221.0" />
-      <Button fx:id="signUpbtn" layoutX="191.0" layoutY="301.0" mnemonicParsing="false" onAction="#signUp" text="signUp" />
+      <Label layoutX="160.0" layoutY="166.0" text="name:" />
+      <Label layoutX="140.0" layoutY="261.0" text="password:" />
+      <Label layoutX="91.0" layoutY="349.0" text="enter password again:" />
+      <Label layoutX="181.0" layoutY="434.0" text="ID" />
+      <TextField fx:id="nameText" layoutX="417.0" layoutY="158.0" />
+      <TextField fx:id="passText" layoutX="417.0" layoutY="245.0" />
+      <TextField fx:id="oassAgainText" layoutX="417.0" layoutY="333.0" />
+      <TextField fx:id="IDText" layoutX="417.0" layoutY="426.0" />
+      <Button fx:id="signUpbtn" layoutX="513.0" layoutY="716.0" mnemonicParsing="false" onAction="#signUp" text="signUp" />
+      <TextField fx:id="CardNumberText" layoutX="417.0" layoutY="514.0" />
+      <Label layoutX="121.0" layoutY="522.0" text="Card Number" />
+      <RadioButton fx:id="AnnualSubRadio" layoutX="119.0" layoutY="620.0" mnemonicParsing="false" text="Annual Subscription">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgPayMethod" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="MonthlySubRadio" layoutX="435.0" layoutY="620.0" mnemonicParsing="false" text="Monthly Subscripton" toggleGroup="$tgPayMethod" />
+      <RadioButton fx:id="PayPErOrderRadio" layoutX="751.0" layoutY="620.0" mnemonicParsing="false" text="Pay Per Order" toggleGroup="$tgPayMethod" />
    </children>
 </AnchorPane>

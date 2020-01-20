@@ -1,18 +1,18 @@
 package common;
 
+import java.io.Serializable;
 import java.util.*;
-public class UserRequest {
-	
+public class UserRequest implements Serializable {
+	private static final long serialVersionUID = 3271081956355193071L;
 	String request_str;
-	ArrayList<Object> request_args = new ArrayList<Object>();
+	private ArrayList<Object> request_args;
 	
 	public UserRequest(String request_str_, ArrayList<Object> request_args_){
 		request_str = request_str_;
-        ArrayList<Object> request_args = (ArrayList<Object>) request_args_.clone();
+		request_args = request_args_;
 	}
 	
-	
-	public String get_request_str(){
+	public String get_request_str() {
 		return request_str;
 	}
 	
@@ -20,8 +20,7 @@ public class UserRequest {
 		return request_args;
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		return request_str;
 	}
 	

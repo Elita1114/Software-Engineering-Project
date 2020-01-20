@@ -19,6 +19,8 @@ public class MainController {
 	@FXML
 	private void initialize() {
 		catalogController.injectMainController(this);
+		signUpController.injectMainController(this);
+
 	}
 	public ClientConsole getClient() {
 		return client;

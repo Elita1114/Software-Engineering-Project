@@ -37,6 +37,9 @@ public class SignUpController {
     private Button signUpbtn;
 
     @FXML
+    private TextField PhoneNumberText;
+    
+    @FXML
     private TextField passText;
 
     @FXML
@@ -82,10 +85,12 @@ public class SignUpController {
     	String passwd = passText.getText();
     	String passValidate = oassAgainText.getText();
     	String cardNumber = CardNumberText.getText();
-    	PayingMethod pay_method = PayingMethod.pay_per_order;
+    	int pay_method = PayingMethod.pay_per_order;
+    	String phoneNumber = PhoneNumberText.getText();
+    	String store =  storeselector.getText();
     	
     	if(PayPErOrderRadio.isSelected())
-    		pay_method = PayingMethod.pay_per_order;
+    		pay_method = PayingMethod.pay_per_order; 
     	if(MonthlySubRadio.isSelected())
     		pay_method = PayingMethod.monthly_subscription;
     	if(AnnualSubRadio.isSelected())
@@ -98,7 +103,8 @@ public class SignUpController {
     		return;
     	}
     	
-    	User new_user =  new User(user_name, passwd, I_D,cardNumber,pay_method);
+    	// User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, String store)
+    	User new_user =  new User(user_name, passwd, I_D, cardNumber, pay_method, phoneNumber, store);
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(new_user);
     	UserRequest user_request = new UserRequest("#signup",  args);

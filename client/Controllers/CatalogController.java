@@ -82,7 +82,8 @@ public class CatalogController implements Initializable {
         itemObservableList = FXCollections.observableArrayList();
 
         //add some Students
-        /*itemObservableList.addAll(
+        /*
+        		itemObservableList.addAll(
                 new Item("John Doe1", "trhrg","blue"),
                 new Item("John Doe2", "abcd","red"),
                 new Item("John Doe3", "efgh","orange"));

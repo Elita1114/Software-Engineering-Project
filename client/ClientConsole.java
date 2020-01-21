@@ -201,7 +201,7 @@ public class ClientConsole extends Application implements ChatIF
 					  
 	  MainController controller = fxmlLoader.<MainController>getController();
 	  controller.setCatalog(chat.catalog.getList());
-	  
+	  controller.setUpdateCatalog(chat.catalog.getList());
 	  chat.flagCatalog=false;
 	  
 	  controller.setClient(chat);

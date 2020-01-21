@@ -13,8 +13,8 @@ public class MainController {
 	@FXML private CatalogController catalogController;
 	@FXML private SignUpController signUpController;
 	@FXML private LoginController loginController;
-	@FXML private UpdateCatalogController UpdateCatController;//update catalog controller
-	@FXML private tryController tryy;
+	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
+	@FXML private tryController tryController;
 
 	private ClientConsole client;
 
@@ -25,9 +25,9 @@ public class MainController {
 		catalogController.injectMainController(this);
 		signUpController.injectMainController(this);
 		loginController.injectMainController(this);
-	//	tryy.injectMainController(this);
+		tryController.injectMainController(this);
 
-	//	UpdateCatController.injectMainController(this);
+		updatecatalogController.injectMainController(this);
 	}
 	public ClientConsole getClient() {
 		return client;
@@ -39,7 +39,7 @@ public class MainController {
 		catalogController.setCatalog(list);
 	}
 	public void setUpdateCatalog(ArrayList<CatalogItem> list) {
-	//	UpdateCatController.setCatalog(list);
+		updatecatalogController.setCatalog(list);
 	}
 	public void setClient(ClientConsole client_) {
 		client=client_;

@@ -39,6 +39,44 @@ public class UpdateCatalogController implements Initializable {
     private MainController mainController;
     
     
+    
+    @FXML
+    private Button btnAll; //0
+
+    @FXML
+    private Button btnDaisy; //1
+    @FXML
+    private Button btnArrang; //2
+    @FXML
+    private Button btnIris; //3
+    @FXML
+    private Button btnLily; //4
+    @FXML
+    private Button btnMix; //5
+    @FXML
+    private Button btnOrchid; //6
+    @FXML
+    private Button btnRose; //7
+    @FXML
+    private Button btnWedding; //8
+    @FXML
+    private Button btnBonsai; //9
+    @FXML
+    private Button btnOffice; //10
+    @FXML
+    private Button btnGreen; //11
+    @FXML
+    private Button btnCacti; //12
+
+    
+
+    
+
+    
+
+    
+
+    
     public UpdateCatalogController()  {
     	
         itemObservableList = FXCollections.observableArrayList();
@@ -120,6 +158,96 @@ public class UpdateCatalogController implements Initializable {
     
     
     
+    private void updateButtonPressed(String msg) {
+    	Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	mainController.getClient().flagCatalog=false;
+    	    	mainController.getClient().client.handleMessageFromClientUI(msg);
+    			while(!mainController.getClient().flagCatalog) {
+    				try {
+    					Thread.sleep(100);
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    			setCatalog(mainController.getClient().catalog.getList());
+    			updateCatalog();
+    			mainController.getClient().flagCatalog=false;
+    	    }
+    	});
+		
+    }
+    
+    @FXML
+    void daisyPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 1");
+    	
+    }
 
+    @FXML
+    void arrangPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 2");
+    	
+    }
+
+    @FXML
+    void irisPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 3");
+    	
+    }
+
+    @FXML
+    void lilyPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 4");
+    }
+
+    @FXML
+    void mixPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 5");
+    }
+
+    @FXML
+    void orchidPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 6");
+    }
+    
+    @FXML
+    void rosePressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 7");
+    }
+
+    @FXML
+    void weddingPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 8");
+    }
+
+    @FXML
+    void bonsaiPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 9");
+    }
+
+    @FXML
+    void officePressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 10");
+    }
+
+    @FXML
+    void greenPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 11");
+    }
+
+    @FXML
+    void cactiPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 12");
+    }
+    
+    @FXML
+    void allPressed(ActionEvent event) {
+    	updateButtonPressed("#getCatalog 0");
+    }
+    
+    
     
 }

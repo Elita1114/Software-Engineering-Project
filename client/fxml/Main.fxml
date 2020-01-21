@@ -23,20 +23,20 @@
                   <fx:include fx:id="signUp" source="SignUp.fxml" />
                </content>
             </Tab>
-            <Tab text="UpdateCatalog">
-               <content>
-                  <fx:include fx:id="CatalogUpdate" source="CatalogUpdate.fxml" />
-               </content>
+            <Tab text="Order">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
             </Tab>
             <Tab text="try">
                <content>
                   <fx:include fx:id="try" source="try.fxml" />
                </content>
             </Tab>
-            <Tab text="Order">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+            <Tab text="updateCatalog">
+               <content>
+                  <fx:include fx:id="updatecatalog" source="CatalogUpdate.fxml" />
+               </content>
             </Tab>
          </tabs>
       </TabPane>

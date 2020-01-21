@@ -37,6 +37,9 @@
             <Font name="Gisha" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnAdd" layoutX="284.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Add to cart" />
+      <Button fx:id="btnAdd" layoutX="284.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: red;" text="drop">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font></Button>
    </children>
 </AnchorPane>

@@ -14,7 +14,6 @@ public class MainController {
 	@FXML private SignUpController signUpController;
 	@FXML private LoginController loginController;
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
-	@FXML private tryController tryController;
 
 	private ClientConsole client;
 
@@ -25,7 +24,6 @@ public class MainController {
 		catalogController.injectMainController(this);
 		signUpController.injectMainController(this);
 		loginController.injectMainController(this);
-		tryController.injectMainController(this);
 
 		updatecatalogController.injectMainController(this);
 	}

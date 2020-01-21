@@ -87,7 +87,7 @@ public class SignUpController {
     	String cardNumber = CardNumberText.getText();
     	int pay_method = PayingMethod.pay_per_order;
     	String phoneNumber = PhoneNumberText.getText();
-    	String store =  storeselector.getText();
+    	int store =  Integer.parseInt(storeselector.getText());
     	
     	if(PayPErOrderRadio.isSelected())
     		pay_method = PayingMethod.pay_per_order; 

@@ -6,6 +6,8 @@ package client;
 
 
 import common.*;
+import javafx.scene.control.Alert;
+
 import java.io.*;
 
 /**
@@ -32,7 +34,7 @@ public class ChatClient extends AbstractClient
    */
   String loginID;
 
-  
+  User loggedUser;
   //Constructors ****************************************************
   
   /**
@@ -82,12 +84,15 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromServer(Object msg) 
   {
-	  	if(msg.toString().equals("#gotCatalog")) {
+	  if(msg.toString().equals("#gotCatalog")) {
 	  		clientUI.getData(msg);
-	  	}
-	  	else{
-	  		clientUI.display(msg.toString());
-	  	}
+	  }
+	  else if(msg.toString().equals("#gotUser")) {
+		  loggedUser = (User)msg;
+	  }
+	  else{
+		  clientUI.display(msg.toString());
+	  }
   }
 
    /**

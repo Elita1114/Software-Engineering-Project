@@ -133,6 +133,7 @@ public class EchoServer extends AbstractServer
 				  }
 			  }else if(user_request.get_request_str().equalsIgnoreCase("#login"))
 			  {
+				  System.out.println("login");
 				  try { 
 					  User new_user = (User) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
@@ -141,13 +142,13 @@ public class EchoServer extends AbstractServer
 					  checkusername.setString(2, generate_md5_hash(new_user.password));
 				      ResultSet rs = checkusername.executeQuery();
 				      int cuser = rs.last() ? rs.getRow() : 0;
-
+				      System.out.println(cuser);
 				      if(cuser == 1){
 				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"));
 				    	  client.sendToClient(loggedUser); 
 				      }
 				      else {
-				    	  	new Alert(Alert.AlertType.ERROR,"User doesn't exist").showAndWait();
+				    	  	//new Alert(Alert.AlertType.ERROR,"User doesn't exist").showAndWait();
 				    		return;
 				      }
 				  }catch(Exception e) {

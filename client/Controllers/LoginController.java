@@ -9,15 +9,11 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.SplitMenuButton;
 
+
 public class LoginController {
+    private MainController mainController;
 
-    @FXML // fx:id="idSplit"
-    private SplitMenuButton idSplit; // Value injected by FXMLLoader
-
-    @FXML // fx:id="idBtn"
-    private MenuButton idBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="idBar"
-    private ContextMenu idBar; // Value injected by FXMLLoader
-
+    public void injectMainController(MainController mainController_) {
+		mainController = mainController_;
+	}
 }

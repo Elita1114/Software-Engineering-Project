@@ -25,9 +25,19 @@ public class User implements Serializable {
 		this.phone_number = phone_number;
 		this.store = store;
 	}
-
+	
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
 
 	public String toString()
+	{
+		return 	"#gotUser";
+	}
+	
+	public String getDetails()
 	{
 		return 	"User: "+ username + 
 				"\nPassword: " + password +

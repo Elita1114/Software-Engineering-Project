@@ -20,6 +20,7 @@ public class MainController {
 	private void initialize() {
 		catalogController.injectMainController(this);
 		signUpController.injectMainController(this);
+		loginController.injectMainController(this);
 
 	}
 	public ClientConsole getClient() {

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.*;
 import client.ClientConsole;
 import common.PayingMethod;
+import common.Status;
 import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
@@ -104,7 +105,7 @@ public class SignUpController {
     	}
     	
     	// User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, String store)
-    	User new_user =  new User(user_name, passwd, I_D, cardNumber, pay_method, phoneNumber, store);
+    	User new_user =  new User(user_name, passwd, I_D, cardNumber, pay_method, phoneNumber, store,Status.values()[0]);
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(new_user);
     	UserRequest user_request = new UserRequest("#signup",  args);

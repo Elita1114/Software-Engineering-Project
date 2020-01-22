@@ -6,6 +6,7 @@ import client.ClientConsole;
 import common.CatalogItem;
 import common.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 
 public class MainController {
@@ -14,10 +15,14 @@ public class MainController {
 	@FXML private CatalogController catalogController;
 	@FXML private SignUpController signUpController;
 	@FXML private LoginController loginController;
+	@FXML private ComplaintController complaintController;
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
+	@FXML public TabPane tabPane;
 
 	static public ClientConsole client;
-	static public User user;
+	
+
+
 
 	
 	@FXML
@@ -26,10 +31,10 @@ public class MainController {
 		catalogController.injectMainController(this);
 		signUpController.injectMainController(this);
 		loginController.injectMainController(this);
-
+		complaintController.injectMainController(this);
 		updatecatalogController.injectMainController(this);
 	}
-	public ClientConsole getClient() {
+	public static ClientConsole getClient() {
 		return client;
 	}
 	public void setFlag(boolean flag_) {

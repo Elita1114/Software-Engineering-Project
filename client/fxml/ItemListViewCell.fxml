@@ -37,6 +37,7 @@
             <Font name="Gisha" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnAdd" layoutX="284.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Add to cart" />
+      <Button fx:id="btnAdd" layoutX="284.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Add to cart" />
+      <Button fx:id="dropBtn" layoutX="284.0" layoutY="179.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="99.0" text="drop" />
    </children>
 </AnchorPane>

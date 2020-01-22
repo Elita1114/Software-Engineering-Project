@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="481.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.ComplaintController">
+   <children>
+      <TextArea fx:id="tvDescription" layoutX="116.0" layoutY="179.0" prefHeight="226.0" prefWidth="497.0" promptText="description" />
+      <Text layoutX="48.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
+      <Text layoutX="48.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
+      <Text layoutX="48.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send a Complaint">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="48.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="We commit to respond within 24 hours. ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="tvTitle" layoutX="116.0" layoutY="134.0" prefHeight="25.0" prefWidth="497.0" promptText="title" />
+      <Button fx:id="btnSend" layoutX="116.0" layoutY="426.0" mnemonicParsing="false" onAction="#sendPressed" text="Send" />
+   </children>
+</AnchorPane>

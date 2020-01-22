@@ -138,14 +138,36 @@ public class EchoServer extends AbstractServer
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      System.out.println(cuser);
 				      if(cuser == 1){
-				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"));
+				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
 				    	  client.sendToClient(loggedUser); 
 				      }
 				  } catch(Exception e) {
 					  System.out.println(e);
 				  }
 			  }
-		  return;  
+
+			  else if(user_request.get_request_str().equalsIgnoreCase("#addComplaint")) {
+				  System.out.println("complaint");
+				  try { 
+					  Complaint complaint  = (Complaint) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement addComplaint = con.prepareStatement("INSERT INTO `Complaint`(`description`, `Status`, `refund`, `user`, `title`) VALUES (?,?,?,?,?)");
+				      addComplaint.setString(1, complaint.description);
+				      addComplaint.setBoolean(2, complaint.status);
+				      addComplaint.setDouble(3, complaint.refund);
+				      addComplaint.setInt(4, complaint.userID);
+				      addComplaint.setString(5, complaint.title);
+				      addComplaint.executeUpdate();
+					  client.sendToClient(new ReturnStatus("#addComplaint", true));
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
+		  
+		  return;
+		  
+
 	  }
 	  
 	  if(request.toString().equalsIgnoreCase("#productslist"))

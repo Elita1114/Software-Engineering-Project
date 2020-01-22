@@ -10,6 +10,8 @@ import javafx.scene.control.Alert;
 
 import java.io.*;
 
+import client.Controllers.ComplaintController;
+
 /**
  * This class overrides some of the methods defined in the abstract
  * superclass in order to give more functionality to the client.
@@ -34,7 +36,7 @@ public class ChatClient extends AbstractClient
    */
   String loginID;
 
-  User loggedUser;
+  public User loggedUser;
   //Constructors ****************************************************
   
   /**
@@ -89,6 +91,9 @@ public class ChatClient extends AbstractClient
 	  }
 	  else if(msg.toString().equals("#gotUser")) {
 		  loggedUser = (User)msg;
+	  }
+	  else if(msg.toString().equals("#addComplaint")) {
+		  ComplaintController.complaintFlag=((ReturnStatus)msg).status;
 	  }
 	  else{
 		  clientUI.display(msg.toString());

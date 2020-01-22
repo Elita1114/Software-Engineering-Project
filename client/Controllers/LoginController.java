@@ -53,6 +53,7 @@ public class LoginController {
     	UserRequest user_request = new UserRequest("#login",  args);
 
     	System.out.println("sending request to server");
+
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
@@ -60,8 +61,16 @@ public class LoginController {
     	    	System.out.println("entered");
     	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
     	    	System.out.println("finished_1");
+    	    	mainController.getTabPane().getSelectionModel().select(0);
     	    }
     	});
     	System.out.println("finished");
+    	
+    	
     }
 }
+
+
+//    	mainController.getTabPane().getSelectionModel().select(1);
+
+

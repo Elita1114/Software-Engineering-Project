@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 import common.Catalog;
@@ -30,9 +30,10 @@ import javafx.fxml.FXML;
 
 public class OrderController {
 
+	private MainController mainController;
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
-
+    private BooleanProperty wantShipping =  new SimpleBooleanProperty(false);
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
@@ -100,10 +101,11 @@ public class OrderController {
     		recieverName = recieverText.getText();
     		phoneNumber = phonenumberText.getText();
     	}
-    	Order my_order = new Order(order_items, date.toString(), letter, want_shipping, address, recieverName, phoneNumber);
+    	Order my_order = new Order(order_items, date, letter, want_shipping, address, recieverName, phoneNumber);
     	ArrayList<Object> args =  new ArrayList<Object>();
-    	args.add("hello");
-    	System.out.println(args);
+    	args.add(mainController.getClient().client.getLoggedUser());
+    	args.add(my_order);
+    	System.out.println(my_order.getDetails());
     	UserRequest user_request = new UserRequest("#order",  args);
     	System.out.println(user_request);
     	System.out.println("sending request to server blah blah");
@@ -112,7 +114,7 @@ public class OrderController {
     	    @Override
     	    public void run() {
     	    	System.out.println(mainController);
-    	    	System.out.println("entered hello");
+    	    	System.out.println("entered order");
     	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
     	    	System.out.println("finished_1");
     	    }
@@ -120,4 +122,9 @@ public class OrderController {
     	System.out.println("finished");
  
     }
+
+	public void injectMainController(MainController mainController_) {
+		mainController = mainController_;
+		
+	}
 }

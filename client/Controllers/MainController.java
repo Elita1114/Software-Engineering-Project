@@ -45,7 +45,7 @@ public class MainController {
 		loginController.injectMainController(this);
 		complaintController.injectMainController(this);
 		updatecatalogController.injectMainController(this);
-   	orderController.injectMainController(this);
+		orderController.injectMainController(this);
 	}
 	public static ClientConsole getClient() {
 		return client;

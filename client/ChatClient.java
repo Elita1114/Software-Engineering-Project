@@ -36,7 +36,7 @@ public class ChatClient extends AbstractClient
    */
   String loginID;
 
-  User loggedUser;
+  private User loggedUser;
   boolean logged;
   //Constructors ****************************************************
   
@@ -281,5 +281,13 @@ public class ChatClient extends AbstractClient
       ("The connection to the Server (" + getHost() + ", " + getPort() + 
       ") has been disconnected");
   }
+
+public User getLoggedUser() {
+	return loggedUser;
+}
+
+public void setLoggedUser(User loggedUser) {
+	this.loggedUser = loggedUser;
+}
 }
 //End of ChatClient class

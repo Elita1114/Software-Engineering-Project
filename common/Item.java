@@ -23,7 +23,6 @@ public class Item implements Serializable{
 		return color;
 	}
 	
-	
 	public void setName(String name_) {
 		name=name_;
 	}

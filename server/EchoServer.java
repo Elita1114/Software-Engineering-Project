@@ -124,7 +124,6 @@ public class EchoServer extends AbstractServer
 					      insertuser.executeUpdate();
 				      }
 				      else {
-				    	  	new Alert(Alert.AlertType.ERROR,"client already exists").showAndWait();
 				    		return;
 				      }
 				  }catch(Exception e) {
@@ -148,7 +147,6 @@ public class EchoServer extends AbstractServer
 				    	  client.sendToClient(loggedUser); 
 				      }
 				      else {
-				    	  	//new Alert(Alert.AlertType.ERROR,"User doesn't exist").showAndWait();
 				    		return;
 				      }
 				  }catch(Exception e) {
@@ -187,7 +185,15 @@ public class EchoServer extends AbstractServer
 				      PreparedStatement updateCart = con.prepareStatement("UPDATE * FROM `Cart` SET `orderID`=? WHERE userID=? AND `orderID`=NULL");
 				      updateCart.setInt(1, user.user_id);
 				      updateCart.setInt(2, insertedorder.getInt("orderID"));
-				      updateCart.executeUpdate();
+				      int rowupdated = updateCart.executeUpdate();
+				      if(rowupdated != 0)
+				      {
+				    	  client.sendToClient(order); 
+				    	  
+				      }else
+				      {
+				    	  System.out.println("error");
+				      }
 				  }catch(Exception e) {
 					  System.out.println("a");
 					  System.out.println(e);

@@ -73,4 +73,8 @@ public class Order {
 	public void set_reciever_phone_number(String reciever_phone_number) {
 		this.reciever_phone_number = reciever_phone_number;
 	}
+	public String toString()
+	{
+		return "#gotOrder";
+	}
 }

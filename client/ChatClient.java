@@ -94,6 +94,9 @@ public class ChatClient extends AbstractClient
 		  loggedUser = (User)msg;
 		  this.logged = true;
 	  }
+	  else if(msg.toString().equals("#gotOrder")) {
+		  System.out.println("gotOrder");
+	  }
 	  else{
 		  clientUI.display(msg.toString());
 	  }

@@ -209,10 +209,6 @@ public class ClientConsole extends Application implements ChatIF
 	  primaryStage.setScene(scene);    	
 	  primaryStage.show(); 
 	
-
-//		controller.getTabPane().getSelectionModel().select(0);
-//		controller.getTabPane().getTabs().remove(3);
-//		controller.getTabPane().getTabs().remove(4);
 	
 	}
 

@@ -94,7 +94,7 @@ public class ChatClient extends AbstractClient
 		  clientUI.display(msg.toString());
 	  }
   }
-
+  
    /**
    * This method handles all data coming from the UI            
    *

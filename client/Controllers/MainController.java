@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import client.ClientConsole;
 import common.CatalogItem;
-import common.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;

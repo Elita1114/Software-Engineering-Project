@@ -42,7 +42,6 @@ public class CatalogController implements Initializable {
     
     @FXML
     private Button btnAll; //0
-
     @FXML
     private Button btnDaisy; //1
     @FXML
@@ -67,6 +66,7 @@ public class CatalogController implements Initializable {
     private Button btnGreen; //11
     @FXML
     private Button btnCacti; //12
+
 
     
 
@@ -97,6 +97,20 @@ public class CatalogController implements Initializable {
         
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
     
     public void injectMainController(MainController mainController_) {
 		mainController = mainController_;

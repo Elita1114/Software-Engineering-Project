@@ -3,6 +3,10 @@ package common;
 import java.io.Serializable;
 
 public class Item implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 828961710358073954L;
 	private String name;
 	private String description;
 	private String color;

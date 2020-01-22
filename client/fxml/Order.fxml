@@ -31,11 +31,11 @@
          <children>
             <Label text="Date" GridPane.rowIndex="1" />
             <Label prefHeight="49.0" prefWidth="98.0" text="Shipping" GridPane.rowIndex="3" />
-            <Label text="Shipping Adress" GridPane.rowIndex="5" />
-            <Label text="Reciever" GridPane.rowIndex="4" />
+            <Label fx:id="addressLabel" text="Shipping Adress" GridPane.rowIndex="5" />
+            <Label fx:id="recieverLabel" text="Reciever" GridPane.rowIndex="4" />
             <DatePicker fx:id="dateSelect" promptText="select date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Letter" GridPane.rowIndex="2" />
-            <Label prefHeight="35.0" prefWidth="261.0" text="Reciver Phone Number" GridPane.rowIndex="6" />
+            <Label fx:id="phoneLabel" prefHeight="35.0" prefWidth="261.0" text="Reciver Phone Number" GridPane.rowIndex="6" />
             <TextField fx:id="recieverText" promptText="reciever's name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="addressText" promptText="address" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="phonenumberText" promptText="phone number" GridPane.columnIndex="1" GridPane.rowIndex="6" />

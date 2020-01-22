@@ -6,13 +6,21 @@ package client.Controllers;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import common.Catalog;
+import common.CatalogItem;
+import common.Item;
+import common.Order;
+import common.UserRequest;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -57,11 +65,23 @@ public class OrderController {
     @FXML
     private TextArea letterText;
     
+    @FXML
+    private Label addressLabel;
+    
+    @FXML
+    private Label phoneLabel;
+    
+    @FXML
+    private Label recieverLabel;
+    
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
     	recieverText.visibleProperty().bind(wantShipping);  
         addressText.visibleProperty().bind(wantShipping);  
         phonenumberText.visibleProperty().bind(wantShipping);  
+        addressLabel.visibleProperty().bind(wantShipping);  
+        phoneLabel.visibleProperty().bind(wantShipping);
+        recieverLabel.visibleProperty().bind(wantShipping);  
     }
     
     @FXML
@@ -71,17 +91,42 @@ public class OrderController {
     
     @FXML
     void orderbttnPressed(ActionEvent event) {
+    	ArrayList<Item> order_items = new ArrayList<Item>();
+    	// change this !!!
+    	order_items.add(new CatalogItem("a", "b", "c",1 , 1, "d"));
     	String letter = letterText.getText();
     	LocalDate date_pick = dateSelect.getValue();
-    	Date date = Date.from(date_pick.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    	//Date date = Date.from(date_pick.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    	//Date date = 
+    	Date date = new Date(System.currentTimeMillis());
     	System.out.println("the selected date is: " + date);
     	String address="", recieverName="", phoneNumber="";
-    	if(shippingButton.isSelected())
+    	boolean want_shipping = shippingButton.isSelected();
+    	if(want_shipping)
     	{
     		address = addressText.getText();
     		recieverName = recieverText.getText();
     		phoneNumber = phonenumberText.getText();
     	}
+    	Order my_order = new Order(order_items, date.toString(), letter, want_shipping, address, recieverName, phoneNumber);
+    	ArrayList<Object> args =  new ArrayList<Object>();
+    	args.add("hello");
+    	System.out.println(args);
+    	UserRequest user_request = new UserRequest("#order",  args);
+    	System.out.println(user_request);
+    	System.out.println("sending request to server blah blah");
+    	System.out.println(mainController);
+    	Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	System.out.println(mainController);
+    	    	System.out.println("entered hello");
+    	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
+    	    	System.out.println("finished_1");
+    	    }
+    	});
+    	System.out.println("finished");
+ 
     }
 }
 

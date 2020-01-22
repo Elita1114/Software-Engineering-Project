@@ -28,6 +28,7 @@ public class MainController {
 	@FXML private LoginController loginController;
 	@FXML private ComplaintController complaintController;
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
+	@FXML private OrderController orderController;//update order controller
 
 
 	static public ClientConsole client;
@@ -44,6 +45,7 @@ public class MainController {
 		loginController.injectMainController(this);
 		complaintController.injectMainController(this);
 		updatecatalogController.injectMainController(this);
+   	orderController.injectMainController(this);
 	}
 	public static ClientConsole getClient() {
 		return client;

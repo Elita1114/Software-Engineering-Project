@@ -5,6 +5,10 @@ import java.io.Serializable;
 public class CustomIteam  extends Item implements Serializable{
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1218774016502592391L;
 	private String type;
 	// private Range<Integer> price_range
 	

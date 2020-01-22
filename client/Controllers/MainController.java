@@ -1,10 +1,21 @@
 package client.Controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import client.ClientConsole;
 import common.CatalogItem;
+import common.PayingMethod;
+import common.Status;
+import common.User;
+import common.UserRequest;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 
 public class MainController {
@@ -14,7 +25,7 @@ public class MainController {
 	@FXML private SignUpController signUpController;
 	@FXML private LoginController loginController;
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
-
+	@FXML private TabPane tabPane;
 	private static ClientConsole client;
 
 	
@@ -42,7 +53,42 @@ public class MainController {
 	public void setClient(ClientConsole client_) {
 		client=client_;
 	}
-	
+	public TabPane getTabPane() {
+		return tabPane;
+	}
+/*
+	public void loadCatalog() {
+		//load the catalog
+		
+		 //get data for catalog
+		  client.client.handleMessageFromClientUI("#getCatalog 0");
+		  // wait for response
+		  do {
+			  try {
+				Thread.sleep(100);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.out.println(chat.flagCatalog);  
+		  }
+		  while(!chat.flagCatalog);
+
+
+		  // get critical initializtaion data 
+		  UserRequest user_request = new UserRequest("#getStores",  "0");
+		  chat.client.handleMessageFromClientUI("#getStores 0");
+
+
+		  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Main.fxml"));     
+		  Parent root = (Parent)fxmlLoader.load(); 
+					
+		  
+						  
+		  MainController controller = fxmlLoader.<MainController>getController();
+		  controller.setCatalog(chat.catalog.getList());
+	}
+*/
 /*
 	
 	@FXML private ConsoleTabController consoleTabController;

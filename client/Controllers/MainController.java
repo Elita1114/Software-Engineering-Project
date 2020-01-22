@@ -15,7 +15,7 @@ public class MainController {
 	@FXML private LoginController loginController;
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
 
-	private ClientConsole client;
+	private static ClientConsole client;
 
 	
 	@FXML

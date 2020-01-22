@@ -2,11 +2,18 @@ package client.Controllers;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import common.CatalogItem;
 import common.Item;
+import common.Status;
+import common.User;
+import common.UserRequest;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -23,7 +30,39 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
 	@FXML private AnchorPane pane;
 	
 	private FXMLLoader mLLoader;
+    @FXML
+    private Button dropBtn;
+    User user= MainController.getClient().client.getLoggedUser();
+    CatalogItem myItem;
 	
+	
+	
+    @FXML
+    void drop(ActionEvent event) {
+    	
+    /*	ArrayList<Object> args =  new ArrayList<Object>();
+    	args.add(myItem.getId());
+    	UserRequest user_request = new UserRequest("#dropCatalog",  args);
+    	Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	System.out.println("entered");
+    	    	MainController.getClient().client.handleMessageFromClientUI(user_request);
+    	    	System.out.println("finished_1");
+    	    	MainController.getClient().client.flagServerAns=false;
+	  			while(!MainController.getClient().client.flagServerAns) {
+	  				try {
+	  					Thread.sleep(100);
+	  				} catch (InterruptedException e) {
+	  					// TODO Auto-generated catch block
+					e.printStackTrace();
+	  				}
+	  				
+	  			}
+    	    }
+    	});*/
+    }
+    	
 	
 	@Override
     protected void updateItem(CatalogItem item, boolean empty) {
@@ -53,6 +92,12 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
             Price.setText(String.valueOf(item.getPrice()));
             ivIm1.setImage(new Image(item.getImagePath()));
 
+            
+            
+            dropBtn.setVisible(false);
+            if(user!=null && user.status!=Status.client )
+                dropBtn.setVisible(true);
+            
             setText(null);
             setGraphic(pane);
         }

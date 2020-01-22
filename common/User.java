@@ -2,11 +2,6 @@ package common;
 
 import java.io.Serializable;
 
-
-
-
-
-
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 276134203467033903L;
@@ -18,10 +13,9 @@ public class User implements Serializable {
 	public String phone_number;
 	public int store;
 	public int user_id;
-	public Status status;
 	
 
-	public User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store,Status status) {
+	public User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -30,7 +24,6 @@ public class User implements Serializable {
 		this.pay_method = pay_method;
 		this.phone_number = phone_number;
 		this.store = store;
-		this.status = status;
 	}
 	
 	public User(String username, String password) {

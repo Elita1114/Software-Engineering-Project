@@ -144,7 +144,7 @@ public class EchoServer extends AbstractServer
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      System.out.println(cuser);
 				      if(cuser == 1){
-				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"));
 				    	  client.sendToClient(loggedUser); 
 				      }
 				      else {
@@ -154,44 +154,45 @@ public class EchoServer extends AbstractServer
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
-			  }    else if (user_request.get_request_str().equalsIgnoreCase("#getCatalog"))
-			    {
-			    	try {
-			    		  int type= Integer.parseInt(request.toString().split(" ")[1]);
-					      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-					      Statement stmt=con.createStatement();  
-					      ResultSet rs = null;
-					      if(type==0) {
-					    	  rs=stmt.executeQuery("select * from Products"); 
-					      }
-					      else {
-					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
-					    	  prep_stmt.setInt(1, type);
-					    	  rs = prep_stmt.executeQuery();
-					      }
-					      
-					      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
-					      
-					      
-					      client.sendToClient("getting catalog");
-					      while(rs.next()) { 
-					    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8)));
-					    	  System.out.println("getting item");
-					      }
-					      con.close();  
-					      Catalog catalog=new Catalog(itemList,true);
-					      
-					      client.sendToClient(catalog);  
-					      System.out.println("after send catalog\n");
-					      client.sendToClient("after send catalog\n");  
-					      
-					      
-					  }catch(Exception e) {
-						  System.out.println("a");
-						  System.out.println(e);
-					  }
-					  return;
-			    }
+			  }else if(user_request.get_request_str().equalsIgnoreCase("#order"))
+			  {
+				  try { 
+					  User user = (User) user_request.get_request_args().get(0);
+					  Order order = (Order) user_request.get_request_args().get(1);
+					  
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      ArrayList<Item> order_items = order.get_order_items();
+				      float price = 0;
+				      for(Item item: order_items)
+				      {
+				    	  if(item instanceof CatalogItem)
+				    	  {
+				    		  CatalogItem catalogitem = (CatalogItem) item;
+				    		  price += catalogitem.getPrice();
+				    	  }
+				      }
+				      
+				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`) VALUES (?,?,?,?,?,?,?,?,?)");
+				      insertorder.setInt(1, user.user_id); // User id
+				      insertorder.setString(2, order.get_shipping_address());  // reciever
+				      insertorder.setDate(3, order.get_requested_delivery_date()); // delivery date
+				      insertorder.setString(4, order.get_letter()); // letter
+				      insertorder.setDate(5, order.get_requested_delivery_date()); 	// phoneNumber
+				      insertorder.setString(6, order.get_shipping_reciever()); // reciver
+				      insertorder.setString(7, order.get_recievre_phone_number());  // ID
+				      insertorder.setFloat(8, price);  // ID
+				      insertorder.executeUpdate();
+				      ResultSet insertedorder = insertorder.getGeneratedKeys();
+				      
+				      PreparedStatement updateCart = con.prepareStatement("UPDATE * FROM `Cart` SET `orderID`=? WHERE userID=? AND `orderID`=NULL");
+				      updateCart.setInt(1, user.user_id);
+				      updateCart.setInt(2, insertedorder.getInt("orderID"));
+				      updateCart.executeUpdate();
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
 		  
 		  return;
 		  

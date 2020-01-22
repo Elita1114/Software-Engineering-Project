@@ -74,13 +74,9 @@ public class MainController {
 			System.out.println(chat.flagCatalog);  
 		  }
 		  while(!chat.flagCatalog);
-
-
 		  // get critical initializtaion data 
 		  UserRequest user_request = new UserRequest("#getStores",  "0");
 		  chat.client.handleMessageFromClientUI("#getStores 0");
-
-
 		  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Main.fxml"));     
 		  Parent root = (Parent)fxmlLoader.load(); 
 					
@@ -95,11 +91,9 @@ public class MainController {
 	@FXML private ConsoleTabController consoleTabController;
 	
 	@FXML private LoggerTabController loggerTabController;
-
 	public TextArea getVisualLog() {
 		return loggerTabController.getLoggerTxtArea();
 	}
-
 	@FXML
 	private void initialize() {
 		consoleTabController.injectMainController(this);

@@ -6,45 +6,30 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="1085.0" prefWidth="1172.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.OrderController">
+
+<AnchorPane prefHeight="717.0" prefWidth="539.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="client.Controllers.OrderController">
    <children>
       <Label layoutX="13.0" layoutY="14.0" prefHeight="32.0" prefWidth="207.0" text="Order">
          <font>
             <Font size="51.0" />
          </font>
       </Label>
-      <GridPane layoutX="65.0" layoutY="135.0" prefHeight="590.0" prefWidth="949.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="Date" GridPane.rowIndex="1" />
-            <Label prefHeight="49.0" prefWidth="98.0" text="Shipping" GridPane.rowIndex="3" />
-            <Label text="Shipping Adress" GridPane.rowIndex="5" />
-            <Label text="Reciever" GridPane.rowIndex="4" />
-            <DatePicker fx:id="dateSelect" promptText="select date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Letter" GridPane.rowIndex="2" />
-            <Label prefHeight="35.0" prefWidth="261.0" text="Reciver Phone Number" GridPane.rowIndex="6" />
-            <TextField fx:id="recieverText" promptText="reciever's name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="addressText" promptText="address" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="phonenumberText" promptText="phone number" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <RadioButton fx:id="shippingButton" mnemonicParsing="false" onAction="#shippingBttnSelect" prefHeight="35.0" prefWidth="29.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextArea fx:id="letterText" prefHeight="200.0" prefWidth="200.0" promptText="Enter letter" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="timeText" promptText="time HH:MM" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-         </children>
-      </GridPane>
-      <Accordion layoutX="632.0" layoutY="224.0" />
-      <Button fx:id="orderButton" layoutX="450.0" layoutY="794.0" mnemonicParsing="false" onAction="#orderbttnPressed" prefHeight="51.0" prefWidth="207.0" text="Order" />
+      <ListView layoutX="149.0" layoutY="88.0" prefHeight="179.0" prefWidth="319.0" />
+      <Label layoutX="14.0" layoutY="88.0" prefHeight="21.0" prefWidth="144.0" text="items to order:" />
+      <Label layoutX="15.0" layoutY="374.0" prefHeight="21.0" prefWidth="110.0" text="add a greeting:" />
+      <TextField layoutX="156.0" layoutY="367.0" prefHeight="86.0" prefWidth="319.0" />
+      <Label layoutX="15.0" layoutY="481.0" prefHeight="21.0" prefWidth="144.0" text="time to be delivered:" />
+      <DatePicker layoutX="156.0" layoutY="476.0" />
+      <TextField layoutX="158.0" layoutY="525.0" />
+      <Label layoutX="112.0" layoutY="530.0" prefHeight="21.0" prefWidth="44.0" text="hour:" />
+      <Label layoutX="15.0" layoutY="582.0" prefHeight="21.0" prefWidth="57.0" text="address:" />
+      <Label layoutX="13.0" layoutY="633.0" text="name:" />
+      <Label layoutX="13.0" layoutY="682.0" text="phoen:" />
+      <Label layoutX="134.0" layoutY="304.0" prefHeight="21.0" prefWidth="57.0" text="price:" />
+      <TextField layoutX="156.0" layoutY="577.0" />
+      <TextField layoutX="158.0" layoutY="628.0" />
+      <TextField layoutX="156.0" layoutY="677.0" />
+      <Label layoutX="280.0" layoutY="304.0" text="(price)" />
+      <Button layoutX="408.0" layoutY="662.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="buy" />
    </children>
 </AnchorPane>

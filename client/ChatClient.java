@@ -36,7 +36,8 @@ public class ChatClient extends AbstractClient
    */
   String loginID;
 
-  public User loggedUser;
+  User loggedUser;
+  boolean logged;
   //Constructors ****************************************************
   
   /**
@@ -54,6 +55,7 @@ public class ChatClient extends AbstractClient
     this.clientUI = clientUI;
     openConnection();
     this.loginID = "ANONYMOUS";
+    this.logged = false;
     sendToServer("#login ANONYMOUS");
   }
 
@@ -72,6 +74,7 @@ public class ChatClient extends AbstractClient
     super(host, port); //Call the superclass constructor
     this.clientUI = clientUI;
     this.loginID = loginID;
+    this.logged = false;
     openConnection();
     sendToServer("#login " + loginID);
   }
@@ -91,6 +94,10 @@ public class ChatClient extends AbstractClient
 	  }
 	  else if(msg.toString().equals("#gotUser")) {
 		  loggedUser = (User)msg;
+		  this.logged = true;
+	  }
+	  else if(msg.toString().equals("#gotOrder")) {
+		  System.out.println("gotOrder");
 	  }
 	  else if(msg.toString().equals("#addComplaint")) {
 		  ComplaintController.complaintFlag=((ReturnStatus)msg).status;
@@ -99,7 +106,7 @@ public class ChatClient extends AbstractClient
 		  clientUI.display(msg.toString());
 	  }
   }
-  
+
    /**
    * This method handles all data coming from the UI            
    *
@@ -256,6 +263,10 @@ public class ChatClient extends AbstractClient
     System.exit(0);
   }
 
+  public boolean getlogged()
+  {
+	  return logged;
+  }
   /**
    * Reacts to a closed connection while waiting for
    * messages from the server. Overrides method in 

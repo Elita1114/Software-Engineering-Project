@@ -6,5 +6,5 @@ public enum Status{
 	chainManager,
 	chainWorker,
 	customService,
-	systemManager}
-
+	systemManager
+}

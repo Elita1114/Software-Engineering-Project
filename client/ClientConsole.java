@@ -12,6 +12,7 @@ import client.Controllers.CatalogController;
 import client.Controllers.MainController;
 import common.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -178,7 +179,7 @@ public class ClientConsole extends Application implements ChatIF
 	  chat.client.handleMessageFromClientUI("#getCatalog 0");
 	  // wait for response
 	  do {
-		  try {
+	  	try {
 			Thread.sleep(100);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
@@ -187,7 +188,6 @@ public class ClientConsole extends Application implements ChatIF
 		System.out.println(chat.flagCatalog);  
 	  }
 	  while(!chat.flagCatalog);
-
 
 	  // get critical initializtaion data 
 	  
@@ -209,7 +209,6 @@ public class ClientConsole extends Application implements ChatIF
 	  primaryStage.setScene(scene);    	
 	  primaryStage.show(); 
 	
-		
 	
 	}
 

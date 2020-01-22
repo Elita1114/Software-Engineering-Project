@@ -79,6 +79,11 @@ public class Order implements Serializable{
 		this.reciever_phone_number = reciever_phone_number;
 	}
 
+  public String toString()
+	{
+		return "#gotOrder";
+	}
+
 
 	@Override
 	public String toString() {
@@ -86,5 +91,4 @@ public class Order implements Serializable{
 				+ ", letter=" + letter + ", want_shipping=" + want_shipping + ", shipping_address=" + shipping_address
 				+ ", shipping_reciever=" + shipping_reciever + ", reciever_phone_number=" + reciever_phone_number + "]";
 	}
-	
 }

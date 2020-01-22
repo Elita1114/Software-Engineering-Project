@@ -53,7 +53,6 @@ public class LoginController {
     	UserRequest user_request = new UserRequest("#login",  args);
 
     	System.out.println("sending request to server");
-
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
@@ -61,16 +60,25 @@ public class LoginController {
     	    	System.out.println("entered");
     	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
     	    	System.out.println("finished_1");
-    	    	mainController.getTabPane().getSelectionModel().select(0);
     	    }
     	});
     	System.out.println("finished");
-    	
+		Platform.runLater(new Runnable() {
+		  	    @Override
+		  	    public void run() {
+		  			while(!mainController.getClient().client.getlogged()) {
+		  				try {
+		  					Thread.sleep(100);
+		  				} catch (InterruptedException e) {
+		  					// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				mainController.getTabPane().getTabs().remove(1);
+				mainController.getTabPane().getTabs().remove(1);
+				mainController.getTabPane().getSelectionModel().select(0);
+		    }
+		});
     	
     }
 }
-
-
-//    	mainController.getTabPane().getSelectionModel().select(1);
-
-

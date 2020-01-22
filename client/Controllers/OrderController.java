@@ -4,6 +4,7 @@ package client.Controllers;
  */
 
 import java.net.URL;
+import java.util.ResourceBundle;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -25,18 +26,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 
 public class OrderController {
-	
-    private MainController mainController;
-    
-    public void injectMainController(MainController mainController_) {
-		mainController = mainController_;
-	}
-    
-    private BooleanProperty wantShipping = new SimpleBooleanProperty(false);
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -129,4 +121,3 @@ public class OrderController {
  
     }
 }
-

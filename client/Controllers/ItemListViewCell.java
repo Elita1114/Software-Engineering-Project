@@ -5,11 +5,8 @@ import java.io.IOException;
 
 import common.CatalogItem;
 import common.Item;
-import common.Status;
-import common.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -22,9 +19,6 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
 	@FXML private Label Color;
 	@FXML private Label Price;
 	@FXML private ImageView ivIm1;
-    @FXML
-    private Button dropBtn;
-    User user= MainController.getClient().client.loggedUser;
 	
 	@FXML private AnchorPane pane;
 	
@@ -58,19 +52,11 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
             Color.setText(String.valueOf(item.getColor()));
             Price.setText(String.valueOf(item.getPrice()));
             ivIm1.setImage(new Image(item.getImagePath()));
-            
-            
-            dropBtn.setVisible(false);
-            if(user!=null && user.status!=Status.client )
-                dropBtn.setVisible(true);
 
-            
             setText(null);
             setGraphic(pane);
         }
 
     }
-
-
-
+	
 }

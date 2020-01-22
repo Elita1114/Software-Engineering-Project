@@ -38,5 +38,20 @@ public class CatalogItem extends Item implements Serializable {
 	public void setImagePath(String imagePath_) {
 		imagePath=imagePath_;
 	}
+	
+	// possible errors
+	public boolean equals(Object obj)
+	{
+		  if(this == obj) 
+	            return true; 
+	      if(obj == null || obj.getClass()!= this.getClass()) 
+	           return false; 
+	      // type casting of the argument.  
+	      CatalogItem other_item = (CatalogItem) obj; 	          
+	      // comparing the state of argument with  
+	      // the state of 'this' Object. 
+	      return (other_item.price == this.price && other_item.id == this.id && other_item.imagePath == this.imagePath
+	    		  && super.equals(obj)); 
+	}
 
 }

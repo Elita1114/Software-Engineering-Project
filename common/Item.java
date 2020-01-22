@@ -37,4 +37,18 @@ public class Item implements Serializable{
 		color=color_;
 	}
 	
+	@Override 
+	public boolean equals(Object obj)
+	{
+		  if(this == obj) 
+	            return true; 
+	      if(obj == null || obj.getClass()!= this.getClass()) 
+	           return false; 
+	      // type casting of the argument.  
+	      Item other_item = (Item) obj; 	          
+	      // comparing the state of argument with  
+	      // the state of 'this' Object. 
+	      return (other_item.name == this.name && other_item.description == this.description && other_item.color == this.color); 
+	}
+	
 }

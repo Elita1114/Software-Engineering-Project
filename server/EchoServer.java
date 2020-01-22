@@ -152,8 +152,6 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  User user = (User) user_request.get_request_args().get(0);
 					  Order order = (Order) user_request.get_request_args().get(1);
-					  System.out.println(user.getDetails());
-					  System.out.println(order.getDetails());
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      ArrayList<Item> order_items = order.get_order_items();
 				      float price = 0;
@@ -178,20 +176,12 @@ public class EchoServer extends AbstractServer
 				      insertorder.setFloat(9, price);  // ID
 				      insertorder.executeUpdate();
 				      ResultSet insertedorder = insertorder.getGeneratedKeys();
-				      
-				      System.out.println("\n\n" + insertedorder + "\n\n");
-				      PreparedStatement updateCart = con.prepareStatement("UPDATE * FROM `Cart` SET `orderID`=? WHERE userID=? AND `orderID`=NULL");
+				      insertedorder.next();
+				      PreparedStatement updateCart = con.prepareStatement("UPDATE `Cart` SET `orderID`=? WHERE `userID`=? AND `orderID`=NULL");
 				      updateCart.setInt(1, user.user_id);
-				      updateCart.setInt(2, insertedorder.getInt("orderID"));
-				      int rowupdated = updateCart.executeUpdate();
-				      if(rowupdated != 0)
-				      {
-				    	  client.sendToClient(order); 
-				    	  
-				      }else
-				      {
-				    	  System.out.println("error");
-				      }
+				      updateCart.setInt(2, insertedorder.getInt(1));
+				      updateCart.executeUpdate();
+			    	  client.sendToClient(order); 	
 				  }catch(Exception e) {
 					  System.out.println("a");
 					  System.out.println(e);

@@ -42,7 +42,6 @@ public class CatalogController implements Initializable {
     
     @FXML
     private Button btnAll; //0
-
     @FXML
     private Button btnDaisy; //1
     @FXML

@@ -102,7 +102,7 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromClientUI(UserRequest user_request)
   {
-	  System.out.println("trying to send to server");
+	  System.out.println("trying to send to server in handle ");
 	  try {
     	  sendToServer(user_request);
       }

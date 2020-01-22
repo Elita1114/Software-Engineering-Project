@@ -21,12 +21,11 @@ public class MainController {
 	
 	@FXML
 	private void initialize() {
-		
 		catalogController.injectMainController(this);
 		signUpController.injectMainController(this);
 		loginController.injectMainController(this);
 		updatecatalogController.injectMainController(this);
-		updatecatalogController.injectMainController(this);
+		orderController.injectMainController(this);
 	}
 	public ClientConsole getClient() {
 		return client;

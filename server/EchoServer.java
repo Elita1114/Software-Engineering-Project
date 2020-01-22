@@ -110,8 +110,6 @@ public class EchoServer extends AbstractServer
 				      checkusername.setString(1, new_user.username);
 				      ResultSet rs = checkusername.executeQuery();
 				      int cuser = rs.last() ? rs.getRow() : 0;
-				      System.out.println("Cuser");
-				      System.out.println(cuser);
 				      if(cuser == 0){
 					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`) VALUES (?,?,?,?,?,?,?)");
 					      insertuser.setString(1, new_user.username); // User name
@@ -123,15 +121,11 @@ public class EchoServer extends AbstractServer
 					      insertuser.setString(7, new_user.id);  // ID
 					      insertuser.executeUpdate();
 				      }
-				      else {
-				    	  	new Alert(Alert.AlertType.ERROR,"client already exists").showAndWait();
-				    		return;
-				      }
-				  }catch(Exception e) {
-					  System.out.println("a");
-					  System.out.println(e);
-				  }
-			  }else if(user_request.get_request_str().equalsIgnoreCase("#login"))
+				  	} catch(Exception e) {
+				  		System.out.println(e);
+				  	}
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#login"))
 			  {
 				  System.out.println("login");
 				  try { 
@@ -147,19 +141,13 @@ public class EchoServer extends AbstractServer
 				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"));
 				    	  client.sendToClient(loggedUser); 
 				      }
-				      else {
-				    	  	//new Alert(Alert.AlertType.ERROR,"User doesn't exist").showAndWait();
-				    		return;
-				      }
-				  }catch(Exception e) {
+				  } catch(Exception e) {
 					  System.out.println(e);
 				  }
 			  }
-		  
-		  return;
-		  
-			  
+		  return;  
 	  }
+	  
 	  if(request.toString().equalsIgnoreCase("#productslist"))
 	  {
 		  try {
@@ -255,7 +243,7 @@ public class EchoServer extends AbstractServer
 		      client.sendToClient("after send catalog\n");  
 		      
 		      
-		  }catch(Exception e) {
+		  } catch(Exception e) {
 			  System.out.println("a");
 			  System.out.println(e);
 		  }

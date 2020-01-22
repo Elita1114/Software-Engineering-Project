@@ -152,7 +152,8 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  User user = (User) user_request.get_request_args().get(0);
 					  Order order = (Order) user_request.get_request_args().get(1);
-					  
+					  System.out.println(user.getDetails());
+					  System.out.println(order.getDetails());
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      ArrayList<Item> order_items = order.get_order_items();
 				      float price = 0;
@@ -165,18 +166,20 @@ public class EchoServer extends AbstractServer
 				    	  }
 				      }
 				      
-				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`) VALUES (?,?,?,?,?,?,?,?,?)");
+				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`) VALUES (NULL,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				      insertorder.setInt(1, user.user_id); // User id
 				      insertorder.setString(2, order.get_shipping_address());  // reciever
-				      insertorder.setDate(3, order.get_requested_delivery_date()); // delivery date
-				      insertorder.setString(4, order.get_letter()); // letter
-				      insertorder.setDate(5, order.get_requested_delivery_date()); 	// phoneNumber
-				      insertorder.setString(6, order.get_shipping_reciever()); // reciver
-				      insertorder.setString(7, order.get_recievre_phone_number());  // ID
-				      insertorder.setFloat(8, price);  // ID
+				      insertorder.setInt(3, order.want_shipping()?1:0);  // reciever
+				      insertorder.setDate(4, order.get_requested_delivery_date()); // delivery date
+				      insertorder.setString(5, order.get_letter()); // letter
+				      insertorder.setDate(6, order.get_requested_delivery_date()); 	// phoneNumber
+				      insertorder.setString(7, order.get_shipping_reciever()); // reciver
+				      insertorder.setString(8, order.get_recievre_phone_number());  // ID
+				      insertorder.setFloat(9, price);  // ID
 				      insertorder.executeUpdate();
 				      ResultSet insertedorder = insertorder.getGeneratedKeys();
 				      
+				      System.out.println("\n\n" + insertedorder + "\n\n");
 				      PreparedStatement updateCart = con.prepareStatement("UPDATE * FROM `Cart` SET `orderID`=? WHERE userID=? AND `orderID`=NULL");
 				      updateCart.setInt(1, user.user_id);
 				      updateCart.setInt(2, insertedorder.getInt("orderID"));

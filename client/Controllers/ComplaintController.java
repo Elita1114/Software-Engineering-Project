@@ -40,10 +40,10 @@ public class ComplaintController {
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
-    	    	if(mainController.getClient().client.loggedUser!=null) {
+    	    	if(mainController.getClient().client.getlogged()) {
 	    	    	String title=tvTitle.getText().toString();
 	    	    	String description=tvDescription.getText().toString();
-	    	    	Complaint complaint =  new Complaint(title, description, false, 0, mainController.getClient().client.loggedUser.user_id);
+	    	    	Complaint complaint =  new Complaint(title, description, false, 0, mainController.getClient().client.getLoggedUser().user_id);
 	    	    	ArrayList<Object> args =  new ArrayList<Object>();
 	    	    	args.add(complaint);
 	    	    	UserRequest user_request=new UserRequest("#addComplaint", args);

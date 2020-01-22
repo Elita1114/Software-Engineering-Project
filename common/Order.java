@@ -10,7 +10,7 @@ public class Order implements Serializable{
 	 */
 	private static final long serialVersionUID = -3708969239650189239L;
 	private ArrayList<Item> order_items;
-	private String requested_delivery_date_time;
+	private Date requested_delivery_date_time;
 	private String letter;
 	private boolean want_shipping;
 	private String shipping_address;
@@ -19,12 +19,12 @@ public class Order implements Serializable{
 	
 	static final double shipping_price = 20; 
 	
-	public Order(ArrayList<Item> order_items, String requested_delivery_date_time, String letter, boolean want_shipping,
+	public Order(ArrayList<Item> order_items, Date date, String letter, boolean want_shipping,
 			String shipping_address, String shipping_reciever, String reciever_phone_number) {
 		super();
 		this.order_items = order_items;
 		this.letter = letter;
-		this.requested_delivery_date_time = requested_delivery_date_time;
+		this.requested_delivery_date_time = date;
 		this.want_shipping = want_shipping;
 		if(want_shipping) 
 		{
@@ -48,10 +48,10 @@ public class Order implements Serializable{
 	public void set_letter(String letter) {
 		this.letter = letter;
 	}
-	public String get_requested_delivery_date() {
+	public Date get_requested_delivery_date() {
 		return requested_delivery_date_time;
 	}
-	public void set_requested_delivery_date(String requested_delivery_date_time) {
+	public void set_requested_delivery_date(Date requested_delivery_date_time) {
 		this.requested_delivery_date_time = requested_delivery_date_time;
 	}
 	public boolean want_shipping() {
@@ -79,14 +79,13 @@ public class Order implements Serializable{
 		this.reciever_phone_number = reciever_phone_number;
 	}
 
-  public String toString()
+	public String toString()
 	{
 		return "#gotOrder";
 	}
 
 
-	@Override
-	public String toString() {
+	public String getDetails() {
 		return "Order [order_items=" + order_items + ", requested_delivery_date_time=" + requested_delivery_date_time
 				+ ", letter=" + letter + ", want_shipping=" + want_shipping + ", shipping_address=" + shipping_address
 				+ ", shipping_reciever=" + shipping_reciever + ", reciever_phone_number=" + reciever_phone_number + "]";

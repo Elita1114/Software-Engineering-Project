@@ -144,7 +144,7 @@ public class EchoServer extends AbstractServer
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      System.out.println(cuser);
 				      if(cuser == 1){
-				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"));
+				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
 				    	  client.sendToClient(loggedUser); 
 				      }
 				      else {
@@ -154,7 +154,44 @@ public class EchoServer extends AbstractServer
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
-			  }
+			  }    else if (user_request.get_request_str().equalsIgnoreCase("#getCatalog"))
+			    {
+			    	try {
+			    		  int type= Integer.parseInt(request.toString().split(" ")[1]);
+					      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					      Statement stmt=con.createStatement();  
+					      ResultSet rs = null;
+					      if(type==0) {
+					    	  rs=stmt.executeQuery("select * from Products"); 
+					      }
+					      else {
+					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+					    	  prep_stmt.setInt(1, type);
+					    	  rs = prep_stmt.executeQuery();
+					      }
+					      
+					      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
+					      
+					      
+					      client.sendToClient("getting catalog");
+					      while(rs.next()) { 
+					    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8)));
+					    	  System.out.println("getting item");
+					      }
+					      con.close();  
+					      Catalog catalog=new Catalog(itemList,true);
+					      
+					      client.sendToClient(catalog);  
+					      System.out.println("after send catalog\n");
+					      client.sendToClient("after send catalog\n");  
+					      
+					      
+					  }catch(Exception e) {
+						  System.out.println("a");
+						  System.out.println(e);
+					  }
+					  return;
+			    }
 		  
 		  return;
 		  

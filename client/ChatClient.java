@@ -34,7 +34,7 @@ public class ChatClient extends AbstractClient
    */
   String loginID;
 
-  User loggedUser;
+  public User loggedUser;
   //Constructors ****************************************************
   
   /**

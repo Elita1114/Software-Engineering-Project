@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.MainController">
    <children>
       <TabPane fx:id="tabPane" layoutX="127.0" layoutY="90.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -32,6 +32,11 @@
             <Tab text="updateCatalog">
                <content>
                   <fx:include fx:id="updatecatalog" source="CatalogUpdate.fxml" />
+               </content>
+            </Tab>
+            <Tab text="Send a Complaint">
+               <content>
+                  <fx:include fx:id="complaint" source="Complaint.fxml" />
                </content>
             </Tab>
          </tabs>

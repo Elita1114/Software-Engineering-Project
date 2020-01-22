@@ -12,9 +12,11 @@ import common.UserRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 
@@ -24,9 +26,13 @@ public class MainController {
 	@FXML private CatalogController catalogController;
 	@FXML private SignUpController signUpController;
 	@FXML private LoginController loginController;
+	@FXML private ComplaintController complaintController;
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
+
+
+	static public ClientConsole client;
 	@FXML private TabPane tabPane;
-	private static ClientConsole client;
+
 
 
 	
@@ -36,7 +42,7 @@ public class MainController {
 		catalogController.injectMainController(this);
 		signUpController.injectMainController(this);
 		loginController.injectMainController(this);
-		updatecatalogController.injectMainController(this);
+		complaintController.injectMainController(this);
 		updatecatalogController.injectMainController(this);
 	}
 	public static ClientConsole getClient() {

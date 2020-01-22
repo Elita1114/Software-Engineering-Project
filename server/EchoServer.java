@@ -154,49 +154,31 @@ public class EchoServer extends AbstractServer
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
-			  }    else if (user_request.get_request_str().equalsIgnoreCase("#getCatalog"))
-			    {
-			    	try {
-			    		  int type= Integer.parseInt(request.toString().split(" ")[1]);
-					      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-					      Statement stmt=con.createStatement();  
-					      ResultSet rs = null;
-					      if(type==0) {
-					    	  rs=stmt.executeQuery("select * from Products"); 
-					      }
-					      else {
-					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
-					    	  prep_stmt.setInt(1, type);
-					    	  rs = prep_stmt.executeQuery();
-					      }
-					      
-					      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
-					      
-					      
-					      client.sendToClient("getting catalog");
-					      while(rs.next()) { 
-					    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8)));
-					    	  System.out.println("getting item");
-					      }
-					      con.close();  
-					      Catalog catalog=new Catalog(itemList,true);
-					      
-					      client.sendToClient(catalog);  
-					      System.out.println("after send catalog\n");
-					      client.sendToClient("after send catalog\n");  
-					      
-					      
-					  }catch(Exception e) {
-						  System.out.println("a");
-						  System.out.println(e);
-					  }
-					  return;
-			    }
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#addComplaint")) {
+				  System.out.println("complaint");
+				  try { 
+					  Complaint complaint  = (Complaint) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement addComplaint = con.prepareStatement("INSERT INTO `Complaint`(`description`, `Status`, `refund`, `user`, `title`) VALUES (?,?,?,?,?)");
+				      addComplaint.setString(1, complaint.description);
+				      addComplaint.setBoolean(2, complaint.status);
+				      addComplaint.setDouble(3, complaint.refund);
+				      addComplaint.setInt(4, complaint.userID);
+				      addComplaint.setString(5, complaint.title);
+				      addComplaint.executeUpdate();
+					  client.sendToClient(new ReturnStatus("#addComplaint", true));
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
 		  
 		  return;
 		  
 			  
 	  }
+	  
 	  if(request.toString().equalsIgnoreCase("#productslist"))
 	  {
 		  try {

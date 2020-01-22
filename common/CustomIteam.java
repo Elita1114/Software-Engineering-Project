@@ -25,6 +25,18 @@ public class CustomIteam  extends Item implements Serializable{
 		this.type = type;
 	}
 	
+	public boolean equals(Object obj)
+	{
+		  if(this == obj) 
+	            return true; 
+	      if(obj == null || obj.getClass()!= this.getClass()) 
+	           return false; 
+	      // type casting of the argument.  
+	      CustomIteam other_item = (CustomIteam) obj; 	          
+	      // comparing the state of argument with  
+	      // the state of 'this' Object. 
+	      return (other_item.type == this.type && super.equals(obj)); 
+	}
 	
 	
 }

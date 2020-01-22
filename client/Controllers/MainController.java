@@ -28,6 +28,7 @@ public class MainController {
 	@FXML private TabPane tabPane;
 	private static ClientConsole client;
 
+
 	
 	@FXML
 	private void initialize() {
@@ -35,7 +36,7 @@ public class MainController {
 		catalogController.injectMainController(this);
 		signUpController.injectMainController(this);
 		loginController.injectMainController(this);
-
+		updatecatalogController.injectMainController(this);
 		updatecatalogController.injectMainController(this);
 	}
 	public static ClientConsole getClient() {

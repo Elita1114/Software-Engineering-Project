@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import client.ClientConsole;
 import common.CatalogItem;
+import common.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
@@ -15,7 +16,8 @@ public class MainController {
 	@FXML private LoginController loginController;
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
 
-	private ClientConsole client;
+	static public ClientConsole client;
+	static public User user;
 
 	
 	@FXML

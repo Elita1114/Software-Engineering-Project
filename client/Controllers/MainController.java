@@ -27,7 +27,7 @@ public class MainController {
 
 		updatecatalogController.injectMainController(this);
 	}
-	public ClientConsole getClient() {
+	public static ClientConsole getClient() {
 		return client;
 	}
 	public void setFlag(boolean flag_) {

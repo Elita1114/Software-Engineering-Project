@@ -7,11 +7,20 @@ public class Item implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 828961710358073954L;
+	private int qty;
 	private String name;
 	private String description;
 	private String color;
 	
+	public Item(String name_, String description_, String color_, int qty_){
+		setQty(qty_);
+		name=name_;
+		description=description_;
+		color=color_;
+	}
+	
 	public Item(String name_, String description_, String color_){
+		setQty(1);
 		name=name_;
 		description=description_;
 		color=color_;
@@ -49,6 +58,14 @@ public class Item implements Serializable{
 	      // comparing the state of argument with  
 	      // the state of 'this' Object. 
 	      return (other_item.name == this.name && other_item.description == this.description && other_item.color == this.color); 
+	}
+
+	public int getQty() {
+		return qty;
+	}
+
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
 	
 }

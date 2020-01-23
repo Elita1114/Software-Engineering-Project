@@ -29,7 +29,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class OrderController {
-
+	private ArrayList<Item> order_items;
 	private MainController mainController;
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -84,9 +84,6 @@ public class OrderController {
     
     @FXML
     void orderbttnPressed(ActionEvent event) {
-    	ArrayList<Item> order_items = new ArrayList<Item>();
-    	// change this !!!
-    	order_items.add(new CatalogItem("a", "b", "c",1 , 1, "d"));
     	String letter = letterText.getText();
     	LocalDate date_pick = dateSelect.getValue();
     	//Date date = Date.from(date_pick.atStartOfDay(ZoneId.systemDefault()).toInstant());

@@ -11,12 +11,14 @@ import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 
@@ -29,12 +31,13 @@ public class MainController {
 	@FXML private ComplaintController complaintController;
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
 	@FXML private OrderController orderController;//update order controller
+	@FXML private HandleComplaintController handleComplaintController;//update order controller
 
 
 	static public ClientConsole client;
 	@FXML private TabPane tabPane;
 
-
+	@FXML private Tab tabHandleComplaint;
 
 	
 	@FXML
@@ -46,6 +49,7 @@ public class MainController {
 		complaintController.injectMainController(this);
 		updatecatalogController.injectMainController(this);
 		orderController.injectMainController(this);
+		handleComplaintController.injectMainController(this);
 	}
 	public static ClientConsole getClient() {
 		return client;
@@ -65,6 +69,21 @@ public class MainController {
 	public TabPane getTabPane() {
 		return tabPane;
 	}
+	
+	
+	@FXML
+	public final EventHandler<Event> handleClick(){
+		if(tabHandleComplaint.isSelected()) {
+			handleComplaintController.complaintsOpened();
+			
+			System.out.println("handle was clicked");
+			
+			
+		}
+		return null;
+		
+	}
+	
 /*
 	public void loadCatalog() {
 		//load the catalog

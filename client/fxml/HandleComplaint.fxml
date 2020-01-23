@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="425.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.HandleComplaintController">
+   <children>
+      <ListView fx:id="lvComplaints" layoutX="29.0" layoutY="66.0" onMouseClicked="#mouseClicked" prefHeight="335.0" prefWidth="402.0" />
+      <AnchorPane layoutX="448.0" layoutY="34.0" prefHeight="335.0" prefWidth="286.0">
+         <children>
+            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title:" />
+            <Text layoutX="15.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" />
+            <TextArea fx:id="tvDescription" editable="false" layoutX="39.0" layoutY="77.0" prefHeight="91.0" prefWidth="236.0" promptText="complaint" />
+            <TextField fx:id="tvTitle" editable="false" layoutX="39.0" layoutY="31.0" prefHeight="25.0" prefWidth="236.0" promptText="title" />
+            <Text layoutX="13.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reply:" />
+            <TextArea fx:id="tvReply" layoutX="37.0" layoutY="186.0" prefHeight="63.0" prefWidth="236.0" promptText="type your reply here" />
+            <TextField fx:id="tvRefund" layoutX="39.0" layoutY="268.0" prefHeight="25.0" prefWidth="236.0" promptText="refund amount" text="0" />
+            <Button fx:id="btnSend" layoutX="122.0" layoutY="299.0" mnemonicParsing="false" onAction="#sendPressed" text="send" />
+            <Text layoutX="13.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Refund:" />
+         </children>
+      </AnchorPane>
+      <Text layoutX="29.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Complaints">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

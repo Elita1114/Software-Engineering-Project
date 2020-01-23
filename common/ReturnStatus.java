@@ -13,6 +13,6 @@ public class ReturnStatus implements Serializable {
 	}
 	
 	public String toString() {
-		return "#addComplaint";
+		return message;
 	}
 }

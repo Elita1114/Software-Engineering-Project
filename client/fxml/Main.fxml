@@ -39,6 +39,11 @@
                   <fx:include fx:id="complaint" source="Complaint.fxml" />
                </content>
             </Tab>
+            <Tab fx:id="tabHandleComplaint" onSelectionChanged="#handleClick" text="Handle Complaints">
+               <content>
+                  <fx:include fx:id="handleComplaint" source="HandleComplaint.fxml" />
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
    </children>

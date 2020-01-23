@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import java.io.*;
 
 import client.Controllers.ComplaintController;
+import client.Controllers.HandleComplaintController;
 
 /**
  * This class overrides some of the methods defined in the abstract
@@ -90,6 +91,7 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromServer(Object msg) 
   {
+	  
 	  if(msg.toString().equals("#gotCatalog")) {
 	  		clientUI.getData(msg);
 	  }
@@ -97,11 +99,18 @@ public class ChatClient extends AbstractClient
 		  loggedUser = (User)msg;
 		  this.logged = true;
 	  }
+	  else if(msg.toString().equals("#gotComplaints")) {
+		  HandleComplaintController.complaintsList=(ComplaintsList)msg;
+		  HandleComplaintController.flag=true;
+	  }
 	  else if(msg.toString().equals("#gotOrder")) {
 		  System.out.println("gotOrder");
 	  }
 	  else if(msg.toString().equals("#addComplaint")) {
 		  ComplaintController.complaintFlag=((ReturnStatus)msg).status;
+	  }
+	  else if(msg.toString().equals("#updateComplaint")) {
+		  HandleComplaintController.updateComplaint=((ReturnStatus)msg).status;
 	  }
 	  else if(msg.toString().equals("#dropCatalog")) {
 		  flagServerAns=true;

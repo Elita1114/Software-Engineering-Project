@@ -26,6 +26,7 @@ public class ComplaintListViewCell extends ListCell<Complaint>{
 	@FXML private Label tvTitle;
 	@FXML private Label tvUserID;
 	@FXML private Text tvHandled;
+	@FXML private Text tvUrgent;
 	
 	@FXML private AnchorPane pane;
 	
@@ -57,10 +58,15 @@ public class ComplaintListViewCell extends ListCell<Complaint>{
 
             tvTitle.setText(String.valueOf(item.title));
             tvUserID.setText(String.valueOf(item.userID));
+            
+            tvUrgent.setVisible(false);
             if(item.status)
             	tvHandled.setVisible(true);
-            else
+            else {
             	tvHandled.setVisible(false);
+            	if(item.timer<=60)
+            		tvUrgent.setVisible(true);
+            }
 
             setText(null);
             setGraphic(pane);

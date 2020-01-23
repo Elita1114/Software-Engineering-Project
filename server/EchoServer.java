@@ -427,6 +427,29 @@ public class EchoServer extends AbstractServer
 		  }
 		  return;
     }
+    else if(request.toString().equalsIgnoreCase("#isUrgent")) {
+    	try {
+    		  
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+		      ResultSet rs = null;
+		      rs=stmt.executeQuery("select * from Complaint WHERE timer < 61 AND status = false"); 
+		      
+		      int cuser = rs.last() ? rs.getRow() : 0;
+		      if(cuser==0)
+		    	  client.sendToClient(new ReturnStatus("#isUrgent", false));
+		      else
+		    	  client.sendToClient(new ReturnStatus("#isUrgent", true));
+		      con.close();  
+
+		      
+		      
+		  } catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
+    }
     else 
     {
       if (client.getInfo("loginID") == null)

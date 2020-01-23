@@ -109,6 +109,10 @@ public class ChatClient extends AbstractClient
 		  HandleComplaintController.complaintsList=(ComplaintsList)msg;
 		  HandleComplaintController.flag=true;
 	  }
+	  else if(msg.toString().equals("#isUrgent")) {
+		  MyThread.flagAnswer=true;
+		  MyThread.flagUrgent=((ReturnStatus)msg).status;
+	  }
 	  else if(msg.toString().equals("#gotOrder")) {
 		  System.out.println("gotOrder");
 	  }

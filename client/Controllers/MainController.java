@@ -37,7 +37,7 @@ public class MainController {
 	static public ClientConsole client;
 	@FXML private TabPane tabPane;
 
-	@FXML private Tab tabHandleComplaint;
+	@FXML public Tab tabHandleComplaint;
 
 	
 	@FXML
@@ -50,6 +50,9 @@ public class MainController {
 		updatecatalogController.injectMainController(this);
 		orderController.injectMainController(this);
 		handleComplaintController.injectMainController(this);
+		
+		tabPane.getTabs().remove(tabHandleComplaint);
+		
 	}
 	public static ClientConsole getClient() {
 		return client;

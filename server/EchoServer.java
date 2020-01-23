@@ -142,7 +142,8 @@ public class EchoServer extends AbstractServer
 				    	  client.sendToClient(loggedUser); 
 				      }
 				      else {
-				    		return;
+				    	  client.sendToClient("#wrongdetails");
+				    	  return;
 				      }
 				  }catch(Exception e) {
 					  System.out.println(e);

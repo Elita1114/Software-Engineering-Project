@@ -38,7 +38,8 @@ public class ChatClient extends AbstractClient
   String loginID;
 
   private User loggedUser;
-  boolean logged;
+  private boolean logged;
+  private boolean wrongdetails;
   public boolean flagServerAns;
   //Constructors ****************************************************
   
@@ -58,6 +59,7 @@ public class ChatClient extends AbstractClient
     openConnection();
     this.loginID = "ANONYMOUS";
     this.logged = false;
+    this.setWrongdetails(false);
     sendToServer("#login ANONYMOUS");
   }
 
@@ -77,6 +79,7 @@ public class ChatClient extends AbstractClient
     this.clientUI = clientUI;
     this.loginID = loginID;
     this.logged = false;
+    this.setWrongdetails(false);
     openConnection();
     sendToServer("#login " + loginID);
   }
@@ -98,6 +101,9 @@ public class ChatClient extends AbstractClient
 	  else if(msg.toString().equals("#gotUser")) {
 		  loggedUser = (User)msg;
 		  this.logged = true;
+	  }
+	  else if(msg.toString().equals("#wrongdetails")) {
+		  this.setWrongdetails(true);
 	  }
 	  else if(msg.toString().equals("#gotComplaints")) {
 		  HandleComplaintController.complaintsList=(ComplaintsList)msg;
@@ -302,6 +308,14 @@ public User getLoggedUser() {
 
 public void setLoggedUser(User loggedUser) {
 	this.loggedUser = loggedUser;
+}
+
+public boolean isWrongdetails() {
+	return wrongdetails;
+}
+
+public void setWrongdetails(boolean wrongdetails) {
+	this.wrongdetails = wrongdetails;
 }
 }
 //End of ChatClient class

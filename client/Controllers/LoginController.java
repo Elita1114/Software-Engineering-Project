@@ -18,6 +18,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType; 
 
 public class LoginController {
 
@@ -64,19 +65,29 @@ public class LoginController {
     	});
     	System.out.println("finished");
 		Platform.runLater(new Runnable() {
-		  	    @Override
-		  	    public void run() {
-		  			while(!mainController.getClient().client.getlogged()) {
-		  				try {
-		  					Thread.sleep(100);
-		  				} catch (InterruptedException e) {
-		  					// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				mainController.getTabPane().getTabs().remove(1);
-				mainController.getTabPane().getTabs().remove(1);
-				mainController.getTabPane().getSelectionModel().select(0);
+	  	    @Override
+	  	    public void run() {
+	  			while(!mainController.getClient().client.getlogged() && !mainController.getClient().client.isWrongdetails()) {
+	  				try {
+	  					Thread.sleep(100);
+	  				} catch (InterruptedException e) {
+	  					// TODO Auto-generated catch block
+					e.printStackTrace();
+	  				}
+	  			}
+	  			if(mainController.getClient().client.getlogged())
+	  			{
+	  				Alert alert = new Alert(AlertType.INFORMATION, "Login successful!");
+	  				alert.show();
+					mainController.getTabPane().getTabs().remove(1);
+					mainController.getTabPane().getTabs().remove(1);
+					mainController.getTabPane().getSelectionModel().select(0);
+	  			}else if(mainController.getClient().client.isWrongdetails())
+	  			{
+	  				Alert alert = new Alert(AlertType.ERROR, "Username or password incorrect!");
+	  				alert.show();
+	  				mainController.getClient().client.setWrongdetails(false);
+	  			}
 		    }
 		});
     	

@@ -192,7 +192,6 @@ public class CatalogController implements Initializable {
     			mainController.getClient().flagCatalog=false;
     	    }
     	});
-		
     }
     
     @FXML

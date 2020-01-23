@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import common.PayingMethod;
+import common.Status;
 import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
@@ -73,7 +74,11 @@ public class LoginController {
 		  					// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+		  				
 				}
+		  		if(mainController.getClient().client.getlogged() && mainController.getClient().client.getLoggedUser().status==Status.customService) {
+		  			mainController.getTabPane().getTabs().add(mainController.tabHandleComplaint);
+		  		}
 				mainController.getTabPane().getTabs().remove(1);
 				mainController.getTabPane().getTabs().remove(1);
 				mainController.getTabPane().getSelectionModel().select(0);

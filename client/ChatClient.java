@@ -38,6 +38,7 @@ public class ChatClient extends AbstractClient
 
   private User loggedUser;
   boolean logged;
+  public boolean flagServerAns;
   //Constructors ****************************************************
   
   /**
@@ -101,6 +102,10 @@ public class ChatClient extends AbstractClient
 	  }
 	  else if(msg.toString().equals("#addComplaint")) {
 		  ComplaintController.complaintFlag=((ReturnStatus)msg).status;
+	  }
+	  else if(msg.toString().equals("#dropCatalog")) {
+		  flagServerAns=true;
+		  System.out.println("drop flag true\n");
 	  }
 	  else{
 		  clientUI.display(msg.toString());

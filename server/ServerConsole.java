@@ -125,6 +125,8 @@ public class ServerConsole implements ChatIF
       port = DEFAULT_PORT;
     }
     ServerConsole server = new ServerConsole(port);
+    ComplaintsTimerUpdater complaintsTimerUpdater=new ComplaintsTimerUpdater(server.server);
+    complaintsTimerUpdater.start();
     server.accept();  //Wait for console data
   }
 }

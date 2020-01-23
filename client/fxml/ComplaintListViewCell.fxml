@@ -28,5 +28,10 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
+      <Text fx:id="tvUrgent" fill="RED" layoutX="224.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Urgent" visible="false">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

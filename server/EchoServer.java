@@ -205,6 +205,19 @@ public class EchoServer extends AbstractServer
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
+			  }else if(user_request.get_request_str().equalsIgnoreCase("#dropCatalog")) {
+				  System.out.println("drop");
+				  try { 
+					  int idItem  = (int) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement addComplaint = con.prepareStatement("UPDATE `Products` SET `inCatalog` = '0' WHERE `Products`.`id` = ?");
+				      addComplaint.setInt(1, idItem);
+				      addComplaint.executeUpdate();
+					  client.sendToClient("#dropCatalog");
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
 			  }
 		  
 		  return;

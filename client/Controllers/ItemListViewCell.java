@@ -40,7 +40,7 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
     @FXML
     void drop(ActionEvent event) {
     	
-    /*	ArrayList<Object> args =  new ArrayList<Object>();
+    	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(myItem.getId());
     	UserRequest user_request = new UserRequest("#dropCatalog",  args);
     	Platform.runLater(new Runnable() {
@@ -50,6 +50,7 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
     	    	MainController.getClient().client.handleMessageFromClientUI(user_request);
     	    	System.out.println("finished_1");
     	    	MainController.getClient().client.flagServerAns=false;
+    	    	System.out.println("set drop flag\n");
 	  			while(!MainController.getClient().client.flagServerAns) {
 	  				try {
 	  					Thread.sleep(100);
@@ -60,14 +61,14 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
 	  				
 	  			}
     	    }
-    	});*/
+    	});
     }
     	
 	
 	@Override
     protected void updateItem(CatalogItem item, boolean empty) {
         super.updateItem(item, empty);
-
+        myItem=item;
         if(empty || item == null) {
 
             setText(null);

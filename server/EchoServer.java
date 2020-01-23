@@ -219,35 +219,19 @@ public class EchoServer extends AbstractServer
 					  User user = (User) user_request.get_request_args().get(0);
 					  Order order = (Order) user_request.get_request_args().get(1);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      ArrayList<Item> order_items = order.get_order_items();
-				      float price = 0;
-				      for(Item item: order_items)
-				      {
-				    	  if(item instanceof CatalogItem)
-				    	  {
-				    		  CatalogItem catalogitem = (CatalogItem) item;
-				    		  price += catalogitem.getPrice();
-				    	  }
+				      Statement stmt=con.createStatement();  
+				      PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `userID`=? AND `orderID`=NULL");
+				      getcart.setInt(1, user.user_id);
+				      ResultSet rs = getcart.executeQuery();
+				      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
+				      
+				      
+				      while(rs.next()) { 
+				    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8)));
 				      }
 				      
-				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`) VALUES (NULL,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-				      insertorder.setInt(1, user.user_id); // User id
-				      insertorder.setString(2, order.get_shipping_address());  // reciever
-				      insertorder.setInt(3, order.want_shipping()?1:0);  // reciever
-				      insertorder.setDate(4, order.get_requested_delivery_date()); // delivery date
-				      insertorder.setString(5, order.get_letter()); // letter
-				      insertorder.setDate(6, order.get_requested_delivery_date()); 	// phoneNumber
-				      insertorder.setString(7, order.get_shipping_reciever()); // reciver
-				      insertorder.setString(8, order.get_recievre_phone_number());  // ID
-				      insertorder.setFloat(9, price);  // ID
-				      insertorder.executeUpdate();
-				      ResultSet insertedorder = insertorder.getGeneratedKeys();
-				      insertedorder.next();
-				      PreparedStatement updateCart = con.prepareStatement("UPDATE `Cart` SET `orderID`=? WHERE `userID`=? AND `orderID`=NULL");
-				      updateCart.setInt(1, user.user_id);
-				      updateCart.setInt(2, insertedorder.getInt(1));
-				      updateCart.executeUpdate();
-			    	  client.sendToClient(order); 	
+				      con.close();  
+				      client.sendToClient(itemList);  
 				  }catch(Exception e) {
 					  System.out.println("a");
 					  System.out.println(e);

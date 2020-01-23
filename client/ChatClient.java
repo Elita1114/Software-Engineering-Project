@@ -103,7 +103,7 @@ public class ChatClient extends AbstractClient
 		  this.logged = true;
 	  }
 	  else if(msg.toString().equals("#wrongdetails")) {
-		  this.setWrongdetails(true);
+		  this.setWrongdetails(true); 
 	  }
 	  else if(msg.toString().equals("#gotComplaints")) {
 		  HandleComplaintController.complaintsList=(ComplaintsList)msg;

@@ -78,7 +78,7 @@ public class OrderController {
         phonenumberText.visibleProperty().bind(wantShipping);  
         addressLabel.visibleProperty().bind(wantShipping);  
         phoneLabel.visibleProperty().bind(wantShipping);
-        recieverLabel.visibleProperty().bind(wantShipping);  
+        recieverLabel.visibleProperty().bind(wantShipping); 
     }
     
     @FXML

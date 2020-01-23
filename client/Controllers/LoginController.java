@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import common.PayingMethod;
+import common.Status;
 import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
@@ -77,11 +78,15 @@ public class LoginController {
 	  			}
 	  			if(mainController.getClient().client.getlogged())
 	  			{
+            if(mainController.getClient().client.getLoggedUser().status==Status.customService)
+            {
+              mainController.getTabPane().getTabs().add(mainController.tabHandleComplaint);
+            }
 	  				Alert alert = new Alert(AlertType.INFORMATION, "Login successful!");
 	  				alert.show();
-					mainController.getTabPane().getTabs().remove(1);
-					mainController.getTabPane().getTabs().remove(1);
-					mainController.getTabPane().getSelectionModel().select(0);
+					  mainController.getTabPane().getTabs().remove(1);
+					  mainController.getTabPane().getTabs().remove(1);
+					  mainController.getTabPane().getSelectionModel().select(0);
 	  			}else if(mainController.getClient().client.isWrongdetails())
 	  			{
 	  				Alert alert = new Alert(AlertType.ERROR, "Username or password incorrect!");

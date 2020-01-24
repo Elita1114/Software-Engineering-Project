@@ -25,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 public class LoginController {
 	
 	private MainController mainController;
+	CatalogController catalogController;
 	
     @FXML // fx:id="idSplit"
     private SplitMenuButton idSplit; // Value injected by FXMLLoader
@@ -43,6 +44,10 @@ public class LoginController {
 
     public void injectMainController(MainController mainController_) {
 		mainController = mainController_;
+	}
+    
+    public void injectCatalogController(CatalogController catalogController_) {
+    	catalogController = catalogController_;
 	}
     
     @FXML
@@ -92,6 +97,7 @@ public class LoginController {
 					mainController.getTabPane().getTabs().remove(1);
 					mainController.getTabPane().getTabs().remove(1);
 					mainController.getTabPane().getSelectionModel().select(0);
+					catalogController.updateCatalog();
 	  			}else if(mainController.getClient().client.isWrongdetails())
 	  			{
 	  				Alert alert = new Alert(AlertType.ERROR, "Username or password incorrect!");

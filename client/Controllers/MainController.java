@@ -33,7 +33,7 @@ public class MainController {
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
 	@FXML private OrderController orderController;//update order controller
 	@FXML private HandleComplaintController handleComplaintController;//update order controller
-
+	
 
 	static public ClientConsole client;
 	private boolean flagCheck=false;
@@ -53,6 +53,7 @@ public class MainController {
 		updatecatalogController.injectMainController(this);
 		orderController.injectMainController(this);
 		handleComplaintController.injectMainController(this);
+		loginController.injectCatalogController(catalogController);
 		
 		tabPane.getTabs().remove(tabHandleComplaint);
 		
@@ -107,7 +108,6 @@ public class MainController {
 	
 	
 
-	
 	
 	
 /*

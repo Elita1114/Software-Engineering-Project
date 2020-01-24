@@ -191,6 +191,7 @@ public class EchoServer extends AbstractServer
 			  
 			  else if(user_request.get_request_str().equalsIgnoreCase("#addtocart"))
 			  {
+				  /*********************************** qty is down  *****************************/
 				  try { 
 					  User user = (User) user_request.get_request_args().get(0);
 					  Item item = (Item) user_request.get_request_args().get(1);
@@ -202,7 +203,7 @@ public class EchoServer extends AbstractServer
 						  CatalogItem catalogitem = (CatalogItem) item;
 						  addtocart.setInt(1, user.user_id); // User id
 						  addtocart.setInt(2, catalogitem.getId());  // id
-						  addtocart.setInt(3, catalogitem.getQty());  // qty
+		//				  addtocart.setInt(3, catalogitem.getQty());  // qty
 						  addtocart.executeUpdate();
 						  client.sendToClient(catalogitem);
 					  }
@@ -288,6 +289,39 @@ public class EchoServer extends AbstractServer
 				      addComplaint.setInt(1, idItem);
 				      addComplaint.executeUpdate();
 					  client.sendToClient("#dropCatalog");
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#UpdateItem")) {
+				  System.out.println("drop");
+				  try { 
+				      CatalogItem updatedItem  = (CatalogItem) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement addComplaint = con.prepareStatement("UPDATE `Products` SET `name`=?,`description`=?,`price`=?,`Color`=?,`Image Path`=? WHERE `Products`.`id` = ?");
+				      addComplaint.setString(1, updatedItem.getName());
+				      addComplaint.setString(2, updatedItem.getDescription());
+				      addComplaint.setDouble(3, updatedItem.getPrice());
+				      addComplaint.setString(4, updatedItem.getColor());
+				      addComplaint.setString(5, updatedItem.getImagePath());
+				      addComplaint.setInt(6, updatedItem.getId());
+				      addComplaint.executeUpdate();
+					  client.sendToClient("#UpdateItem");
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }			 
+			  else if(user_request.get_request_str().equalsIgnoreCase("#delCatalogItem")) {
+				  System.out.println("delete catalog item");
+				  try { 
+					  int idItem  = (int) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement addComplaint = con.prepareStatement("DELETE FROM `Products` WHERE `id`=?");
+				      addComplaint.setInt(1, idItem);
+					  addComplaint.executeUpdate();
+					  client.sendToClient("#delCatalogItem");
 					  
 				  }catch(Exception e) {
 					  System.out.println(e);

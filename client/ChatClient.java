@@ -126,11 +126,19 @@ public class ChatClient extends AbstractClient
 		  flagServerAns=true;
 		  System.out.println("drop flag true\n");
 	  }
+	  else if(msg.toString().equals("#UpdateItem")) {
+		  flagServerAns=true;
+		  System.out.println("update catalog item flag true\n");
+	  }
+	  else if(msg.toString().equals("#delCatalogItem")) {
+		  flagServerAns=true;
+		  System.out.println("delete catalog item flag true\n");
+	  }
 	  else{
 		  clientUI.display(msg.toString());
 	  }
   }
-
+  
    /**
    * This method handles all data coming from the UI            
    *

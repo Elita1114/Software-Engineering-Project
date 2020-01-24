@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +27,8 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
 	@FXML private Label Color;
 	@FXML private Label Price;
 	@FXML private ImageView ivIm1;
+	
+
 	
 	@FXML private AnchorPane pane;
 	
@@ -91,13 +94,16 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
             Description.setText(String.valueOf(item.getDescription()));
             Color.setText(String.valueOf(item.getColor()));
             Price.setText(String.valueOf(item.getPrice()));
-            ivIm1.setImage(new Image(item.getImagePath()));
+            if(!item.getImagePath().contentEquals(""))
+            	ivIm1.setImage(new Image(item.getImagePath()));
 
             
-            
             dropBtn.setVisible(false);
-            if(user!=null && user.status!=Status.client )
+            if(user!=null) {
+            if(user.status!=Status.client )
                 dropBtn.setVisible(true);
+
+            }
             
             setText(null);
             setGraphic(pane);

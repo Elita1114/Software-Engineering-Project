@@ -8,38 +8,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="pane" prefHeight="221.0" prefWidth="454.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="pane" prefHeight="253.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="Title" layoutX="241.0" layoutY="21.0" prefHeight="28.0" prefWidth="185.0" text="Label" textAlignment="CENTER">
-         <font>
-            <Font name="Gisha Bold" size="25.0" />
-         </font></Label>
-      <Label fx:id="Description" layoutX="241.0" layoutY="51.0" prefHeight="30.0" prefWidth="185.0" text="Label">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-      <Label fx:id="Color" layoutX="361.0" layoutY="82.0" prefHeight="23.0" prefWidth="93.0" text="Label">
-         <font>
-            <Font name="Gisha" size="14.0" />
-         </font></Label>
       <ImageView fx:id="ivIm1" fitHeight="200.0" fitWidth="200.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="tvColor" layoutX="241.0" layoutY="80.0" text="Primary Color:">
+      <Label fx:id="tvColor" layoutX="240.0" layoutY="132.0" text="Primary Color:">
          <font>
             <Font name="Gisha" size="18.0" />
          </font></Label>
-      <Label fx:id="tvPrice" layoutX="241.0" layoutY="107.0" text="Price:">
+      <Label fx:id="tvPrice" layoutX="240.0" layoutY="157.0" text="Price:">
          <font>
             <Font name="Gisha" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="Price" layoutX="361.0" layoutY="109.0" prefHeight="23.0" prefWidth="93.0" text="Label">
+      <Button fx:id="deleteBtn" layoutX="480.0" layoutY="221.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="23.0" prefWidth="99.0" text="delete" />
+      <TextField fx:id="Description" layoutX="240.0" layoutY="87.0" prefHeight="31.0" prefWidth="152.0" />
+      <TextField fx:id="Color" layoutX="365.0" layoutY="128.0" />
+      <TextField fx:id="Price" layoutX="365.0" layoutY="156.0" />
+      <TextField fx:id="Title" layoutX="235.0" layoutY="20.0" prefHeight="60.0" prefWidth="294.0">
          <font>
-            <Font name="Gisha" size="14.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
-      </Label>
-      <Button fx:id="btnAdd" layoutX="284.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: red;" text="drop">
-         <font>
-            <Font name="System Bold" size="21.0" />
-         </font></Button>
+      </TextField>
+      <Button fx:id="saveBtn" layoutX="480.0" layoutY="192.0" mnemonicParsing="false" onAction="#saveItem" prefHeight="25.0" prefWidth="99.0" text="save" />
+      <Label layoutX="14.0" layoutY="219.0" text="path" />
+      <TextField fx:id="Path" layoutX="40.0" layoutY="215.0" prefHeight="25.0" prefWidth="160.0" />
+      <RadioButton fx:id="AddCatalogRadio" layoutX="248.0" layoutY="196.0" mnemonicParsing="false" text="addToCatalog" />
+      <Label layoutX="234.0" layoutY="219.0" text="id:" />
+      <Label fx:id="IDlablel" layoutX="255.0" layoutY="219.0" text="Label" />
    </children>
 </AnchorPane>

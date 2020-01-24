@@ -7,25 +7,34 @@ public class Item implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 828961710358073954L;
-	private int qty;
-	private String name;
-	private String description;
-	private String color;
-	
-	public Item(String name_, String description_, String color_, int qty_){
-		setQty(qty_);
-		name=name_;
-		description=description_;
-		color=color_;
-	}
+	protected String name;
+	protected String description;
+	protected String color;
+	protected int id;
+
 	
 	public Item(String name_, String description_, String color_){
-		setQty(1);
+		name=name_;
+		description=description_;
+		color=color_;
+		id=-1;
+	}
+	
+	public Item(String name_, String description_, String color_,int id_){
+		name=name_;
+		description=description_;
+		color=color_;
+		id=id_;
+	}
+	
+
+	/*
+	public Item(String name_, String description_, String color_){
 		name=name_;
 		description=description_;
 		color=color_;
 	}
-	
+	*/
 	public String getName() {
 		return name;
 	}
@@ -57,15 +66,17 @@ public class Item implements Serializable{
 	      Item other_item = (Item) obj; 	          
 	      // comparing the state of argument with  
 	      // the state of 'this' Object. 
-	      return (other_item.name == this.name && other_item.description == this.description && other_item.color == this.color); 
+	      return (other_item.name == this.name && other_item.description == this.description && other_item.id == this.id ); 
 	}
 
-	public int getQty() {
-		return qty;
-	}
 
-	public void setQty(int qty) {
-		this.qty = qty;
+
+
+	public void setId(int id_) {
+		id=id_;
 	}
 	
+	public int getId() {
+		return id;
+	}
 }

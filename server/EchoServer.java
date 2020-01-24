@@ -432,7 +432,7 @@ public class EchoServer extends AbstractServer
 		    	  rs=stmt.executeQuery("select * from Products WHERE `inCatalog`=1"); 
 		      }
 		      else {
-		    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+		    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?, `inCatalog`=1");
 		    	  prep_stmt.setInt(1, type);
 		    	  rs = prep_stmt.executeQuery();
 		      }

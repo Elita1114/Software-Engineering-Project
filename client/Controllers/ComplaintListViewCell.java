@@ -27,13 +27,16 @@ public class ComplaintListViewCell extends ListCell<Complaint>{
 	@FXML private Label tvUserID;
 	@FXML private Text tvHandled;
 	@FXML private Text tvUrgent;
-	
+	@FXML private Label tvUserIDtitle;
 	@FXML private AnchorPane pane;
 	
+	private boolean flag;
 	public Complaint complaint;
 	private FXMLLoader mLLoader;
 	
-	
+	public ComplaintListViewCell(boolean flag_) {
+		flag=flag_;
+	}
 	@Override
     protected void updateItem(Complaint item, boolean empty) {
         super.updateItem(item, empty);
@@ -58,6 +61,13 @@ public class ComplaintListViewCell extends ListCell<Complaint>{
 
             tvTitle.setText(String.valueOf(item.title));
             tvUserID.setText(String.valueOf(item.userID));
+            tvUserIDtitle.setText("User ID: " );
+            if(flag) {
+            	int hours = item.timer/60;
+            	int minutes=item.timer%60;
+            	tvUserIDtitle.setText("Time Left: " );
+            	tvUserID.setText(hours+" hours and "+minutes+" minutes.");
+            }
             
             tvUrgent.setVisible(false);
             if(item.status)

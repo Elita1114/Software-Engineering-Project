@@ -40,7 +40,7 @@ public class MainController {
 	@FXML private TabPane tabPane;
 
 	@FXML public Tab tabHandleComplaint;
-
+	@FXML public Tab tabComplaint;
 
 	
 	@FXML
@@ -95,6 +95,7 @@ public class MainController {
 	@FXML
 	public final EventHandler<Event> handleClick(){
 		if(tabHandleComplaint.isSelected()) {
+			
 			handleComplaintController.complaintsOpened();
 			
 			System.out.println("handle was clicked");
@@ -105,6 +106,20 @@ public class MainController {
 		
 	}
 	
+	
+	@FXML
+	public final EventHandler<Event> complaintClick(){
+		if(tabComplaint.isSelected()) {
+			if(client.client.getlogged())
+				complaintController.complaintsOpened();
+			
+			System.out.println("handle was clicked");
+			
+			
+		}
+		return null;
+		
+	}
 	
 
 	

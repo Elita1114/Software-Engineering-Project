@@ -8,27 +8,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="pane" prefHeight="77.0" prefWidth="322.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="pane" prefHeight="77.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="tvTitle" layoutX="14.0" layoutY="14.0" prefHeight="28.0" prefWidth="185.0" text="Title" textAlignment="CENTER">
          <font>
             <Font name="Gisha Bold" size="18.0" />
          </font></Label>
-      <Label layoutX="14.0" layoutY="42.0" text="User id: ">
+      <Label fx:id="tvUserIDtitle" layoutX="14.0" layoutY="42.0" text="User id: ">
          <font>
             <Font name="Gisha" size="18.0" />
          </font></Label>
-      <Label fx:id="tvUserID" layoutX="79.0" layoutY="42.0" text="id">
+      <Label fx:id="tvUserID" layoutX="103.0" layoutY="46.0" text="id">
          <font>
-            <Font name="Gisha" size="18.0" />
+            <Font name="Gisha" size="14.0" />
          </font>
       </Label>
-      <Text fx:id="tvHandled" fill="#339041" layoutX="224.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handled" visible="false">
+      <Text fx:id="tvHandled" fill="#339041" layoutX="346.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handled" visible="false">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="tvUrgent" fill="RED" layoutX="224.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Urgent" visible="false">
+      <Text fx:id="tvUrgent" fill="RED" layoutX="346.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Urgent" visible="false">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

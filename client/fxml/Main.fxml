@@ -44,9 +44,14 @@
                   <fx:include fx:id="handleComplaint" source="HandleComplaint.fxml" />
                </content>
             </Tab>
-            <Tab fx:id="tabAddItem" text="add item">
+            <Tab fx:id="addCatalogItem" text="add item">
                <content>
                   <fx:include fx:id="addCatalogItem" source="AddItem.fxml" />
+               </content>
+            </Tab>
+            <Tab fx:id="updateUser" text="Update User">
+               <content>
+                  <fx:include  fx:id="updateUser" source="UpdateUser.fxml" />
                </content>
             </Tab>
          </tabs>

@@ -33,7 +33,10 @@ public class MainController {
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
 	@FXML private OrderController orderController;//update order controller
 	@FXML private HandleComplaintController handleComplaintController;//update order controller
-	
+	@FXML private addItemController addCatalogItemController;
+	@FXML private UpdateUserController updateUserController;
+
+
 
 	static public ClientConsole client;
 	private boolean flagCheck=false;

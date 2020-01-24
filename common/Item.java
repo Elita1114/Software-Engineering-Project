@@ -66,7 +66,7 @@ public class Item implements Serializable{
 	      Item other_item = (Item) obj; 	          
 	      // comparing the state of argument with  
 	      // the state of 'this' Object. 
-	      return (other_item.name == this.name && other_item.description == this.description && other_item.id == this.id ); 
+	      return (other_item.name == this.name && other_item.description == this.description && other_item.id == this.id && other_item.color == this.color); 
 	}
 
 

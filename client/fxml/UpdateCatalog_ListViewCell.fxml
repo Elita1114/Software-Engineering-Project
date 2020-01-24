@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="pane" prefHeight="253.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="pane" prefHeight="321.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="ivIm1" fitHeight="200.0" fitWidth="200.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="tvColor" layoutX="240.0" layoutY="132.0" text="Primary Color:">
@@ -20,7 +20,7 @@
             <Font name="Gisha" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="deleteBtn" layoutX="480.0" layoutY="221.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="23.0" prefWidth="99.0" text="delete" />
+      <Button fx:id="deleteBtn" layoutX="481.0" layoutY="288.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="23.0" prefWidth="99.0" text="delete" />
       <TextField fx:id="Description" layoutX="240.0" layoutY="87.0" prefHeight="31.0" prefWidth="152.0" />
       <TextField fx:id="Color" layoutX="365.0" layoutY="128.0" />
       <TextField fx:id="Price" layoutX="365.0" layoutY="156.0" />
@@ -29,11 +29,15 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </TextField>
-      <Button fx:id="saveBtn" layoutX="480.0" layoutY="192.0" mnemonicParsing="false" onAction="#saveItem" prefHeight="25.0" prefWidth="99.0" text="save" />
+      <Button fx:id="saveBtn" layoutX="481.0" layoutY="259.0" mnemonicParsing="false" onAction="#saveItem" prefHeight="25.0" prefWidth="99.0" text="save" />
       <Label layoutX="14.0" layoutY="219.0" text="path" />
       <TextField fx:id="Path" layoutX="40.0" layoutY="215.0" prefHeight="25.0" prefWidth="160.0" />
-      <RadioButton fx:id="AddCatalogRadio" layoutX="248.0" layoutY="196.0" mnemonicParsing="false" text="addToCatalog" />
-      <Label layoutX="234.0" layoutY="219.0" text="id:" />
-      <Label fx:id="IDlablel" layoutX="255.0" layoutY="219.0" text="Label" />
+      <RadioButton fx:id="AddCatalogRadio" layoutX="249.0" layoutY="263.0" mnemonicParsing="false" text="addToCatalog" />
+      <Label layoutX="235.0" layoutY="286.0" text="id:" />
+      <Label fx:id="IDlablel" layoutX="256.0" layoutY="286.0" text="Label" />
+      <Label layoutX="240.0" layoutY="189.0" prefHeight="17.0" prefWidth="43.0" text="type:" />
+      <TextField fx:id="typeField" layoutX="363.0" layoutY="185.0" />
+      <Label layoutX="240.0" layoutY="215.0" text="sale:" />
+      <TextField fx:id="saleField" layoutX="363.0" layoutY="211.0" />
    </children>
 </AnchorPane>

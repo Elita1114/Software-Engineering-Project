@@ -228,7 +228,7 @@ public class EchoServer extends AbstractServer
 				      
 				      
 				      while(rs.next()) { 
-				    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8)));
+				    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8),Integer.valueOf(rs.getString(4)),Float.valueOf(rs.getString(10))));
 				      }
 				      
 				      con.close();  
@@ -299,13 +299,15 @@ public class EchoServer extends AbstractServer
 				  try { 
 				      CatalogItem updatedItem  = (CatalogItem) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement addComplaint = con.prepareStatement("UPDATE `Products` SET `name`=?,`description`=?,`price`=?,`Color`=?,`Image Path`=? WHERE `Products`.`id` = ?");
+				      PreparedStatement addComplaint = con.prepareStatement("UPDATE `Products` SET `name`=?,`description`=?,`price`=?,`Color`=?,`Image Path`=? ,`type`=? ,`sale`=? WHERE `Products`.`id` = ?");
 				      addComplaint.setString(1, updatedItem.getName());
 				      addComplaint.setString(2, updatedItem.getDescription());
 				      addComplaint.setDouble(3, updatedItem.getPrice());
 				      addComplaint.setString(4, updatedItem.getColor());
 				      addComplaint.setString(5, updatedItem.getImagePath());
-				      addComplaint.setInt(6, updatedItem.getId());
+				      addComplaint.setInt(6, updatedItem.getType());
+				      addComplaint.setDouble(7, updatedItem.getSale());
+				      addComplaint.setInt(8, updatedItem.getId());
 				      addComplaint.executeUpdate();
 					  client.sendToClient("#UpdateItem");
 					  
@@ -417,7 +419,7 @@ public class EchoServer extends AbstractServer
 		      
 		      client.sendToClient("getting catalog");
 		      while(rs.next()) { 
-		    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8)));
+		    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(6),rs.getFloat(5),rs.getInt(1),rs.getString(8),Integer.valueOf(rs.getString(4)),Float.valueOf(rs.getString(10))));
 		    	  System.out.println("getting item");
 		      }
 		      con.close();  

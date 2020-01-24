@@ -58,6 +58,15 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
     @FXML
     private Label IDlablel;
 
+
+    @FXML
+    private TextField typeField;
+    
+
+    @FXML
+    private TextField saleField;
+
+    
     @FXML
     private ImageView ivIm1;
 	private FXMLLoader mLLoader;
@@ -117,11 +126,14 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 
             }
 
+            //filling field with data
             Title.setText(String.valueOf(item.getName()));
             Description.setText(String.valueOf(item.getDescription()));
             Color.setText(String.valueOf(item.getColor()));
             Price.setText(String.valueOf(item.getPrice()));
             IDlablel.setText(String.valueOf(item.getId()));
+            saleField.setText(String.valueOf(item.getSale()));
+            typeField.setText(String.valueOf(item.getType()));
             if(!item.getImagePath().contentEquals(""))
             	ivIm1.setImage(new Image(item.getImagePath()));
             Path.setText(String.valueOf(item.getImagePath()));
@@ -135,13 +147,14 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	
     @FXML
     void saveItem(ActionEvent event) {
+    	//save the updated flower
         String titel= Title.getText(), description= Description.getText(), color=Color.getText(), path=Path.getText();
-        float price=Float.valueOf(Price.getText());
-        int id= Integer.parseInt(IDlablel.getText());
+        float price=Float.valueOf(Price.getText()),sale=Float.valueOf(saleField.getText());
+        int id= Integer.parseInt(IDlablel.getText()), type =Integer.parseInt(typeField.getText());
 
     	ArrayList<Object> args =  new ArrayList<Object>();
     	
-    	CatalogItem updatedItem = new CatalogItem(titel,description, color,price,id,path);
+    	CatalogItem updatedItem = new CatalogItem(titel,description, color,price,id,path,type,sale);
     	args.add(updatedItem);
     	UserRequest user_request = new UserRequest("#UpdateItem",  args);
     	Platform.runLater(new Runnable() {

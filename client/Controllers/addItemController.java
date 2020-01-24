@@ -3,6 +3,7 @@ package client.Controllers;
 
 import java.util.ArrayList;
 
+import common.CatalogItem;
 import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
@@ -13,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
 public class addItemController {
-    User user= MainController.getClient().client.getLoggedUser();
+    User user;
 
     @FXML
     private Button addItem;
@@ -41,14 +42,16 @@ public class addItemController {
 
     @FXML
     void add(ActionEvent event) {
-    	/*
+    	user= MainController.getClient().client.getLoggedUser();
         String titel= nameText.getText(), description= descriptionText.getText(), color=colorText.getText(), path=pathText.getText();
         float price=Float.valueOf(priceText.getText()),sale=Float.valueOf(saleText.getText());
-        int type =Integer.parseInt(typeText.getText());
+        int type =Integer.parseInt(typeText.getText()),store = user.store;
     	
     	ArrayList<Object> args =  new ArrayList<Object>();
-    	args.add(myItem.getId());
-    	UserRequest user_request = new UserRequest("#delCatalogItem",  args);
+    	
+    	CatalogItem updatedItem = new CatalogItem(titel,description, color,price,-1,path,type,sale,store,1);
+    	args.add(updatedItem);
+    	UserRequest user_request = new UserRequest("#addCatalogItem",  args);
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
@@ -56,7 +59,7 @@ public class addItemController {
     	    	MainController.getClient().client.handleMessageFromClientUI(user_request);
     	    	System.out.println("finished_1");
     	    	MainController.getClient().client.flagServerAns=false;
-    	    	System.out.println("set delete Catalog Item flag\n");
+    	    	System.out.println("set add catalog Item flag\n");
 	  			while(!MainController.getClient().client.flagServerAns) {
 	  				try {
 	  					Thread.sleep(100);
@@ -67,7 +70,7 @@ public class addItemController {
 	  				
 	  			}
     	    }
-    	});*/
+    	});
     }
 
 }

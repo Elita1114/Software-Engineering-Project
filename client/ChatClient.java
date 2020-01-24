@@ -134,6 +134,10 @@ public class ChatClient extends AbstractClient
 		  flagServerAns=true;
 		  System.out.println("delete catalog item flag true\n");
 	  }
+	  else if(msg.toString().equals("#addCatalogItem")) {
+		  flagServerAns=true;
+		  System.out.println("add catalog item flag true\n");
+	  }
 	  else{
 		  clientUI.display(msg.toString());
 	  }

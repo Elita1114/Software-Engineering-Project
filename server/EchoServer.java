@@ -228,9 +228,8 @@ public class EchoServer extends AbstractServer
 				      
 				      
 				      while(rs.next()) { 
-				    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8),Integer.valueOf(rs.getString(4)),Float.valueOf(rs.getString(10))));
+				    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(6),rs.getFloat(5),rs.getInt(1),rs.getString(8),rs.getInt(4),Float.valueOf(rs.getString(10)),rs.getInt(9),rs.getInt(11)));
 				      }
-				      
 				      con.close();  
 				      client.sendToClient(itemList);  
 				  }catch(Exception e) {
@@ -285,9 +284,9 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  int idItem  = (int) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement addComplaint = con.prepareStatement("UPDATE `Products` SET `inCatalog` = '0' WHERE `Products`.`id` = ?");
-				      addComplaint.setInt(1, idItem);
-				      addComplaint.executeUpdate();
+				      PreparedStatement dropCatalogItem = con.prepareStatement("UPDATE `Products` SET `inCatalog` = '0' WHERE `Products`.`id` = ?");
+				      dropCatalogItem.setInt(1, idItem);
+				      dropCatalogItem.executeUpdate();
 					  client.sendToClient("#dropCatalog");
 					  
 				  }catch(Exception e) {
@@ -295,20 +294,20 @@ public class EchoServer extends AbstractServer
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#UpdateItem")) {
-				  System.out.println("drop");
+				  System.out.println("update Item");
 				  try { 
 				      CatalogItem updatedItem  = (CatalogItem) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement addComplaint = con.prepareStatement("UPDATE `Products` SET `name`=?,`description`=?,`price`=?,`Color`=?,`Image Path`=? ,`type`=? ,`sale`=? WHERE `Products`.`id` = ?");
-				      addComplaint.setString(1, updatedItem.getName());
-				      addComplaint.setString(2, updatedItem.getDescription());
-				      addComplaint.setDouble(3, updatedItem.getPrice());
-				      addComplaint.setString(4, updatedItem.getColor());
-				      addComplaint.setString(5, updatedItem.getImagePath());
-				      addComplaint.setInt(6, updatedItem.getType());
-				      addComplaint.setDouble(7, updatedItem.getSale());
-				      addComplaint.setInt(8, updatedItem.getId());
-				      addComplaint.executeUpdate();
+				      PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Products` SET `name`=?,`description`=?,`price`=?,`Color`=?,`Image Path`=? ,`type`=? ,`sale`=? WHERE `Products`.`id` = ?");
+				      updateItemSQL.setString(1, updatedItem.getName());
+				      updateItemSQL.setString(2, updatedItem.getDescription());
+				      updateItemSQL.setDouble(3, updatedItem.getPrice());
+				      updateItemSQL.setString(4, updatedItem.getColor());
+				      updateItemSQL.setString(5, updatedItem.getImagePath());
+				      updateItemSQL.setInt(6, updatedItem.getType());
+				      updateItemSQL.setDouble(7, updatedItem.getSale());
+				      updateItemSQL.setInt(8, updatedItem.getId());
+				      updateItemSQL.executeUpdate();
 					  client.sendToClient("#UpdateItem");
 					  
 				  }catch(Exception e) {
@@ -320,10 +319,34 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  int idItem  = (int) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement addComplaint = con.prepareStatement("DELETE FROM `Products` WHERE `id`=?");
-				      addComplaint.setInt(1, idItem);
-					  addComplaint.executeUpdate();
+				      PreparedStatement deleteItemSql = con.prepareStatement("DELETE FROM `Products` WHERE `id`=?");
+				      deleteItemSql.setInt(1, idItem);
+				      deleteItemSql.executeUpdate();
 					  client.sendToClient("#delCatalogItem");
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#addCatalogItem")) {
+				  System.out.println("add catalog item");
+				  try { 
+				      CatalogItem addedItem  = (CatalogItem) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement addCayalogItemSql = con.prepareStatement("INSERT INTO `Products`(`name`, `description`, `type`, `price`, `Color`, `maincolor`, `Image Path`, `store`, `sale`, `inCatalog`) VALUES (?,?,?,?,?,?,?,?,?,?)");
+				      addCayalogItemSql.setString(1, addedItem.getName());
+				      addCayalogItemSql.setString(2, addedItem.getDescription());
+				      addCayalogItemSql.setInt(3, addedItem.getType());
+				      addCayalogItemSql.setDouble(4, addedItem.getPrice());
+				      addCayalogItemSql.setString(5, addedItem.getColor());
+				      addCayalogItemSql.setInt(6, 0);/************************** delete this main Color*/
+				      addCayalogItemSql.setString(7, addedItem.getImagePath());
+				      addCayalogItemSql.setInt(8, addedItem.getStore());
+				      addCayalogItemSql.setDouble(9, addedItem.getSale());
+				      addCayalogItemSql.setInt(10, addedItem.getInCatalog());
+				      
+				      addCayalogItemSql.executeUpdate();
+					  client.sendToClient("#addCatalogItem");
 					  
 				  }catch(Exception e) {
 					  System.out.println(e);
@@ -406,7 +429,7 @@ public class EchoServer extends AbstractServer
 		      Statement stmt=con.createStatement();  
 		      ResultSet rs = null;
 		      if(type==0) {
-		    	  rs=stmt.executeQuery("select * from Products"); 
+		    	  rs=stmt.executeQuery("select * from Products WHERE `inCatalog`=1"); 
 		      }
 		      else {
 		    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
@@ -419,7 +442,7 @@ public class EchoServer extends AbstractServer
 		      
 		      client.sendToClient("getting catalog");
 		      while(rs.next()) { 
-		    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(6),rs.getFloat(5),rs.getInt(1),rs.getString(8),Integer.valueOf(rs.getString(4)),Float.valueOf(rs.getString(10))));
+		    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(6),rs.getFloat(5),rs.getInt(1),rs.getString(8),Integer.valueOf(rs.getString(4)),Float.valueOf(rs.getString(10)),rs.getInt(9),rs.getInt(11)));
 		    	  System.out.println("getting item");
 		      }
 		      con.close();  

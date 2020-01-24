@@ -11,17 +11,20 @@ public class CatalogItem extends Item implements Serializable {
 	private String imagePath;
 	private int type;
 	private float sale;
-
+	private int store;
+	private int inCatalog;
 	
 
 	
-	public CatalogItem(String name_, String description_, String color_,float price_,int id_,String imagePath_, int type_, float sale_) {
+	public CatalogItem(String name_, String description_, String color_,float price_,int id_,String imagePath_, int type_, float sale_, int store_,int inCatalog_) {
 		super(name_, description_, color_,id_);
 		// TODO Auto-generated constructor stub
 		price=price_;
 		imagePath=imagePath_;
 		setType(type_);
 		setSale(sale_);
+		setStore(store_);
+		setInCatalog(inCatalog_);
 	}
 	
 	public float getPrice() {
@@ -68,6 +71,22 @@ public class CatalogItem extends Item implements Serializable {
 
 	public void setSale(float sale) {
 		this.sale = sale;
+	}
+
+	public int getStore() {
+		return store;
+	}
+
+	public void setStore(int store) {
+		this.store = store;
+	}
+
+	public int getInCatalog() {
+		return inCatalog;
+	}
+
+	public void setInCatalog(int inCatalog) {
+		this.inCatalog = inCatalog;
 	}
 
 }

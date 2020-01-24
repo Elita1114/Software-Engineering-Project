@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import common.CatalogItem;
 import common.Item;
+import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,6 +22,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
+    User user= MainController.getClient().client.getLoggedUser();
+
+	
     @FXML
     private Label tvColor;
 
@@ -150,11 +154,11 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
     	//save the updated flower
         String titel= Title.getText(), description= Description.getText(), color=Color.getText(), path=Path.getText();
         float price=Float.valueOf(Price.getText()),sale=Float.valueOf(saleField.getText());
-        int id= Integer.parseInt(IDlablel.getText()), type =Integer.parseInt(typeField.getText());
+        int id= Integer.parseInt(IDlablel.getText()), type =Integer.parseInt(typeField.getText()),store = user.store;
 
     	ArrayList<Object> args =  new ArrayList<Object>();
     	
-    	CatalogItem updatedItem = new CatalogItem(titel,description, color,price,id,path,type,sale);
+    	CatalogItem updatedItem = new CatalogItem(titel,description, color,price,id,path,type,sale,store,1);
     	args.add(updatedItem);
     	UserRequest user_request = new UserRequest("#UpdateItem",  args);
     	Platform.runLater(new Runnable() {

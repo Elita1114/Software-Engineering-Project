@@ -40,7 +40,7 @@ public class ChatClient extends AbstractClient
   private User loggedUser;
   private boolean logged;
   private boolean wrongdetails;
-  public boolean flagServerAns;
+  public boolean flagServerAns;//generic flag that is false asking answer from server and true after getting it
   //Constructors ****************************************************
   
   /**

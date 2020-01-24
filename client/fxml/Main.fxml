@@ -34,7 +34,7 @@
                   <fx:include fx:id="updatecatalog" source="CatalogUpdate.fxml" />
                </content>
             </Tab>
-            <Tab text="Send a Complaint">
+            <Tab fx:id="tabComplaint" onSelectionChanged="#complaintClick" text="Complaints">
                <content>
                   <fx:include fx:id="complaint" source="Complaint.fxml" />
                </content>

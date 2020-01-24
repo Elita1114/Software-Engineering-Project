@@ -56,7 +56,7 @@ public class HandleComplaintController {
     
     public HandleComplaintController()  { 
         itemObservableList = FXCollections.observableArrayList();
-        itemObservableList.add(new Complaint("test","test",true,0,0));
+        
     }
     
     public void injectMainController(MainController mainController_) {
@@ -99,7 +99,7 @@ public class HandleComplaintController {
     	Platform.runLater(() -> {
 
     		lvComplaints.setItems(itemObservableList);
-    		lvComplaints.setCellFactory(itemListView  -> new ComplaintListViewCell());
+    		lvComplaints.setCellFactory(itemListView  -> new ComplaintListViewCell(false));
 
         });
     	
@@ -108,7 +108,7 @@ public class HandleComplaintController {
     public void updateComplaint() {
     	//lvItems.getItems().clear();
     	lvComplaints.setItems(itemObservableList);
-    	lvComplaints.setCellFactory(itemListView  -> new ComplaintListViewCell());
+    	lvComplaints.setCellFactory(itemListView  -> new ComplaintListViewCell(false));
     	
     	
     }
@@ -121,25 +121,27 @@ public class HandleComplaintController {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				int x=lvComplaints.getSelectionModel().getSelectedIndex();
-				current=itemObservableList.get(x);
-				tvTitle.setText(current.title);
-				tvDescription.setText(current.description);
-				tvReply.setText(current.reply);
-				if(current.status) {
-					btnSend.setDisable(true);
-					tvRefund.setEditable(false);
-					tvReply.setEditable(false);
-				}
-				else
-				{
-					btnSend.setDisable(false);
-					tvRefund.setEditable(true);
-					tvReply.setEditable(true);
-				}
-				tvRefund.setText(String.valueOf(current.refund));
-				System.out.println("click "+String.valueOf(x));
 				
+				int x=lvComplaints.getSelectionModel().getSelectedIndex();
+				if(x<itemObservableList.size() && x!=-1) {
+					current=itemObservableList.get(x);
+					tvTitle.setText(current.title);
+					tvDescription.setText(current.description);
+					tvReply.setText(current.reply);
+					if(current.status) {
+						btnSend.setDisable(true);
+						tvRefund.setEditable(false);
+						tvReply.setEditable(false);
+					}
+					else
+					{
+						btnSend.setDisable(false);
+						tvRefund.setEditable(true);
+						tvReply.setEditable(true);
+					}
+					tvRefund.setText(String.valueOf(current.refund));
+					System.out.println("click "+String.valueOf(x));
+				}
 			}
 		});
     	

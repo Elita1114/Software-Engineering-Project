@@ -417,8 +417,36 @@ public class EchoServer extends AbstractServer
 		      con.close();  
 		      ComplaintsList complaints=new ComplaintsList(itemList);
 		      client.sendToClient(complaints);  
-		      System.out.println("after send catalog\n");
-		      client.sendToClient("after send catalog\n");  
+		      
+		      
+		  } catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
+    }
+    else if(request.toString().startsWith("#getComplaints")) {
+    	try {
+  		  
+    		 int id= Integer.parseInt(request.toString().split(" ")[1]);
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+
+		      
+		      PreparedStatement getComplaint = con.prepareStatement("select * from Complaint WHERE user = ?");
+		      getComplaint.setInt(1, id);
+		      ResultSet rs = getComplaint.executeQuery();
+		      
+		      
+		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
+
+		      while(rs.next()) { 
+		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(8)));
+		    	  System.out.println("getting item");
+		      }
+		      con.close();  
+		      ComplaintsList complaints=new ComplaintsList(itemList,"#userGetComplaints");
+		      client.sendToClient(complaints);  
 		      
 		      
 		  } catch(Exception e) {

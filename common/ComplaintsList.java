@@ -9,7 +9,6 @@ public class ComplaintsList implements Serializable {
 	
 	public ComplaintsList(ArrayList<Complaint> itemList_) {
 		itemList=itemList_;
-		
 	}
 	
 	public String toString() {

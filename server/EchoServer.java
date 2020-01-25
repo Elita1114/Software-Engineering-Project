@@ -202,7 +202,6 @@ public class EchoServer extends AbstractServer
 						  CatalogItem catalogitem = (CatalogItem) item;
 						  addtocart.setInt(1, user.user_id); // User id
 						  addtocart.setInt(2, catalogitem.getId());  // id
-						  addtocart.setInt(3, catalogitem.getQty());  // qty
 						  addtocart.executeUpdate();
 						  client.sendToClient(catalogitem);
 					  }
@@ -352,17 +351,6 @@ public class EchoServer extends AbstractServer
         return;
       }
       client.setInfo("loginID", request.toString().substring(7));
-    }
-    else if(request.toString().equalsIgnoreCase("#test")) {
-    	Item item=new Item("title","desc","color");
-    	try {
-			client.sendToClient("testing #test");
-			client.sendToClient(item);
-			client.sendToClient("after test");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     }
     else if (request.toString().startsWith("#getCatalog"))
     {

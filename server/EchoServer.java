@@ -193,17 +193,20 @@ public class EchoServer extends AbstractServer
 			  {
 				  try { 
 					  User user = (User) user_request.get_request_args().get(0);
-					  Item item = (Item) user_request.get_request_args().get(1);
+					  CartItem citem = (CartItem) user_request.get_request_args().get(1);
 					  con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-					  PreparedStatement addtocart = con.prepareStatement("INSERT INTO `Cart`(`userID`, `productID`, `quantity`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+					  PreparedStatement addtocart = con.prepareStatement("INSERT INTO `Cart`(`userID`, `productID`, `quantity`, `name`, `price`, `description`) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				      
-					  if(item instanceof CatalogItem)
+					  if(citem.getItem() instanceof CatalogItem)
 					  {
-						  CatalogItem catalogitem = (CatalogItem) item;
 						  addtocart.setInt(1, user.user_id); // User id
-						  addtocart.setInt(2, catalogitem.getId());  // id
+						  addtocart.setInt(2, ((CatalogItem)citem.getItem()).getId());  // id
+						  addtocart.setInt(3, citem.getQty());  // qty
+						  addtocart.setString(4, ((CatalogItem)citem.getItem()).getName());  // Name
+						  addtocart.setFloat(5, ((CatalogItem)citem.getItem()).getPrice());  // Price
+						  addtocart.setString(6, ((CatalogItem)citem.getItem()).getDescription());  // Description
 						  addtocart.executeUpdate();
-						  client.sendToClient(catalogitem);
+						  client.sendToClient(citem);
 					  }
 					  
 				  }catch(Exception e) {
@@ -226,7 +229,7 @@ public class EchoServer extends AbstractServer
 				      
 				      
 				      while(rs.next()) { 
-				    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8)));
+				    	  itemList.add(new Item(rs.getInt("productID"), rs.getString("name"), rs.getString("description")));
 				      }
 				      
 				      con.close();  
@@ -354,6 +357,7 @@ public class EchoServer extends AbstractServer
     }
     else if (request.toString().startsWith("#getCatalog"))
     {
+    	System.out.println("1");
     	try {
     		  int type= Integer.parseInt(request.toString().split(" ")[1]);
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
@@ -367,18 +371,20 @@ public class EchoServer extends AbstractServer
 		    	  prep_stmt.setInt(1, type);
 		    	  rs = prep_stmt.executeQuery();
 		      }
-		      
+		      System.out.println("2");
 		      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
 		      
-		      
+		      System.out.println("3");
 		      client.sendToClient("getting catalog");
-		      while(rs.next()) { 
-		    	  itemList.add(new CatalogItem(rs.getString(2),rs.getString(3),rs.getString(7),rs.getFloat(5),rs.getInt(1),rs.getString(8)));
+		      while(rs.next()) {
+		    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path")));
+		    	  System.out.println("2");
 		    	  System.out.println("getting item");
 		      }
+		      System.out.println("2");
 		      con.close();  
 		      Catalog catalog=new Catalog(itemList,true);
-		      
+		      System.out.println("3");
 		      client.sendToClient(catalog);  
 		      System.out.println("after send catalog\n");
 		      client.sendToClient("after send catalog\n");  

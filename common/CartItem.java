@@ -9,7 +9,23 @@ public class CartItem  implements Serializable {
 	private Item item;
 	
 	public CartItem(int id_, String name_, String description_, String color_, int qty_) {
-		item = new Item(id_, name_, description_, color_);
-		qty = qty_;
+		setItem(new Item(id_, name_, description_, color_));
+		setQty(qty_);
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public int getQty() {
+		return qty;
+	}
+
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
 }

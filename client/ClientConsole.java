@@ -184,7 +184,7 @@ public class ClientConsole extends Application implements ChatIF
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println(chat.flagCatalog);  
+		System.out.println("asdf" + chat.flagCatalog);  
 	  }
 	  while(!chat.flagCatalog);
 

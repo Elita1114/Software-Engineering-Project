@@ -39,6 +39,14 @@ public class Item implements Serializable{
 		color=color_;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id_) {
+		id = id_;
+	}
+	
 	@Override 
 	public boolean equals(Object obj)
 	{
@@ -52,13 +60,4 @@ public class Item implements Serializable{
 	      // the state of 'this' Object. 
 	      return (other_item.name == this.name && other_item.description == this.description && other_item.color == this.color); 
 	}
-
-	public int getQty() {
-		return qty;
-	}
-
-	public void setQty(int qty) {
-		this.qty = qty;
-	}
-	
 }

@@ -64,7 +64,13 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
     	});
     }
     	
-	
+
+    @FXML
+    void clickadd(ActionEvent event) {
+
+    }
+    
+    
 	@Override
     protected void updateItem(CatalogItem item, boolean empty) {
         super.updateItem(item, empty);

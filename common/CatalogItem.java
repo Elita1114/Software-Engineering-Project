@@ -13,7 +13,7 @@ public class CatalogItem extends Item implements Serializable {
 	
 	
 	public CatalogItem(String name_, String description_, String color_,float price_,int id_,String imagePath_) {
-		super(name_, description_, color_);
+		super(id_, name_, description_, color_);
 		// TODO Auto-generated constructor stub
 		price=price_;
 		id=id_;

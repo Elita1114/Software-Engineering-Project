@@ -13,7 +13,7 @@ public class CustomIteam  extends Item implements Serializable{
 	// private Range<Integer> price_range
 	
 	public CustomIteam(String type, String description, String color) {
-		super("", description, color);
+		super(-1, "", description, color);
 		this.type = type;
 	}
 

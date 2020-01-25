@@ -13,10 +13,16 @@ public class Item implements Serializable{
 	private String color;
 	
 	public Item(int id_, String name_, String description_, String color_){
-		id = id_;
+		setId(id_);
 		name=name_;
 		description=description_;
 		color=color_;
+	}
+	
+	public Item(int id_, String name_, String description_){
+		setId(id_);
+		name=name_;
+		description=description_;
 	}
 
 	public String getName() {
@@ -53,12 +59,11 @@ public class Item implements Serializable{
 	      return (other_item.name == this.name && other_item.description == this.description && other_item.color == this.color); 
 	}
 
-	public int getQty() {
-		return qty;
+	public int getId() {
+		return id;
 	}
 
-	public void setQty(int qty) {
-		this.qty = qty;
+	public void setId(int id) {
+		this.id = id;
 	}
-	
 }

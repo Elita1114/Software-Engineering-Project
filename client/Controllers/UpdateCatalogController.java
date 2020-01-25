@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import client.MyThread;
+
 import common.Catalog;
 import common.CatalogItem;
 import common.Item;

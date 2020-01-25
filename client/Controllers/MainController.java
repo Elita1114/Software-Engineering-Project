@@ -21,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 
 public class MainController {
 	
@@ -35,9 +36,11 @@ public class MainController {
 
 
 	static public ClientConsole client;
+	private boolean flagCheck=false;
 	@FXML private TabPane tabPane;
 
 	@FXML public Tab tabHandleComplaint;
+	@FXML public Tab tabComplaint;
 
 	
 	@FXML
@@ -74,9 +77,25 @@ public class MainController {
 	}
 	
 	
+	static public void notifyCustomerService() {
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Alert alert = new Alert(AlertType.WARNING);
+    	    	alert.setTitle("Warning");
+    	    	alert.setHeaderText(null);
+    	    	alert.setContentText("There are urgent unhandled complaints.");
+    	    	alert.showAndWait();
+			}
+		});
+	}
+	
 	@FXML
 	public final EventHandler<Event> handleClick(){
 		if(tabHandleComplaint.isSelected()) {
+			
 			handleComplaintController.complaintsOpened();
 			
 			System.out.println("handle was clicked");
@@ -86,6 +105,25 @@ public class MainController {
 		return null;
 		
 	}
+	
+	
+	@FXML
+	public final EventHandler<Event> complaintClick(){
+		if(tabComplaint.isSelected()) {
+			if(client.client.getlogged())
+				complaintController.complaintsOpened();
+			
+			System.out.println("handle was clicked");
+			
+			
+		}
+		return null;
+		
+	}
+	
+
+	
+	
 	
 /*
 	public void loadCatalog() {

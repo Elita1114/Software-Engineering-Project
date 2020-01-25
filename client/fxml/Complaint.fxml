@@ -6,22 +6,47 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="481.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.ComplaintController">
-   <children>
-      <TextArea fx:id="tvDescription" layoutX="116.0" layoutY="179.0" prefHeight="226.0" prefWidth="497.0" promptText="description" />
-      <Text layoutX="48.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-      <Text layoutX="48.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
-      <Text layoutX="48.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send a Complaint">
-         <font>
-            <Font name="System Bold" size="25.0" />
-         </font>
-      </Text>
-      <Text layoutX="48.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="We commit to respond within 24 hours. ">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <TextField fx:id="tvTitle" layoutX="116.0" layoutY="134.0" prefHeight="25.0" prefWidth="497.0" promptText="title" />
-      <Button fx:id="btnSend" layoutX="116.0" layoutY="426.0" mnemonicParsing="false" onAction="#sendPressed" text="Send" />
-   </children>
-</AnchorPane>
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.ComplaintController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="925.0" prefWidth="804.0">
+         <children>
+		      <TextArea fx:id="tvDescription" layoutX="116.0" layoutY="179.0" prefHeight="226.0" prefWidth="497.0" promptText="description" />
+		      <Text layoutX="48.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
+		      <Text layoutX="48.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
+		      <Text layoutX="48.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send a Complaint">
+		         <font>
+		            <Font name="System Bold" size="25.0" />
+		         </font>
+		      </Text>
+		      <Text layoutX="48.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="We commit to respond within 24 hours. ">
+		         <font>
+		            <Font size="18.0" />
+		         </font>
+		      </Text>
+		      <TextField fx:id="tvTitle" layoutX="116.0" layoutY="134.0" prefHeight="25.0" prefWidth="497.0" promptText="title" />
+		      <Button fx:id="btnSend" layoutX="116.0" layoutY="426.0" mnemonicParsing="false" onAction="#sendPressed" text="Send" />
+            <Text layoutX="34.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Previous Complaints">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <ListView fx:id="lvComplaints" layoutX="38.0" layoutY="527.0" onMouseClicked="#mouseClicked" prefHeight="377.0" prefWidth="464.0" />
+            <AnchorPane layoutX="504.0" layoutY="527.0" prefHeight="335.0" prefWidth="286.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title:" />
+                  <Text layoutX="15.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" />
+                  <TextArea fx:id="tvDescription1" editable="false" layoutX="39.0" layoutY="77.0" prefHeight="91.0" prefWidth="236.0" promptText="complaint" />
+                  <TextField fx:id="tvTitle1" editable="false" layoutX="39.0" layoutY="31.0" prefHeight="25.0" prefWidth="236.0" promptText="title" />
+                  <Text layoutX="13.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reply:" />
+                  <TextArea fx:id="tvReply" editable="false" layoutX="37.0" layoutY="186.0" prefHeight="63.0" prefWidth="236.0" promptText="reply" />
+                  <TextField fx:id="tvRefund" editable="false" layoutX="39.0" layoutY="268.0" prefHeight="25.0" prefWidth="236.0" promptText="refund amount" />
+                  <Text layoutX="13.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Refund:" />
+               </children>
+            </AnchorPane>
+		   </children>
+         
+         
+         
+         </AnchorPane>
+  </content>
+</ScrollPane>

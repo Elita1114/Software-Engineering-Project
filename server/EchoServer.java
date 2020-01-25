@@ -268,13 +268,14 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  Complaint complaint  = (Complaint) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement addComplaint = con.prepareStatement("INSERT INTO `Complaint`(`description`, `Status`, `refund`, `user`, `title`,`reply`) VALUES (?,?,?,?,?,?)");
+				      PreparedStatement addComplaint = con.prepareStatement("INSERT INTO `Complaint`(`description`, `Status`, `refund`, `user`, `title`,`reply`,`timer`) VALUES (?,?,?,?,?,?,?)");
 				      addComplaint.setString(1, complaint.description);
 				      addComplaint.setBoolean(2, complaint.status);
 				      addComplaint.setDouble(3, complaint.refund);
 				      addComplaint.setInt(4, complaint.userID);
 				      addComplaint.setString(5, complaint.title);
 				      addComplaint.setString(6, complaint.reply);
+				      addComplaint.setInt(7, complaint.timer);
 				      addComplaint.executeUpdate();
 					  client.sendToClient(new ReturnStatus("#addComplaint", true));
 					  con.close();
@@ -354,7 +355,6 @@ public class EchoServer extends AbstractServer
       }
       client.setInfo("loginID", request.toString().substring(7));
     }
-
     else if (request.toString().startsWith("#getCatalog"))
     {
     	System.out.println("1");
@@ -407,14 +407,65 @@ public class EchoServer extends AbstractServer
 		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
 
 		      while(rs.next()) { 
-		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4)));
+		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(8)));
 		    	  System.out.println("getting item");
 		      }
 		      con.close();  
 		      ComplaintsList complaints=new ComplaintsList(itemList);
 		      client.sendToClient(complaints);  
-		      System.out.println("after send catalog\n");
-		      client.sendToClient("after send catalog\n");  
+		      
+		      
+		  } catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
+    }
+    else if(request.toString().startsWith("#getComplaints")) {
+    	try {
+  		  
+    		 int id= Integer.parseInt(request.toString().split(" ")[1]);
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+
+		      
+		      PreparedStatement getComplaint = con.prepareStatement("select * from Complaint WHERE user = ?");
+		      getComplaint.setInt(1, id);
+		      ResultSet rs = getComplaint.executeQuery();
+		      
+		      
+		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
+
+		      while(rs.next()) { 
+		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(8)));
+		    	  System.out.println("getting item");
+		      }
+		      con.close();  
+		      ComplaintsList complaints=new ComplaintsList(itemList,"#userGetComplaints");
+		      client.sendToClient(complaints);  
+		      
+		      
+		  } catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
+    }
+    else if(request.toString().equalsIgnoreCase("#isUrgent")) {
+    	try {
+    		  
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+		      ResultSet rs = null;
+		      rs=stmt.executeQuery("select * from Complaint WHERE timer < 61 AND status = false"); 
+		      
+		      int cuser = rs.last() ? rs.getRow() : 0;
+		      if(cuser==0)
+		    	  client.sendToClient(new ReturnStatus("#isUrgent", false));
+		      else
+		    	  client.sendToClient(new ReturnStatus("#isUrgent", true));
+		      con.close();  
+
 		      
 		      
 		  } catch(Exception e) {
@@ -529,6 +580,26 @@ public class EchoServer extends AbstractServer
     else if (message.equalsIgnoreCase("#getport"))
     {
       serverUI.display("Currently port: " + Integer.toString(getPort()));
+    }
+    else if(message.equalsIgnoreCase("#updateTimer")) {
+    	try {
+    		  
+		    con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+
+		    String sql = "update Complaint set timer = timer - ? where status = ? AND timer > ?";
+			PreparedStatement prep_stmt = con.prepareStatement(sql);
+			prep_stmt.setInt(1, 10);
+			prep_stmt.setBoolean(2, false);
+			prep_stmt.setInt(3, 0);
+			prep_stmt.executeUpdate();
+		      
+		    con.close();  
+ 
+		  } catch(Exception e) {
+			  System.out.println("b");
+			  System.out.println(e);
+		  }
+		  return;
     }
   }
     

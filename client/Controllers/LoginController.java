@@ -7,6 +7,7 @@ package client.Controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import client.MyThread;
 import common.PayingMethod;
 import common.Status;
 import common.User;
@@ -22,7 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType; 
 
 public class LoginController {
-
+	
 	private MainController mainController;
 	
     @FXML // fx:id="idSplit"
@@ -46,6 +47,8 @@ public class LoginController {
     
     @FXML
     void login(ActionEvent event) {
+
+    	
     	String user_name = nameText.getText();
     	String passwd = passText.getText();
     	System.out.println("login");
@@ -78,9 +81,11 @@ public class LoginController {
 	  			}
 	  			if(mainController.getClient().client.getlogged())
 	  			{
-		            if(mainController.getClient().client.getLoggedUser().status==Status.customService)
+	  				MyThread.loggedIn=true;
+	  				if(mainController.getClient().client.getLoggedUser().status==Status.customService)
 		            {
 		            	mainController.getTabPane().getTabs().add(mainController.tabHandleComplaint);
+		            	MyThread.flagCustomerService=true;
 		            }
 	  				Alert alert = new Alert(AlertType.INFORMATION, "Login successful!");
 	  				alert.show();
@@ -95,6 +100,5 @@ public class LoginController {
 	  			}
 		    }
 		});
-    	
     }
 }

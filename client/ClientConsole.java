@@ -141,7 +141,7 @@ public class ClientConsole extends Application implements ChatIF
   
   @Override
 	public void start(Stage primaryStage) throws IOException {
-	  
+	  MyThread thread=new MyThread();
 	  Parameters params = getParameters();
 	  List<String> args = params.getRaw();
 	  
@@ -215,6 +215,8 @@ public class ClientConsole extends Application implements ChatIF
 	  controller.setCatalog(chat.catalog.getList());
 	  controller.setUpdateCatalog(chat.catalog.getList());
 	  chat.flagCatalog=false;
+	  
+	  thread.start();
 	  
 	  controller.setClient(chat);
 	  Scene scene = new Scene(root); 		

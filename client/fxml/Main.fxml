@@ -23,7 +23,7 @@
                   <fx:include fx:id="signUp" source="SignUp.fxml" />
                </content>
             </Tab>
-            <Tab text="Order">
+            <Tab fx:id="tabOrder" onSelectionChanged="#handleClick" text="Order">
               <content>
                 <fx:include fx:id="order" source="Order.fxml" />
                 

@@ -20,20 +20,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class ItemListViewCell extends ListCell<CatalogItem>{
+public class ItemListViewCell extends ListCell<Item>{
 	@FXML private Label Title;
 	@FXML private Label Description;
 	@FXML private Label Color;
 	@FXML private Label Price;
 	@FXML private ImageView ivIm1;
-	
 	@FXML private AnchorPane pane;
 	
 	private FXMLLoader mLLoader;
     @FXML
     private Button dropBtn;
     User user= MainController.getClient().client.getLoggedUser();
-    CatalogItem myItem;
+    Item myItem;
 	
 	
 	
@@ -72,11 +71,10 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
     
     
 	@Override
-    protected void updateItem(CatalogItem item, boolean empty) {
+    protected void updateItem(Item item, boolean empty) {
         super.updateItem(item, empty);
         myItem=item;
         if(empty || item == null) {
-
             setText(null);
             setGraphic(null);
 
@@ -96,8 +94,12 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
             Title.setText(String.valueOf(item.getName()));
             Description.setText(String.valueOf(item.getDescription()));
             Color.setText(String.valueOf(item.getColor()));
-            Price.setText(String.valueOf(item.getPrice()));
-            ivIm1.setImage(new Image(item.getImagePath()));
+            if (item instanceof CatalogItem)
+            {
+            	CatalogItem c_item = (CatalogItem) item;
+            	Price.setText(String.valueOf(c_item.getPrice()));
+            	ivIm1.setImage(new Image(c_item.getImagePath()));
+            }
 
             
             

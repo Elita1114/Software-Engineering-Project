@@ -44,26 +44,20 @@ public class HandleComplaintController {
     private Button btnSend;
 
     private MainController mainController;
-    
     static public ComplaintsList complaintsList;
     static public ObservableList<Complaint> itemObservableList;
-
     static public Complaint current=null;
     static public boolean flag=false;
     static public boolean updateComplaint=false;
     
-    
-    
     public HandleComplaintController()  { 
         itemObservableList = FXCollections.observableArrayList();
-        
     }
     
     public void injectMainController(MainController mainController_) {
 		mainController = mainController_;
 	}
-    
-    
+     
     static public void setComplaint(ArrayList<Complaint> itemList_) {
     	itemObservableList.clear();
     	if(!itemList_.isEmpty()) {
@@ -72,7 +66,6 @@ public class HandleComplaintController {
     		}
     	}
     }
-    
     
     public void complaintsOpened() {
     	Platform.runLater(new Runnable() {
@@ -97,20 +90,16 @@ public class HandleComplaintController {
     
     public void initialize() {
     	Platform.runLater(() -> {
-
     		lvComplaints.setItems(itemObservableList);
-    		lvComplaints.setCellFactory(itemListView  -> new ComplaintListViewCell(false));
-
-        });
+    		lvComplaints.setCellFactory(itemListView  -> new ComplaintListViewCell(false)); 
+    		});
     	
     }
     
     public void updateComplaint() {
-    	//lvItems.getItems().clear();
+    	// lvItems.getItems().clear();
     	lvComplaints.setItems(itemObservableList);
     	lvComplaints.setCellFactory(itemListView  -> new ComplaintListViewCell(false));
-    	
-    	
     }
     
 
@@ -149,7 +138,6 @@ public class HandleComplaintController {
     
     @FXML
     void sendPressed(ActionEvent event) {
-
     	if(tvReply.getText().isEmpty()) {
     		Alert alert = new Alert(AlertType.WARNING);
 	    	alert.setTitle("Failed");

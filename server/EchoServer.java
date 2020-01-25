@@ -218,12 +218,13 @@ public class EchoServer extends AbstractServer
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getcart"))
 			  {
 				  try { 
+					  System.out.println("entered here");
 					  User user = (User) user_request.get_request_args().get(0);
-					  Order order = (Order) user_request.get_request_args().get(1);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      Statement stmt=con.createStatement();  
-				      PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `userID`=? AND `orderID`=NULL");
-				      getcart.setInt(1, user.user_id);
+				      System.out.println("The id is " + user.user_id);
+				      PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `userID`=5 AND `orderID` is NULL");
+				      // getcart.setInt(1, user.user_id);
 				      ResultSet rs = getcart.executeQuery();
 				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
@@ -234,7 +235,7 @@ public class EchoServer extends AbstractServer
 				      
 				      con.close();  
 				      Cart cart= new Cart(itemList);
-				      
+				      System.out.println(cart);
 				      client.sendToClient(cart);  
 				  }catch(Exception e) {
 					  System.out.println("a");

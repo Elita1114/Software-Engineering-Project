@@ -130,6 +130,10 @@ public class ChatClient extends AbstractClient
 		  flagServerAns=true;
 		  System.out.println("drop flag true\n");
 	  }
+	  else if(msg instanceof Cart) {
+		  System.out.println("Got Cart");
+	  		clientUI.getData(msg);
+	  }
 	  else{
 		  clientUI.display(msg.toString());
 	  }

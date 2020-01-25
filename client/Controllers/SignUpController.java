@@ -4,8 +4,10 @@ package client.Controllers;
 import java.io.IOException;
 import java.util.*;
 import client.ClientConsole;
+import common.Complaint;
 import common.PayingMethod;
 import common.Status;
+import common.Store;
 import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
@@ -69,11 +71,9 @@ public class SignUpController {
 	}
     @FXML
 	private void initialize() {
-		MenuItem menuItem1 = new MenuItem("Option 1");
-         MenuItem menuItem2 = new MenuItem("Option 2");
-         MenuItem menuItem3 = new MenuItem("Option 3");
-
-         storeselector.getItems().add(menuItem1);
+//    	for (Store store : mainController.getClient().client.getStoreslist().stores) { 		      
+//    		System.out.println(store.getName());
+//		}
     }
    
     

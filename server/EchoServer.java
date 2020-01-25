@@ -475,6 +475,26 @@ public class EchoServer extends AbstractServer
 		  }
 		  return;
     }
+    else if(request.toString().equalsIgnoreCase("#getStores")) {
+    	try {
+  		  
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+		      ResultSet rs = null;
+		      rs=stmt.executeQuery("select * from Store"); 
+		      ArrayList<Store> storesList = new ArrayList<Store>();
+		      while(rs.next()) { 
+		    	  storesList.add(new Store(rs.getInt("store_num"), rs.getString("name")));
+		      }
+		      con.close();  
+		      StoresList stores=new StoresList(storesList);
+		      client.sendToClient(stores);   
+		  } catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
+    }
     else 
     {
       if (client.getInfo("loginID") == null)

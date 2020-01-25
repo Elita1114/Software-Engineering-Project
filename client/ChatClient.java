@@ -36,7 +36,7 @@ public class ChatClient extends AbstractClient
    * The Login ID of the user.
    */
   String loginID;
-
+  private StoresList storeslist;
   private User loggedUser;
   private boolean logged;
   private boolean wrongdetails;
@@ -101,6 +101,11 @@ public class ChatClient extends AbstractClient
 	  else if(msg.toString().equals("#gotUser")) {
 		  loggedUser = (User)msg;
 		  this.logged = true;
+	  }
+	  else if(msg.toString().equals("#gotStores")) {
+		  storeslist = (StoresList)msg;
+		  System.out.println(storeslist);
+		  this.flagServerAns=true;
 	  }
 	  else if(msg.toString().equals("#wrongdetails")) {
 		  this.setWrongdetails(true); 
@@ -328,6 +333,14 @@ public boolean isWrongdetails() {
 
 public void setWrongdetails(boolean wrongdetails) {
 	this.wrongdetails = wrongdetails;
+}
+
+public StoresList getStoreslist() {
+	return storeslist;
+}
+
+public void setStoreslist(StoresList storeslist) {
+	this.storeslist = storeslist;
 }
 }
 //End of ChatClient class

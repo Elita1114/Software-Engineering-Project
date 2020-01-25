@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -182,8 +183,20 @@ public class ClientConsole extends Application implements ChatIF
 	  }
 	  ClientConsole chat= new ClientConsole(loginID, host, port);
 	  
-	  
-	  
+	  chat.client.handleMessageFromClientUI("#getStores");
+	  // wait for response
+	  chat.client.flagServerAns = false;
+	  do {
+		  try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		  System.out.println("asdf");
+	  }
+	  while(!chat.client.flagServerAns);
+
 	  //get data for catalog
 	  chat.client.handleMessageFromClientUI("#getCatalog 0");
 	  // wait for response
@@ -194,14 +207,13 @@ public class ClientConsole extends Application implements ChatIF
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("asdf" + chat.flagCatalog);  
+		System.out.println(chat.flagCatalog);  
 	  }
 	  while(!chat.flagCatalog);
 
 
 	  // get critical initializtaion data 
 	  
-	  chat.client.handleMessageFromClientUI("#getStores 0");
 
 
 	  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Main.fxml"));     

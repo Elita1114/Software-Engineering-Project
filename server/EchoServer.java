@@ -223,7 +223,7 @@ public class EchoServer extends AbstractServer
 				      PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `userID`=? AND `orderID`=NULL");
 				      getcart.setInt(1, user.user_id);
 				      ResultSet rs = getcart.executeQuery();
-				      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
+				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
 				      
 				      while(rs.next()) { 
@@ -231,7 +231,9 @@ public class EchoServer extends AbstractServer
 				      }
 				      
 				      con.close();  
-				      client.sendToClient(itemList);  
+				      Cart cart= new Cart(itemList);
+				      
+				      client.sendToClient(cart);  
 				  }catch(Exception e) {
 					  System.out.println("a");
 					  System.out.println(e);

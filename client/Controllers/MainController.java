@@ -25,7 +25,6 @@ import javafx.scene.control.Alert.AlertType;
 
 public class MainController {
 	
-	
 	@FXML private CatalogController catalogController;
 	@FXML private SignUpController signUpController;
 	@FXML private LoginController loginController;
@@ -41,11 +40,10 @@ public class MainController {
 
 	@FXML public Tab tabHandleComplaint;
 	@FXML public Tab tabComplaint;
-
+	@FXML public Tab tabOrder;
 	
 	@FXML
 	private void initialize() {
-		
 		catalogController.injectMainController(this);
 		signUpController.injectMainController(this);
 		loginController.injectMainController(this);
@@ -102,6 +100,10 @@ public class MainController {
 			
 			
 		}
+		else if(tabOrder.isSelected()) {
+			orderController.fetchOrder();
+			System.out.println("Getting cart for user");
+		}
 		return null;
 		
 	}
@@ -120,57 +122,4 @@ public class MainController {
 		return null;
 		
 	}
-	
-
-	
-	
-	
-/*
-	public void loadCatalog() {
-		//load the catalog
-		
-		 //get data for catalog
-		  client.client.handleMessageFromClientUI("#getCatalog 0");
-		  // wait for response
-		  do {
-			  try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			System.out.println(chat.flagCatalog);  
-		  }
-		  while(!chat.flagCatalog);
-
-
-		  // get critical initializtaion data 
-		  UserRequest user_request = new UserRequest("#getStores",  "0");
-		  chat.client.handleMessageFromClientUI("#getStores 0");
-
-
-		  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Main.fxml"));     
-		  Parent root = (Parent)fxmlLoader.load(); 
-					
-		  
-						  
-		  MainController controller = fxmlLoader.<MainController>getController();
-		  controller.setCatalog(chat.catalog.getList());
-	}
-*/
-/*
-	
-	@FXML private ConsoleTabController consoleTabController;
-	
-	@FXML private LoggerTabController loggerTabController;
-
-	public TextArea getVisualLog() {
-		return loggerTabController.getLoggerTxtArea();
-	}
-
-	@FXML
-	private void initialize() {
-		consoleTabController.injectMainController(this);
-	}
-	*/
 }

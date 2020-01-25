@@ -17,13 +17,17 @@ import common.Complaint;
 import common.ComplaintsList;
 import common.Item;
 import common.Order;
+import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -31,7 +35,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class OrderController {
+	
+    @FXML
+    
 	private ArrayList<Item> order_items;
+    private ListView<Item> lvItems;
+    static public ObservableList<Item> itemObservableList;
+
 	private MainController mainController;
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -68,8 +78,59 @@ public class OrderController {
     
     @FXML
     private Label recieverLabel;
-    
 
+	public void injectMainController(MainController mainController_) {
+		mainController = mainController_;
+		
+	}
+	
+	public void fetchOrder() {
+		System.out.println("fetching order");
+		
+		ArrayList<Object> args =  new ArrayList<Object>();
+    	args.add(mainController.getClient().client.getLoggedUser());
+    	UserRequest user_request = new UserRequest("#getcart",  args);
+    	
+		Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	mainController.getClient().flagCart=false;
+    	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
+    			while(!mainController.getClient().flagCart) {
+    				try {
+    					Thread.sleep(100);
+    					System.out.println("waiitng for server");
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				};
+    			}
+    			System.out.println("got cart");
+    			System.out.println(mainController.getClient().cart.getItems());
+    			setOrder(mainController.getClient().cart.getItems());
+    			System.out.println(itemObservableList);
+    			// updateOrder();
+    			mainController.getClient().flagCart=false;
+    	    }
+    	});
+	}
+	
+     public void setOrder(ArrayList<Item> itemList_) {
+    	itemObservableList.clear();
+    	if(!itemList_.isEmpty()) {
+    		for (Item item : itemList_) { 		      
+	    		itemObservableList.add(item);
+	    		System.out.println(item);
+    		}
+    	}
+    	lvItems.setItems(itemObservableList);
+    	lvItems.setCellFactory(itemListView  -> new ItemListViewCell());
+    	System.out.println("lvitems: " + lvItems);
+    }
+    
+    public OrderController()  { 
+        itemObservableList = FXCollections.observableArrayList();
+    }
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -79,6 +140,21 @@ public class OrderController {
         addressLabel.visibleProperty().bind(wantShipping);  
         phoneLabel.visibleProperty().bind(wantShipping);
         recieverLabel.visibleProperty().bind(wantShipping); 
+		lvItems = new ListView<Item>();
+      	Platform.runLater(() -> {
+    		lvItems.setItems(itemObservableList);
+    		lvItems.setCellFactory(itemListView  -> new ItemListViewCell());
+        });
+    }
+    
+    public void updateOrder() {
+    	/*
+    	if(lvItems == null)
+    	{
+    	}
+    	*/
+    	lvItems.setItems(itemObservableList);
+    	lvItems.setCellFactory(itemListView  -> new ItemListViewCell());
     }
     
     @FXML
@@ -123,9 +199,4 @@ public class OrderController {
     	System.out.println("finished");
  
     }
-
-	public void injectMainController(MainController mainController_) {
-		mainController = mainController_;
-		
-	}
 }

@@ -36,5 +36,11 @@ public class Cart implements Serializable {
 		items.removeAll(toRemove);
 	}
 
-	 
+	@Override
+	public String toString() {
+		System.out.println("Displaying cart: ");
+		return "Cart [items=" + items + "]";
+	}
+
+	
 }

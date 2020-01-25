@@ -7,25 +7,18 @@ public class Item implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 828961710358073954L;
-	private int qty;
+	private int id;
 	private String name;
 	private String description;
 	private String color;
 	
-	public Item(String name_, String description_, String color_, int qty_){
-		setQty(qty_);
+	public Item(int id_, String name_, String description_, String color_){
+		id = id_;
 		name=name_;
 		description=description_;
 		color=color_;
 	}
-	
-	public Item(String name_, String description_, String color_){
-		setQty(1);
-		name=name_;
-		description=description_;
-		color=color_;
-	}
-	
+
 	public String getName() {
 		return name;
 	}

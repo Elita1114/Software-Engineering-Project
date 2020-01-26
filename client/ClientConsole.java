@@ -40,6 +40,7 @@ public class ClientConsole extends Application implements ChatIF
   final public static int DEFAULT_PORT = 5555;
   public boolean flagCatalog;
   public boolean flagCart;
+  public boolean flagReports;
   public static boolean flag;
   public Catalog catalog;
   public Cart cart;
@@ -134,7 +135,9 @@ public class ClientConsole extends Application implements ChatIF
 		  System.out.println("set flag");
 	  }
 	  else if (data instanceof MonthlyReportList) {
+		  System.out.println("got reports data");
 		  monthly_reports = (MonthlyReportList) data;
+		  System.out.println("item list contains: "+ monthly_reports.getItemList());
 	  }
   }
   

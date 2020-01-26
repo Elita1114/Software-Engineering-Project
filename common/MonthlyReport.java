@@ -1,6 +1,12 @@
 package common;
 
-public class MonthlyReport {
+import java.io.Serializable;
+
+public class MonthlyReport implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8080534450830284830L;
 	int store;
 	String Date;
 	float income_content;
@@ -31,10 +37,10 @@ public class MonthlyReport {
 	public void setDate(String date) {
 		Date = date;
 	}
-	public String gte_income_content() {
+	public float get_income_content() {
 		return income_content;
 	}
-	public void set_income_content(String income_content) {
+	public void set_income_content(float income_content) {
 		this.income_content = income_content;
 	}
 	public String get_order_content() {
@@ -43,10 +49,21 @@ public class MonthlyReport {
 	public void set_order_content(String order_content) {
 		this.order_content = order_content;
 	}
-	public String get_complaint_content() {
-		return complaint_content;
+
+	public int getHandledcomplaint() {
+		return handledcomplaint;
 	}
-	public void set_complaint_content(String complaint_content) {
-		this.complaint_content = complaint_content;
+
+	public void setHandledcomplaint(int handledcomplaint) {
+		this.handledcomplaint = handledcomplaint;
 	}
+
+	public int getUnhandledcomplaint() {
+		return unhandledcomplaint;
+	}
+
+	public void setUnhandledcomplaint(int unhandledcomplaint) {
+		this.unhandledcomplaint = unhandledcomplaint;
+	}
+	
 }

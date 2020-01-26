@@ -33,6 +33,7 @@ public class MainController {
 	@FXML private OrderController orderController;//update order controller
 	@FXML private HandleComplaintController handleComplaintController;//update order controller
 	@FXML private addItemController addCatalogItemController;
+	@FXML private ReportController reportsController;
 
 	static public ClientConsole client;
 	private boolean flagCheck=false;
@@ -41,7 +42,8 @@ public class MainController {
 	@FXML public Tab tabHandleComplaint;
 	@FXML public Tab tabComplaint;
 	@FXML public Tab tabOrder;
-	
+	@FXML public Tab tabReports;
+
 	@FXML
 	private void initialize() {
 		catalogController.injectMainController(this);
@@ -51,7 +53,7 @@ public class MainController {
 		updatecatalogController.injectMainController(this);
 		orderController.injectMainController(this);
 		handleComplaintController.injectMainController(this);
-		
+		reportsController.injectMainController(this);
 		tabPane.getTabs().remove(tabHandleComplaint);
 		
 	}
@@ -103,6 +105,11 @@ public class MainController {
 		else if(tabOrder.isSelected()) {
 			System.out.println("Getting cart for user");
 			orderController.fetchOrder();
+			
+		}
+		else if(tabReports.isSelected()) {
+			System.out.println("Getting reports for user");
+			reportsController.fetchReports();
 			
 		}
 		return null;

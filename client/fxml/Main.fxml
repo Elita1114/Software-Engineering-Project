@@ -49,6 +49,11 @@
                   <fx:include fx:id="addCatalogItem" source="AddItem.fxml" />
                </content>
             </Tab>
+            <Tab fx:id="tabReports" onSelectionChanged="#handleClick" text="View Reports">
+               <content>
+                  <fx:include fx:id="reports" source="ReportViewer.fxml" />
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
    </children>

@@ -12,7 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+import java.util.TimerTask;
+
 import javax.net.ssl.SSLException;
 import java.io.*;
 import java.math.BigInteger;
@@ -85,6 +90,39 @@ public class EchoServer extends AbstractServer
   }
 
   
+  public void schedule_periodic_tasks()
+  {
+	  System.out.println("scheduling periodic task");
+	  MonthlyTimer t_1 = MonthlyTimer.schedule( new GenerateReports(this), 1, 10);
+	  MonthlyTimer t_2 = MonthlyTimer.schedule( new BillClients(this), 1, 10);
+	  
+  }
+  
+  private class GenerateReports extends TimerTask {
+	  
+	  EchoServer server;
+	  public GenerateReports(EchoServer server_) {
+		  server = server_;
+	  }
+	  @Override
+	  public void run() {
+		  System.out.println("requesting to create report");
+		  server.handleMessageFromServerUI("#createReport");
+	  }
+  }
+  
+  private class BillClients extends TimerTask {
+	  
+	  EchoServer server;
+	  public BillClients(EchoServer server_) {
+		  server = server_;
+	  }
+	  @Override
+	  public void run() {
+		  System.out.println("billing clients");
+		  // server.handleMessageFromServerUI("#billclients");
+	  }
+  }
   //Instance methods ************************************************
   
   /**

@@ -36,10 +36,15 @@ import javafx.fxml.FXML;
 
 public class OrderController {
 	
-    @FXML
+   
     
-	private ArrayList<Item> order_items;
+	
+	
+
+    @FXML
     private ListView<Item> lvItems;
+	
+	private ArrayList<Item> order_items;
     static public ObservableList<Item> itemObservableList;
 
 	private MainController mainController;
@@ -108,6 +113,7 @@ public class OrderController {
     			System.out.println("got cart");
     			System.out.println(mainController.getClient().cart.getItems());
     			setOrder(mainController.getClient().cart.getItems());
+    			updateOrder();
     			System.out.println(itemObservableList);
     			// updateOrder();
     			mainController.getClient().flagCart=false;
@@ -123,6 +129,9 @@ public class OrderController {
 	    		System.out.println(item);
     		}
     	}
+    	//System.out.println("\n\n\ncheck whats inside!!"+itemObservableList.get(0).getName()+"\n\n\n\\n");
+    	
+    	
     	lvItems.setItems(itemObservableList);
     	lvItems.setCellFactory(itemListView  -> new ItemListViewCell());
     	System.out.println("lvitems: " + lvItems);
@@ -140,7 +149,7 @@ public class OrderController {
         addressLabel.visibleProperty().bind(wantShipping);  
         phoneLabel.visibleProperty().bind(wantShipping);
         recieverLabel.visibleProperty().bind(wantShipping); 
-		lvItems = new ListView<Item>();
+		
       	Platform.runLater(() -> {
     		lvItems.setItems(itemObservableList);
     		lvItems.setCellFactory(itemListView  -> new ItemListViewCell());

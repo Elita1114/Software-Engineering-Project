@@ -4,6 +4,7 @@ package client.Controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import common.CartItem;
 import common.CatalogItem;
 import common.Item;
 import common.Status;
@@ -20,38 +21,36 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class ItemListViewCell extends ListCell<CatalogItem>{
+public class ItemListViewCell extends ListCell<Item>{
 	@FXML private Label Title;
 	@FXML private Label Description;
 	@FXML private Label Color;
 	@FXML private Label Price;
 	@FXML private ImageView ivIm1;
-	
 	@FXML private AnchorPane pane;
 	
 	private FXMLLoader mLLoader;
-    @FXML
-    private Button dropBtn;
+
     User user= MainController.getClient().client.getLoggedUser();
-    CatalogItem myItem;
+    Item myItem;
 	
 	
 	
+
+
     @FXML
-    void drop(ActionEvent event) {
-    	
+    void clickadd(ActionEvent event) {
+    	System.out.println("send add to cart");
     	ArrayList<Object> args =  new ArrayList<Object>();
-    	args.add(myItem.getId());
-    	UserRequest user_request = new UserRequest("#dropCatalog",  args);
+    	args.add(MainController.getClient().client.getLoggedUser());
+    	args.add(new CartItem(myItem,1));
+    	UserRequest user_request = new UserRequest("#addtocart",  args);
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
-    	    	System.out.println("entered");
+    	    	MainController.getClient().client.flagServerAns = false;
     	    	MainController.getClient().client.handleMessageFromClientUI(user_request);
-    	    	System.out.println("finished_1");
-    	    	MainController.getClient().client.flagServerAns=false;
-    	    	System.out.println("set drop flag\n");
-	  			while(!MainController.getClient().client.flagServerAns) {
+    	    	while(!MainController.getClient().client.flagServerAns) {
 	  				try {
 	  					Thread.sleep(100);
 	  				} catch (InterruptedException e) {
@@ -63,20 +62,12 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
     	    }
     	});
     }
-    	
-
-    @FXML
-    void clickadd(ActionEvent event) {
-
-    }
-    
     
 	@Override
-    protected void updateItem(CatalogItem item, boolean empty) {
+    protected void updateItem(Item item, boolean empty) {
         super.updateItem(item, empty);
         myItem=item;
         if(empty || item == null) {
-
             setText(null);
             setGraphic(null);
 
@@ -96,15 +87,16 @@ public class ItemListViewCell extends ListCell<CatalogItem>{
             Title.setText(String.valueOf(item.getName()));
             Description.setText(String.valueOf(item.getDescription()));
             Color.setText(String.valueOf(item.getColor()));
-            Price.setText(String.valueOf(item.getPrice()));
-            ivIm1.setImage(new Image(item.getImagePath()));
+            if (item instanceof CatalogItem)
+            {
+            	CatalogItem c_item = (CatalogItem) item;
+            	Price.setText(String.valueOf(c_item.getPrice()));
+            	ivIm1.setImage(new Image(c_item.getImagePath()));
+            }
 
             
             
-            dropBtn.setVisible(false);
-            if(user!=null && user.status!=Status.client )
-                dropBtn.setVisible(true);
-            
+
             setText(null);
             setGraphic(pane);
         }

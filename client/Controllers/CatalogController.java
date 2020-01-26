@@ -33,8 +33,8 @@ import javafx.stage.Stage;
 public class CatalogController implements Initializable {
 
     @FXML // fx:id="lvItems"
-    private ListView<CatalogItem> lvItems; // Value injected by FXMLLoader
-    private ObservableList<CatalogItem> itemObservableList;
+    private ListView<Item> lvItems; // Value injected by FXMLLoader
+    private ObservableList<Item> itemObservableList;
     private int x;
     private MainController mainController;
     

@@ -23,7 +23,7 @@
                   <fx:include fx:id="signUp" source="SignUp.fxml" />
                </content>
             </Tab>
-            <Tab text="Order">
+            <Tab fx:id="tabOrder" onSelectionChanged="#handleClick" text="Order">
               <content>
                 <fx:include fx:id="order" source="Order.fxml" />
                 
@@ -42,6 +42,16 @@
             <Tab fx:id="tabHandleComplaint" onSelectionChanged="#handleClick" text="Handle Complaints">
                <content>
                   <fx:include fx:id="handleComplaint" source="HandleComplaint.fxml" />
+               </content>
+            </Tab>
+            <Tab fx:id="addCatalogItem" text="add item">
+               <content>
+                  <fx:include fx:id="addCatalogItem" source="AddItem.fxml" />
+               </content>
+            </Tab>
+            <Tab fx:id="tabReports" onSelectionChanged="#handleClick" text="View Reports">
+               <content>
+                  <fx:include fx:id="reports" source="ReportViewer.fxml" />
                </content>
             </Tab>
          </tabs>

@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -38,8 +39,12 @@ public class ClientConsole extends Application implements ChatIF
    */
   final public static int DEFAULT_PORT = 5555;
   public boolean flagCatalog;
+  public boolean flagCart;
+  public boolean flagReports;
   public static boolean flag;
   public Catalog catalog;
+  public Cart cart;
+  public MonthlyReportList monthly_reports;
 
   //Instance variables **********************************************
   
@@ -114,12 +119,25 @@ public class ClientConsole extends Application implements ChatIF
 
   
   public void getData(Object data) {
-	  System.out.println("got catalog");
-	  if(data.toString().equals("#gotCatalog")) {
+	  System.out.println("getting data");
+	  if(data instanceof Catalog) {
+		  System.out.println("got catalog");
 		  catalog=(Catalog)data;
 		  flagCatalog=true;
 		  System.out.println("set flag");
 		  
+	  }
+	  else if (data instanceof Cart) {
+		  System.out.println("got cart");
+		  cart = (Cart) data;
+		  System.out.println(cart);
+		  flagCart = true;
+		  System.out.println("set flag");
+	  }
+	  else if (data instanceof MonthlyReportList) {
+		  System.out.println("got reports data");
+		  monthly_reports = (MonthlyReportList) data;
+		  System.out.println("item list contains: "+ monthly_reports.getItemList());
 	  }
   }
   
@@ -172,8 +190,20 @@ public class ClientConsole extends Application implements ChatIF
 	  }
 	  ClientConsole chat= new ClientConsole(loginID, host, port);
 	  
-	  
-	  
+	  chat.client.handleMessageFromClientUI("#getStores");
+	  // wait for response
+	  chat.client.flagServerAns = false;
+	  do {
+		  try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		  System.out.println("asdf");
+	  }
+	  while(!chat.client.flagServerAns);
+
 	  //get data for catalog
 	  chat.client.handleMessageFromClientUI("#getCatalog 0");
 	  // wait for response
@@ -184,14 +214,13 @@ public class ClientConsole extends Application implements ChatIF
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("asdf" + chat.flagCatalog);  
+		System.out.println(chat.flagCatalog);  
 	  }
 	  while(!chat.flagCatalog);
 
 
 	  // get critical initializtaion data 
 	  
-	  chat.client.handleMessageFromClientUI("#getStores 0");
 
 
 	  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Main.fxml"));     

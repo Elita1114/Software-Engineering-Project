@@ -8,8 +8,8 @@ public class CartItem  implements Serializable {
 	private int qty;
 	private Item item;
 	
-	public CartItem(int id_, String name_, String description_, String color_, int qty_) {
-		setItem(new Item(id_, name_, description_, color_));
+	public CartItem(Item item_, int qty_) {
+		setItem(item_);
 		setQty(qty_);
 	}
 

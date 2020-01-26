@@ -11,12 +11,24 @@ public class Item implements Serializable{
 	private String name;
 	private String description;
 	private String color;
+	private int type;
 	
-	public Item(int id_, String name_, String description_, String color_){
-		setId(id_);
+	public Item(int id_, String name_, String description_, String color_, int type_){
 		name=name_;
 		description=description_;
 		color=color_;
+		type =type_;
+		id=id_;
+	}
+
+	
+	
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 	
 	public Item(int id_, String name_, String description_){
@@ -45,14 +57,6 @@ public class Item implements Serializable{
 		color=color_;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id_) {
-		id = id_;
-	}
-	
 	@Override 
 	public boolean equals(Object obj)
 	{
@@ -64,8 +68,13 @@ public class Item implements Serializable{
 	      Item other_item = (Item) obj; 	          
 	      // comparing the state of argument with  
 	      // the state of 'this' Object. 
-	      return (other_item.name == this.name && other_item.description == this.description && other_item.color == this.color); 
+	      return (other_item.type == this.type && other_item.name == this.name && other_item.description == this.description && other_item.color == this.color && other_item.id == this.id); 
 	}
 	
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", color=" + color + "]";
+	}
 
 }

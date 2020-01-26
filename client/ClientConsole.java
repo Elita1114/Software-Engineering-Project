@@ -40,9 +40,11 @@ public class ClientConsole extends Application implements ChatIF
   final public static int DEFAULT_PORT = 5555;
   public boolean flagCatalog;
   public boolean flagCart;
+  public boolean flagReports;
   public static boolean flag;
   public Catalog catalog;
   public Cart cart;
+  public MonthlyReportList monthly_reports;
 
   //Instance variables **********************************************
   

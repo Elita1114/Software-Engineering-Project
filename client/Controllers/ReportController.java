@@ -60,15 +60,15 @@ public class ReportController {
     public void fetchReports() { 
     	System.out.println("fetching reports");
 		ArrayList<Object> args =  new ArrayList<Object>();
-    	// args.add(mainController.getClient().client.getLoggedUser());
+		args.add(mainController.getClient().client.getLoggedUser());
     	UserRequest user_request = new UserRequest("#getreports",  args);
-    	/*
+    	
 		Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
-    	    	mainController.getClient().flagCart=false;
+    	    	mainController.getClient().flagReports=false;
     	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
-    			while(!mainController.getClient().flagCart) {
+    			while(!mainController.getClient().flagReports) {
     				try {
     					Thread.sleep(100);
     					System.out.println("waiitng for server");
@@ -77,15 +77,13 @@ public class ReportController {
     					e.printStackTrace();
     				};
     			}
-    			System.out.println("got cart");
-    			System.out.println(mainController.getClient().cart.getItems());
-    			setOrder(mainController.getClient().cart.getItems());
-    			updateOrder();
+    			System.out.println("got Reports");
+    			setReport(mainController.getClient().monthly_reports.getItemList());
+    			updateReport();
     			System.out.println(itemObservableList);
-    			// updateOrder();
-    			mainController.getClient().flagCart=false;
+    			mainController.getClient().flagCart = false;
     	    }
     	});
-    	*/
+    	
     }
 }

@@ -22,4 +22,20 @@ public class MonthlyReportList implements Serializable {
 	public String toString() {
 		return msg;
 	}
+
+	public ArrayList<MonthlyReport> getItemList() {
+		return itemList;
+	}
+
+	public void setItemList(ArrayList<MonthlyReport> itemList) {
+		this.itemList = itemList;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 }

@@ -30,39 +30,13 @@ public class ItemListViewCell extends ListCell<Item>{
 	@FXML private AnchorPane pane;
 	
 	private FXMLLoader mLLoader;
-    @FXML
-    private Button dropBtn;
+
     User user= MainController.getClient().client.getLoggedUser();
     Item myItem;
 	
 	
 	
-    @FXML
-    void drop(ActionEvent event) {
-    	
-    	ArrayList<Object> args =  new ArrayList<Object>();
-    	args.add(myItem.getId());
-    	UserRequest user_request = new UserRequest("#dropCatalog",  args);
-    	Platform.runLater(new Runnable() {
-    	    @Override
-    	    public void run() {
-    	    	System.out.println("entered");
-    	    	MainController.getClient().client.handleMessageFromClientUI(user_request);
-    	    	System.out.println("finished_1");
-    	    	MainController.getClient().client.flagServerAns=false;
-    	    	System.out.println("set drop flag\n");
-	  			while(!MainController.getClient().client.flagServerAns) {
-	  				try {
-	  					Thread.sleep(100);
-	  				} catch (InterruptedException e) {
-	  					// TODO Auto-generated catch block
-					e.printStackTrace();
-	  				}
-	  				
-	  			}
-    	    }
-    	});
-    }
+
 
     @FXML
     void clickadd(ActionEvent event) {
@@ -117,16 +91,12 @@ public class ItemListViewCell extends ListCell<Item>{
             {
             	CatalogItem c_item = (CatalogItem) item;
             	Price.setText(String.valueOf(c_item.getPrice()));
-            	if(!c_item.getImagePath().contentEquals(""))
-            		ivIm1.setImage(new Image(c_item.getImagePath()));
+            	ivIm1.setImage(new Image(c_item.getImagePath()));
             }
 
             
             
-            dropBtn.setVisible(false);
-            if(user!=null && user.status!=Status.client )
-                dropBtn.setVisible(true);
-            
+
             setText(null);
             setGraphic(pane);
         }

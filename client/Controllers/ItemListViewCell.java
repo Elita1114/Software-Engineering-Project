@@ -117,7 +117,8 @@ public class ItemListViewCell extends ListCell<Item>{
             {
             	CatalogItem c_item = (CatalogItem) item;
             	Price.setText(String.valueOf(c_item.getPrice()));
-            	ivIm1.setImage(new Image(c_item.getImagePath()));
+            	if(!c_item.getImagePath().contentEquals(""))
+            		ivIm1.setImage(new Image(c_item.getImagePath()));
             }
 
             

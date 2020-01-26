@@ -381,6 +381,42 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#UpdateItem")) {
+				  System.out.println("update Item");
+				  try { 
+				      CatalogItem updatedItem  = (CatalogItem) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Products` SET `name`=?,`description`=?,`type`=?,`price`=?,`Color`=?,`Image Path`=?,`store`=?,`sale`=? WHERE `id` = ?");
+				      updateItemSQL.setString(1, updatedItem.getName());
+				      updateItemSQL.setString(2, updatedItem.getDescription());
+				      updateItemSQL.setInt(3, updatedItem.getType());
+				      updateItemSQL.setDouble(4, updatedItem.getPrice());
+				      updateItemSQL.setString(5, updatedItem.getColor());
+				      updateItemSQL.setString(6, updatedItem.getImagePath());
+				      updateItemSQL.setInt(7, updatedItem.getStore());
+				      updateItemSQL.setDouble(8, updatedItem.getSale());
+				      updateItemSQL.setInt(9, updatedItem.getId());
+				      updateItemSQL.executeUpdate();
+					  client.sendToClient("#UpdateItem");
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }			 
+			  else if(user_request.get_request_str().equalsIgnoreCase("#delCatalogItem")) {
+				  System.out.println("delete catalog item");
+				  try { 
+					  int idItem  = (int) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement deleteItemSql = con.prepareStatement("DELETE FROM `Products` WHERE `id`=?");
+				      deleteItemSql.setInt(1, idItem);
+				      deleteItemSql.executeUpdate();
+					  client.sendToClient("#delCatalogItem");
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
 		  
 		  return;
 			  }

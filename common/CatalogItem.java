@@ -11,7 +11,6 @@ public class CatalogItem extends Item implements Serializable {
 	private String imagePath;
 	private float sale;
 	private int store;
-	private int id;
 
 	
 	
@@ -20,7 +19,6 @@ public class CatalogItem extends Item implements Serializable {
 		// TODO Auto-generated constructor stub
 		price=price_;
 		imagePath=imagePath_;
-		id=id_;
 		setStore(store_);
 		setSale(sale_);
 	}
@@ -49,14 +47,11 @@ public class CatalogItem extends Item implements Serializable {
 	      CatalogItem other_item = (CatalogItem) obj; 	          
 	      // comparing the state of argument with  
 	      // the state of 'this' Object. 
-	      return (other_item.price == this.price && other_item.imagePath == this.imagePath && other_item.getSale() == this.getSale() && other_item.getStore() == this.getStore() && other_item.id == this.id
+	      return (other_item.price == this.price && other_item.imagePath == this.imagePath && other_item.getSale() == this.getSale() && other_item.getStore() == this.getStore() 
 	    		  && super.equals(obj)); 
 	}
 
-	public int getId() {
-		// TODO Auto-generated method stub
-		return id;
-	}
+
 
 	public int getStore() {
 		return store;

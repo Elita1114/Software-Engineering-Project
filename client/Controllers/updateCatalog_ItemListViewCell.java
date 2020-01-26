@@ -22,7 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
-    User user= MainController.getClient().client.getLoggedUser();
+    User user;
 
 	
     @FXML
@@ -55,7 +55,8 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
     @FXML
     private TextField Path;
     
-
+    @FXML
+    private RadioButton AddCatalogRadio;
     
 
     @FXML
@@ -109,6 +110,7 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	
 	@Override
     protected void updateItem(CatalogItem item, boolean empty) {
+		user= MainController.getClient().client.getLoggedUser();
         super.updateItem(item, empty);
         myItem= item;
         if(empty || item == null) {
@@ -157,7 +159,7 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 
     	ArrayList<Object> args =  new ArrayList<Object>();
     	
-    	CatalogItem updatedItem = new CatalogItem(titel, description,color,price,0,path, type, store, sale);// 0 in id for now, database will give it id
+    	CatalogItem updatedItem = new CatalogItem(titel, description,color,price,id,path, type, store, sale);// 0 in id for now, database will give it id
     	args.add(updatedItem);
     	UserRequest user_request = new UserRequest("#UpdateItem",  args);
     	Platform.runLater(new Runnable() {

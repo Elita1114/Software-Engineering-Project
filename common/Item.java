@@ -18,6 +18,7 @@ public class Item implements Serializable{
 		description=description_;
 		color=color_;
 		type =type_;
+		id=id_;
 	}
 
 	
@@ -67,7 +68,7 @@ public class Item implements Serializable{
 	      Item other_item = (Item) obj; 	          
 	      // comparing the state of argument with  
 	      // the state of 'this' Object. 
-	      return (other_item.type == this.type && other_item.name == this.name && other_item.description == this.description && other_item.color == this.color); 
+	      return (other_item.type == this.type && other_item.name == this.name && other_item.description == this.description && other_item.color == this.color && other_item.id == this.id); 
 	}
 	public int getId() {
 		return id;

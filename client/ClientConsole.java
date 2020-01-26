@@ -43,6 +43,7 @@ public class ClientConsole extends Application implements ChatIF
   public static boolean flag;
   public Catalog catalog;
   public Cart cart;
+  public MonthlyReportList monthly_reports;
 
   //Instance variables **********************************************
   
@@ -131,6 +132,9 @@ public class ClientConsole extends Application implements ChatIF
 		  System.out.println(cart);
 		  flagCart = true;
 		  System.out.println("set flag");
+	  }
+	  else if (data instanceof MonthlyReportList) {
+		  monthly_reports = (MonthlyReportList) data;
 	  }
   }
   

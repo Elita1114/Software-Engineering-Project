@@ -66,9 +66,26 @@ public class ItemListViewCell extends ListCell<Item>{
 
     @FXML
     void clickadd(ActionEvent event) {
-
+    	ArrayList<Object> args =  new ArrayList<Object>();
+    	args.add(myItem);
+    	UserRequest user_request = new UserRequest("#addtocart",  args);
+    	Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	MainController.getClient().client.flagServerAns = false;
+    	    	MainController.getClient().client.handleMessageFromClientUI(user_request);
+    	    	while(!MainController.getClient().client.flagServerAns) {
+	  				try {
+	  					Thread.sleep(100);
+	  				} catch (InterruptedException e) {
+	  					// TODO Auto-generated catch block
+					e.printStackTrace();
+	  				}
+	  				
+	  			}
+    	    }
+    	});
     }
-    
     
 	@Override
     protected void updateItem(Item item, boolean empty) {

@@ -42,13 +42,15 @@ public class ReportController {
 	    		itemObservableList.add(item);
     		}
     	}
+    	System.out.println("\n\n\ncheck whats inside!!"+itemObservableList.get(0).get_order_content()+"\n\n\n\\n");
     }
     
     public void updateReport() {
     	lvReports.setItems(itemObservableList);
     	lvReports.setCellFactory(itemListView  -> new ReportListViewCell());
+    	System.out.println("lvReports: " + lvReports);
     }
-    
+    @FXML
     public void initialize() {
     	Platform.runLater(() -> {
     		lvReports.setItems(itemObservableList);
@@ -78,6 +80,7 @@ public class ReportController {
     				};
     			}
     			System.out.println("got Reports");
+    			System.out.println("reports are "+ mainController.getClient().monthly_reports.getItemList());
     			setReport(mainController.getClient().monthly_reports.getItemList());
     			updateReport();
     			System.out.println("finished displaying reports");

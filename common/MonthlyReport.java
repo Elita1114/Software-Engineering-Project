@@ -3,18 +3,20 @@ package common;
 public class MonthlyReport {
 	int store;
 	String Date;
-	String income_content;
+	float income_content;
 	String order_content;
-	String complaint_content;
+	int handledcomplaint;
+	int unhandledcomplaint;
 	
-	public MonthlyReport(int store, String date, String income_content, String order_content,
-			String complaint_content) {
+	public MonthlyReport(int store, String date, float income_content, String order_content,
+			int handledcomplaint_, int unhandledcomplaint_) {
 		super();
 		this.store = store;
 		Date = date;
 		this.income_content = income_content;
 		this.order_content = order_content;
-		this.complaint_content = complaint_content;
+		this.handledcomplaint = handledcomplaint_;
+		this.unhandledcomplaint = unhandledcomplaint_;
 	}
 	
 	public int getStore() {

@@ -281,6 +281,30 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#getReports"))
+			  {
+				  try { 
+					  User user = (User) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      Statement stmt=con.createStatement();  
+				      PreparedStatement getcart = con.prepareStatement("select * from `reports`");
+				      ResultSet rs = getcart.executeQuery();
+				      ArrayList<MonthlyReport> itemList = new ArrayList<MonthlyReport>();
+				      
+
+				      while(rs.next()) { 
+				    	  itemList.add(new MonthlyReport(rs.getInt("store"), rs.getString("date"), rs.getFloat("Revenue"), rs.getString("text"), rs.getInt("handledcomplaints"), rs.getInt("unhandledcomplaints")));
+				      }
+				      
+				      con.close();  
+				      MonthlyReportList reportlist= new MonthlyReportList(itemList);
+				      System.out.println(reportlist);
+				      client.sendToClient(reportlist);  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#updateComplaint")) {
 				  try { 
 					  int complaintID  = (Integer) user_request.get_request_args().get(0);
@@ -475,36 +499,6 @@ public class EchoServer extends AbstractServer
 		      }
 		      con.close();  
 		      ComplaintsList complaints=new ComplaintsList(itemList);
-		      client.sendToClient(complaints);  
-		      
-		      
-		  } catch(Exception e) {
-			  System.out.println("a");
-			  System.out.println(e);
-		  }
-		  return;
-    }
-    else if(request.toString().startsWith("#getComplaints")) {
-    	try {
-  		  
-    		 int id= Integer.parseInt(request.toString().split(" ")[1]);
-		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-		      Statement stmt=con.createStatement();  
-
-		      
-		      PreparedStatement getComplaint = con.prepareStatement("select * from Complaint WHERE user = ?");
-		      getComplaint.setInt(1, id);
-		      ResultSet rs = getComplaint.executeQuery();
-		      
-		      
-		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
-
-		      while(rs.next()) { 
-		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(9),rs.getInt(8)));
-		    	  System.out.println("getting item");
-		      }
-		      con.close();  
-		      ComplaintsList complaints=new ComplaintsList(itemList,"#userGetComplaints");
 		      client.sendToClient(complaints);  
 		      
 		      

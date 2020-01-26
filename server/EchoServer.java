@@ -152,10 +152,10 @@ public class EchoServer extends AbstractServer
 					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`) VALUES (?,?,?,?,?,?,?)");
 					      insertuser.setString(1, new_user.username); // User name
 					      insertuser.setString(2, generate_md5_hash(new_user.password));  // Password
-					      insertuser.setString(3, "new_user.paymentdetails"); // payment details
-					      insertuser.setInt(4, 0); // store
-					      insertuser.setString(5, "new_user.phonenumber"); 	// phoneNumber
-					      insertuser.setInt(6, 0); // subscription
+					      insertuser.setString(3, new_user.credit_card_number); // payment details
+					      insertuser.setInt(4, new_user.store); // store
+					      insertuser.setString(5, new_user.phone_number); 	// phoneNumber
+					      insertuser.setInt(6, new_user.pay_method); // subscription
 					      insertuser.setString(7, new_user.id);  // ID
 					      insertuser.executeUpdate();
 				      }

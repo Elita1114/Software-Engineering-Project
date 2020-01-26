@@ -43,7 +43,7 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 	                }
 	            }
 	            System.out.println("updating item ");
-	            tvTitle.setText("reported for: " + item.getDate());
+	            tvTitle.setText("reported for: " + item.date);
 	            tvStore.setText("Store " + String.valueOf(item.getStore()));
 	            System.out.println(tvTitle.getText());
 	            System.out.println(tvStore.getText());

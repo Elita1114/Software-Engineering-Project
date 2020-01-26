@@ -378,7 +378,7 @@ public class EchoServer extends AbstractServer
 		      System.out.println("3");
 		      client.sendToClient("getting catalog");
 		      while(rs.next()) {
-		    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path")));
+		    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path"),rs.getInt("type") , rs.getInt("store") , rs.getInt("sale")));
 		    	  System.out.println("2");
 		    	  System.out.println("getting item");
 		      }

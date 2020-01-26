@@ -33,7 +33,7 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 	        } 
 	        else {
 	            if (mLLoader == null) {
-	                mLLoader = new FXMLLoader(getClass().getResource("/client/fxml/ComplaintListViewCell.fxml"));
+	                mLLoader = new FXMLLoader(getClass().getResource("/client/fxml/ReportListViewCell.fxml"));
 	                mLLoader.setController(this);
 	                try {
 	                    mLLoader.load();

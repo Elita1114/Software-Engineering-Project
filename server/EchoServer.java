@@ -12,7 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+import java.util.TimerTask;
+
 import javax.net.ssl.SSLException;
 import java.io.*;
 import java.math.BigInteger;
@@ -85,6 +90,38 @@ public class EchoServer extends AbstractServer
   }
 
   
+  public void schedule_periodic_tasks()
+  {
+	  System.out.println("scheduling periodic task");
+	  // Schedule report generation
+	  Calendar today = Calendar.getInstance();
+	  today.set(Calendar.HOUR_OF_DAY, 2);
+	  today.set(Calendar.MINUTE, 0);
+	  today.set(Calendar.SECOND, 0);
+	   // every night at 2am you run your task
+	  //Timer timer = new Timer();
+	  //timer.schedule(new GenerateReports(this), 100 , TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES)); // period: 1 day
+	  MonthlyTimer t = MonthlyTimer.schedule( new GenerateReports(this), 5, 5);
+	  /*
+	  MonthlyTimer t = MonthlyTimer.schedule( new Runnable() { 
+          public void run() { 
+              System.out.println( "Hola" );
+          }}, 5, 5);*/
+	    // timer.schedule(new GenerateReports(this), today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)); // period: 1 day
+  }
+  
+  private class GenerateReports extends TimerTask {
+	  
+	  EchoServer server;
+	  public GenerateReports(EchoServer server_) {
+		  server = server_;
+	  }
+	  @Override
+	  public void run() {
+		  System.out.println("requesting to create report");
+		  server.handleMessageFromServerUI("#createReport");
+	  }
+  }
   //Instance methods ************************************************
   
   /**

@@ -4,6 +4,10 @@ package server;
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+
 import client.*;
 import common.*;
 
@@ -46,6 +50,7 @@ public class ServerConsole implements ChatIF
     try 
     {
       server = new EchoServer(port, this);
+      server.schedule_periodic_tasks();
     } 
     catch(IOException exception) 
     {
@@ -115,7 +120,7 @@ public class ServerConsole implements ChatIF
   {
     String host = "";
     int port = 0;  //The port number
-
+        
     try
     {
       port = Integer.parseInt(args[0]);

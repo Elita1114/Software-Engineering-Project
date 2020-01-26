@@ -18,7 +18,7 @@
                   <fx:include fx:id="login" source="Login.fxml" />
                </content>
             </Tab>
-            <Tab text="Sign Up">
+            <Tab fx:id="tabSignUp" onSelectionChanged="#signupClick" text="Sign Up">
                <content>
                   <fx:include fx:id="signUp" source="SignUp.fxml" />
                </content>

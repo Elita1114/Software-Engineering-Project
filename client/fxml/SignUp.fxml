@@ -52,10 +52,9 @@
             <RadioButton fx:id="PayPErOrderRadio" mnemonicParsing="false" text="Pay Per Order" toggleGroup="$tgPayMethod" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Button fx:id="signUpbtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#signUp" text="signUp" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
             <Label text="Store" GridPane.rowIndex="6" />
-            <MenuButton fx:id="storeselector" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+            <MenuButton text="SELECT STORE" fx:id="storeselector" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
+
               </items>
             </MenuButton>
             <TextField fx:id="PhoneNumberText" GridPane.columnIndex="1" GridPane.rowIndex="5" />

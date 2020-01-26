@@ -13,6 +13,7 @@ public class MonthlyReport implements Serializable{
 	String order_content;
 	int handledcomplaint;
 	int unhandledcomplaint;
+	public String date;
 	
 	public MonthlyReport(int store, String date, float income_content, String order_content,
 			int handledcomplaint_, int unhandledcomplaint_) {
@@ -31,14 +32,8 @@ public class MonthlyReport implements Serializable{
 	public void setStore(int store) {
 		this.store = store;
 	}
-	public String getDate() {
-		return Date;
-	}
 	public void setDate(String date) {
 		Date = date;
-	}
-	public float get_income_content() {
-		return income_content;
 	}
 	public void set_income_content(float income_content) {
 		this.income_content = income_content;
@@ -52,6 +47,7 @@ public class MonthlyReport implements Serializable{
 	public int getHandledcomplaint() {
 		return handledcomplaint;
 	}
+  
 	public void setHandledcomplaint(int handledcomplaint) {
 		this.handledcomplaint = handledcomplaint;
 	}

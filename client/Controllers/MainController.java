@@ -43,6 +43,7 @@ public class MainController {
 	@FXML public Tab tabComplaint;
 	@FXML public Tab tabOrder;
 	@FXML public Tab tabReports;
+	@FXML public Tab tabSignUp;
 
 	@FXML
 	private void initialize() {
@@ -116,13 +117,20 @@ public class MainController {
 		
 	}
 	
+	@FXML
+	public final EventHandler<Event> signupClick(){
+		if(tabSignUp.isSelected())
+			signUpController.updateStoresList();
+		return null;
+		
+	}
+	
 	
 	@FXML
 	public final EventHandler<Event> complaintClick(){
 		if(tabComplaint.isSelected()) {
 			if(client.client.getlogged())
 				complaintController.complaintsOpened();
-			
 			System.out.println("handle was clicked");
 			
 			

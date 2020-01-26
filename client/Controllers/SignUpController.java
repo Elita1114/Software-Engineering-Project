@@ -105,7 +105,7 @@ public class SignUpController {
     	}
     	
     	// User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, String store)
-    	User new_user =  new User(user_name, passwd, I_D, cardNumber, pay_method, phoneNumber, store,Status.values()[0]); 
+    	User new_user =  new User(0, user_name, passwd, I_D, cardNumber, pay_method, phoneNumber, store,Status.values()[0]); 
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(new_user);
     	UserRequest user_request = new UserRequest("#signup",  args);

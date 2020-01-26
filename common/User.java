@@ -21,8 +21,9 @@ public class User implements Serializable {
 	public Status status;
 	
 
-	public User(String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store,Status status) {
+	public User(int user_id_, String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store,Status status) {
 		super();
+		this.user_id = user_id_;
 		this.username = username;
 		this.password = password;
 		this.id = id;

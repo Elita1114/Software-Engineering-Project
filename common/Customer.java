@@ -1,0 +1,16 @@
+package common;
+
+public class Customer extends User {
+
+	public Customer(int user_id_, String username, String password, String id, String credit_card_number, int pay_method,
+			String phone_number, int store) {
+		super(user_id_, username, password, id, credit_card_number, pay_method,
+				phone_number, store, Status.client);
+	}
+
+	public String getDetails() {
+		return "User: " + username + "\nPassword: " + password + "\nID: " + id + "\nCredit card number "
+				+ credit_card_number + "\nPay method: " + pay_method + "\nPhone number: " + phone_number + "\nStore: "
+				+ store;
+	}
+}

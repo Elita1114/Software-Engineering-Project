@@ -110,6 +110,8 @@ public class OrderController {
     					e.printStackTrace();
     				};
     			}
+    			order_items = mainController.getClient().cart.getItems();
+    	    	System.out.println("Ordered:  " +order_items);
     			System.out.println("got cart");
     			System.out.println(mainController.getClient().cart.getItems());
     			setOrder(mainController.getClient().cart.getItems());
@@ -188,6 +190,7 @@ public class OrderController {
     		phoneNumber = phonenumberText.getText();
     	}
     	Order my_order = new Order(order_items, date, letter, want_shipping, address, recieverName, phoneNumber);
+    	System.out.println("Ordered:  " +order_items);
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(mainController.getClient().client.getLoggedUser());
     	args.add(my_order);

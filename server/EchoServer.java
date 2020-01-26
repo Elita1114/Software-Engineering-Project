@@ -286,16 +286,13 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  User user = (User) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      Statement stmt=con.createStatement();  
-				      PreparedStatement getcart = con.prepareStatement("select * from `reports`");
-				      ResultSet rs = getcart.executeQuery();
+				      PreparedStatement getreports = con.prepareStatement("select * from `reports` WHERE `store`=?");
+				      getreports.setInt(1, user.store);
+				      ResultSet rs = getreports.executeQuery();
 				      ArrayList<MonthlyReport> itemList = new ArrayList<MonthlyReport>();
-				      
-
 				      while(rs.next()) { 
 				    	  itemList.add(new MonthlyReport(rs.getInt("store"), rs.getString("date"), rs.getFloat("Revenue"), rs.getString("text"), rs.getInt("handledcomplaints"), rs.getInt("unhandledcomplaints")));
 				      }
-				      
 				      con.close();  
 				      MonthlyReportList reportlist= new MonthlyReportList(itemList);
 				      System.out.println(reportlist);

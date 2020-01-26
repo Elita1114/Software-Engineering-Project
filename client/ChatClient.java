@@ -142,6 +142,10 @@ public class ChatClient extends AbstractClient
 		  System.out.println("Got Cart");
 	  		clientUI.getData(msg);
 	  }
+	  else if(msg.toString().equals("#addCatalogItem")) {
+		  flagServerAns=true;
+		  System.out.println("add catalog item flag true\n");
+	  }
 	  else{
 		  clientUI.display(msg.toString());
 	  }

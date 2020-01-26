@@ -300,6 +300,28 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#addCatalogItem")) {
+				  System.out.println("add catalog item");
+				  try { 
+				      CatalogItem addedItem  = (CatalogItem) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement addCayalogItemSql = con.prepareStatement("INSERT INTO `Products`(`name`, `description`, `type`, `price`, `Color`, `Image Path`, `store`, `sale`) VALUES (?,?,?,?,?,?,?,?)");
+				      addCayalogItemSql.setString(1, addedItem.getName());
+				      addCayalogItemSql.setString(2, addedItem.getDescription());
+				      addCayalogItemSql.setInt(3, addedItem.getType());
+				      addCayalogItemSql.setDouble(4, addedItem.getPrice());
+				      addCayalogItemSql.setString(5, addedItem.getColor());
+				      addCayalogItemSql.setString(6, addedItem.getImagePath());
+				      addCayalogItemSql.setInt(7, addedItem.getStore());
+				      addCayalogItemSql.setDouble(8, addedItem.getSale());
+				      
+				      addCayalogItemSql.executeUpdate();
+					  client.sendToClient("#addCatalogItem");
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
 		  
 		  return;
 			  }

@@ -21,8 +21,8 @@ public class CatalogItem extends Item implements Serializable {
 		price=price_;
 		imagePath=imagePath_;
 		id=id_;
-		store=store_;
-		sale=sale_;
+		setStore(store_);
+		setSale(sale_);
 	}
 	
 	public float getPrice() {
@@ -49,13 +49,29 @@ public class CatalogItem extends Item implements Serializable {
 	      CatalogItem other_item = (CatalogItem) obj; 	          
 	      // comparing the state of argument with  
 	      // the state of 'this' Object. 
-	      return (other_item.price == this.price && other_item.imagePath == this.imagePath && other_item.sale == this.sale && other_item.store == this.store && other_item.id == this.id
+	      return (other_item.price == this.price && other_item.imagePath == this.imagePath && other_item.getSale() == this.getSale() && other_item.getStore() == this.getStore() && other_item.id == this.id
 	    		  && super.equals(obj)); 
 	}
 
 	public int getId() {
 		// TODO Auto-generated method stub
-		return 0;
+		return id;
+	}
+
+	public int getStore() {
+		return store;
+	}
+
+	public void setStore(int store) {
+		this.store = store;
+	}
+
+	public float getSale() {
+		return sale;
+	}
+
+	public void setSale(float sale) {
+		this.sale = sale;
 	}
 
 }

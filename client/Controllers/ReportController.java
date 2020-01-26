@@ -7,9 +7,14 @@ import common.Complaint;
 import common.MonthlyReport;
 import common.UserRequest;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -19,15 +24,30 @@ public class ReportController {
 	private MainController mainController;
     @FXML private ListView<MonthlyReport> lvReports;
     static public ObservableList<MonthlyReport> itemObservableList;
-    
     @FXML
     public TextField tvDescription;
 
     @FXML
     public TextArea tvContent;
     
+    public NumberAxis yAxis;
+    public CategoryAxis xAxis;
+    
+    @FXML
+    public BarChart<String, Number> complaintBarChart;
+    
     public ReportController() {
     	itemObservableList = FXCollections.observableArrayList();
+    	if(complaintBarChart == null)
+    	{
+    			xAxis = new CategoryAxis();
+    			yAxis = new NumberAxis();
+    			xAxis.setCategories(FXCollections.observableArrayList("Handled Complaints", "Unhandled Complaints"));
+    	      //Creating the Bar chart
+    			BarChart<String, Number> complaintBarChart = new BarChart<>(xAxis, yAxis);
+    	
+    	}
+    	// complaintBarChart.setVisible(false);
     }
     
     public void injectMainController(MainController mainController_) {
@@ -52,6 +72,7 @@ public class ReportController {
     }
     @FXML
     public void initialize() {
+    	complaintBarChart.setVisible(false);
     	Platform.runLater(() -> {
     		lvReports.setItems(itemObservableList);
     		lvReports.setCellFactory(itemListView  -> new ReportListViewCell(this));

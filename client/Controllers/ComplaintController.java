@@ -181,7 +181,7 @@ public class ComplaintController {
     	    	if(mainController.getClient().client.getlogged()) {
 	    	    	String title=tvTitle.getText().toString();
 	    	    	String description=tvDescription.getText().toString();
-	    	    	Complaint complaint =  new Complaint(title, description, false, 0, mainController.getClient().client.getLoggedUser().user_id);
+	    	    	Complaint complaint =  new Complaint(title, description, false, 0, mainController.getClient().client.getLoggedUser().user_id,mainController.getClient().client.getLoggedUser().store);
 	    	    	ArrayList<Object> args =  new ArrayList<Object>();
 	    	    	args.add(complaint);
 	    	    	UserRequest user_request=new UserRequest("#addComplaint", args);

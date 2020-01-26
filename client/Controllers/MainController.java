@@ -101,8 +101,9 @@ public class MainController {
 			
 		}
 		else if(tabOrder.isSelected()) {
-			orderController.fetchOrder();
 			System.out.println("Getting cart for user");
+			orderController.fetchOrder();
+			
 		}
 		return null;
 		

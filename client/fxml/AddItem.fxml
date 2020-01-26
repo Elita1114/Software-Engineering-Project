@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="387.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.addItemController">
+   <children>
+      <Label layoutX="26.0" layoutY="24.0" text="Add Item to Catalog" />
+      <Label layoutX="26.0" layoutY="89.0" text="Name of the item:" />
+      <Label layoutX="26.0" layoutY="191.0" text="Price:" />
+      <Label layoutX="26.0" layoutY="156.0" text="Type:" />
+      <TextField fx:id="nameText" layoutX="197.0" layoutY="85.0" />
+      <TextField fx:id="typeText" layoutX="197.0" layoutY="152.0" />
+      <TextField fx:id="priceText" layoutX="197.0" layoutY="187.0" />
+      <Button fx:id="addItem" layoutX="206.0" layoutY="332.0" mnemonicParsing="false" onAction="#add" text="Add item" />
+      <Label layoutX="26.0" layoutY="123.0" text="Description" />
+      <TextField fx:id="descriptionText" layoutX="197.0" layoutY="119.0" />
+      <Label layoutX="26.0" layoutY="223.0" text="Color:" />
+      <TextField fx:id="colorText" layoutX="197.0" layoutY="219.0" />
+      <Label layoutX="26.0" layoutY="256.0" text="Image path:" />
+      <TextField fx:id="pathText" layoutX="197.0" layoutY="252.0" />
+      <Label layoutX="28.0" layoutY="290.0" text="sale:" />
+      <TextField fx:id="saleText" layoutX="196.0" layoutY="286.0" />
+   </children>
+</AnchorPane>

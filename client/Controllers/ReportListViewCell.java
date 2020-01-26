@@ -5,6 +5,7 @@ import java.io.IOException;
 import common.Complaint;
 import common.Item;
 import common.MonthlyReport;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -21,8 +22,30 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 	    @FXML private AnchorPane pane;
 	    public MonthlyReport monthly_report;
 		private FXMLLoader mLLoader;
+		ReportController report_controller;
 
+	    @FXML
+	    void incomeBttnPressed(ActionEvent event) {
+	    	report_controller.tvDescription.setText("Generated report for store " + monthly_report.getStore() + " on " + monthly_report.getDate());
+	    	report_controller.tvContent.setText(monthly_report.get_order_content());
+	    }
+
+	    @FXML
+	    void complaintsBttnPressed(ActionEvent event) {
+	    	report_controller.tvDescription.setText("Generated report for store " + monthly_report.getStore() + " on " + monthly_report.getDate());
+	    	report_controller.tvContent.setText(monthly_report.get_order_content());
+	    }
+
+	    @FXML
+	    void ordersBttnPressed(ActionEvent event) {
+	    	report_controller.tvDescription.setText("Generated report for store " + monthly_report.getStore() + " on " + monthly_report.getDate());
+	    	report_controller.tvContent.setText(monthly_report.get_order_content());
+	    }
 	    
+	    public ReportListViewCell(ReportController report_controller_)
+	    {
+	    	report_controller = report_controller_;
+	    }
 	    @Override
 	    protected void updateItem(MonthlyReport item, boolean empty) {
 	        super.updateItem(item, empty);

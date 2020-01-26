@@ -18,9 +18,10 @@ public class User implements Serializable {
 	public String phone_number;
 	public int store;
 	public int user_id;
-	
+	public Status status;
 
-	public User(int user_id_, String username, String password, String id, String credit_card_number, int pay_method, String phone_number, int store) {
+
+	public User(int user_id_, String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store,Status status) {
 		super();
 		this.user_id = user_id_;
 		this.username = username;
@@ -30,6 +31,14 @@ public class User implements Serializable {
 		this.pay_method = pay_method;
 		this.phone_number = phone_number;
 		this.store = store;
+		this.status = status;
+	}
+	
+	public User(String username, String password)
+	{
+		super();
+		this.username = username;
+		this.password = password;
 	}
 	
 	public User(String username, String password, int user_id_, int store) {

@@ -49,7 +49,8 @@ public class addItemController {
     	
     	ArrayList<Object> args =  new ArrayList<Object>();
     	
-    	CatalogItem updatedItem = new CatalogItem(titel,description, color,price,-1,path,type,sale,store,1);
+
+    	CatalogItem updatedItem = new CatalogItem(titel, description,color,price,0,path, type, store, sale);// 0 in id for now, database will give it id
     	args.add(updatedItem);
     	UserRequest user_request = new UserRequest("#addCatalogItem",  args);
     	Platform.runLater(new Runnable() {

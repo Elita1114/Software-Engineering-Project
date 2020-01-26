@@ -1,6 +1,12 @@
 package common;
 
-public class MonthlyReport {
+import java.io.Serializable;
+
+public class MonthlyReport implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8080534450830284830L;
 	int store;
 	String Date;
 	float income_content;

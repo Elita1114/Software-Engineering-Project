@@ -66,9 +66,9 @@ public class ReportController {
 		Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
-    	    	mainController.getClient().flagReports=false;
+    	    	mainController.getClient().client.flagServerAns=false;
     	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
-    			while(!mainController.getClient().flagReports) {
+    			while(!mainController.getClient().client.flagServerAns) {
     				try {
     					Thread.sleep(100);
     					System.out.println("waiitng for server");
@@ -80,8 +80,9 @@ public class ReportController {
     			System.out.println("got Reports");
     			setReport(mainController.getClient().monthly_reports.getItemList());
     			updateReport();
+    			System.out.println("finished displaying reports");
     			System.out.println(itemObservableList);
-    			mainController.getClient().flagCart = false;
+    			mainController.getClient().client.flagServerAns = false;
     	    }
     	});
     	

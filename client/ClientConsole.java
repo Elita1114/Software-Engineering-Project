@@ -135,7 +135,9 @@ public class ClientConsole extends Application implements ChatIF
 		  System.out.println("set flag");
 	  }
 	  else if (data instanceof MonthlyReportList) {
+		  System.out.println("got reports data");
 		  monthly_reports = (MonthlyReportList) data;
+		  System.out.println("item list contains: "+ monthly_reports.getItemList());
 	  }
   }
   

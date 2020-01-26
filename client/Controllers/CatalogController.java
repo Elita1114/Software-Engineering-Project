@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import common.Catalog;
 import common.CatalogItem;
 import common.Item;
+import common.UserRequest;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -174,11 +175,14 @@ public class CatalogController implements Initializable {
     
     
     private void updateButtonPressed(String msg) {
+    	ArrayList<Object> args =  new ArrayList<Object>();
+    	args.add(mainController.getClient().client.getLoggedUser());
+    	UserRequest user_request = new UserRequest(msg,  args);
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
     	    	mainController.getClient().flagCatalog=false;
-    	    	mainController.getClient().client.handleMessageFromClientUI(msg);
+    	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
     			while(!mainController.getClient().flagCatalog) {
     				try {
     					Thread.sleep(100);

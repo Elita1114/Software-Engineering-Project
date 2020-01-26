@@ -91,6 +91,22 @@ public class LoginController {
 	  				alert.show();
 					mainController.getTabPane().getTabs().remove(1);
 					mainController.getTabPane().getTabs().remove(1);
+					
+					mainController.getClient().flagCatalog = false;
+	  				ArrayList<Object> args =  new ArrayList<Object>();
+	  		    	args.add(mainController.getClient().client.getLoggedUser());
+	  		    	UserRequest user_request = new UserRequest("#getCatalog 0",  args);
+		  			mainController.getClient().client.handleMessageFromClientUI(user_request);
+		  			while(!mainController.getClient().flagCatalog) {
+		  				try {
+		  					Thread.sleep(100);
+		  				} catch (InterruptedException e) {
+		  					// TODO Auto-generated catch block
+						e.printStackTrace();
+		  				}
+		  			}
+		  			mainController.setCatalog(mainController.getClient().catalog.getList());
+	    			mainController.getClient().flagCatalog=false;
 					mainController.getTabPane().getSelectionModel().select(0);
 	  			}else if(mainController.getClient().client.isWrongdetails())
 	  			{

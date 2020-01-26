@@ -12,6 +12,7 @@ import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -71,16 +72,12 @@ public class SignUpController {
 	}
     @FXML
 	private void initialize() {
-//    	for (Store store : mainController.getClient().client.getStoreslist().stores) { 		      
-//    		System.out.println(store.getName());
-//		}
+
     }
    
     
     @FXML
     void signUp(ActionEvent event) {
-    	
-    	
     	String user_name = nameText.getText();
     	String I_D = IDText.getText();
     	String passwd = passText.getText();
@@ -88,7 +85,8 @@ public class SignUpController {
     	String cardNumber = CardNumberText.getText();
     	int pay_method = PayingMethod.pay_per_order;
     	String phoneNumber = PhoneNumberText.getText();
-    	int store =  Integer.parseInt(storeselector.getText());
+    	System.out.println(storeselector.getText().substring(0,1));
+    	int store = Integer.parseInt(storeselector.getText().substring(0,1));
     	
     	if(PayPErOrderRadio.isSelected())
     		pay_method = PayingMethod.pay_per_order; 
@@ -135,7 +133,23 @@ public class SignUpController {
     
     }
 
+    void updateStoresList() {
+    	EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() { 
+            public void handle(ActionEvent e) 
+            { 
+            	storeselector.setText(((MenuItem)e.getSource()).getText() + ""); 
+            } 
+        }; 
+  
+        // add action events to the menuitems 
         
+    	for (Store store : mainController.getClient().client.getStoreslist().stores) { 
+    		MenuItem m = new MenuItem(store.getId() + ". " + store.getName());
+    		m.setOnAction(event1); 
+    		storeselector.getItems().add(m);
+		}
+    }
+    
     void openCatalogscene(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/CatalogScene.fxml"));     
 		Parent root = (Parent)fxmlLoader.load();

@@ -105,6 +105,7 @@ public class ChatClient extends AbstractClient
 	  else if(msg.toString().equals("#gotStores")) {
 		  storeslist = (StoresList)msg;
 		  System.out.println(storeslist);
+		  System.out.println(storeslist.stores);
 		  this.flagServerAns=true;
 	  }
 	  else if(msg.toString().equals("#addedtocart")) {

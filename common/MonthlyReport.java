@@ -41,7 +41,13 @@ public class MonthlyReport implements Serializable{
 	public String get_order_content() {
 		return order_content;
 	}
-
+	public void set_order_content(String order_content) {
+		this.order_content = order_content;
+	}
+	public int getHandledcomplaint() {
+		return handledcomplaint;
+	}
+  
 	public void setHandledcomplaint(int handledcomplaint) {
 		this.handledcomplaint = handledcomplaint;
 	}

@@ -17,15 +17,14 @@ import javafx.scene.control.TextField;
 public class ReportController {
 
 	private MainController mainController;
-    @FXML
-    private ListView<MonthlyReport> lvReports;
+    @FXML private ListView<MonthlyReport> lvReports;
     static public ObservableList<MonthlyReport> itemObservableList;
     
     @FXML
-    private TextField tvDescription;
+    public TextField tvDescription;
 
     @FXML
-    private TextArea tvContent;
+    public TextArea tvContent;
     
     public ReportController() {
     	itemObservableList = FXCollections.observableArrayList();
@@ -46,15 +45,16 @@ public class ReportController {
     }
     
     public void updateReport() {
+    	System.out.println("bla bla bla " + itemObservableList);
     	lvReports.setItems(itemObservableList);
-    	lvReports.setCellFactory(itemListView  -> new ReportListViewCell());
+    	lvReports.setCellFactory(itemListView  -> new ReportListViewCell(this));
     	System.out.println("lvReports: " + lvReports);
     }
     @FXML
     public void initialize() {
     	Platform.runLater(() -> {
     		lvReports.setItems(itemObservableList);
-    		lvReports.setCellFactory(itemListView  -> new ReportListViewCell());
+    		lvReports.setCellFactory(itemListView  -> new ReportListViewCell(this));
 
         });	
     }

@@ -138,7 +138,7 @@ public class EchoServer extends AbstractServer
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      System.out.println(cuser);
 				      if(cuser == 1){
-				    	  User loggedUser = new User(rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    	  User loggedUser = new User(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
 				    	  client.sendToClient(loggedUser); 
 				      }
 				      else {
@@ -206,7 +206,7 @@ public class EchoServer extends AbstractServer
 						  addtocart.setFloat(5, ((CatalogItem)citem.getItem()).getPrice());  // Price
 						  addtocart.setString(6, ((CatalogItem)citem.getItem()).getDescription());  // Description
 						  addtocart.executeUpdate();
-						  client.sendToClient(citem);
+						  client.sendToClient("#addedtocart");
 					  }
 					  
 				  }catch(Exception e) {
@@ -223,8 +223,8 @@ public class EchoServer extends AbstractServer
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      Statement stmt=con.createStatement();  
 				      System.out.println("The id is " + user.user_id);
-				      PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `userID`=5 AND `orderID` is NULL");
-				      // getcart.setInt(1, user.user_id);
+				      PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `userID`=? AND `orderID` is NULL");
+				      getcart.setInt(1, user.user_id);
 				      ResultSet rs = getcart.executeQuery();
 				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
@@ -669,7 +669,7 @@ public class EchoServer extends AbstractServer
 			}
 			System.out.println("6");
 			System.out.println(reportText);
-		      
+		    
 		    con.close();  
  
 		  } catch(Exception e) {

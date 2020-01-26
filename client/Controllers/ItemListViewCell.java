@@ -4,6 +4,7 @@ package client.Controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import common.CartItem;
 import common.CatalogItem;
 import common.Item;
 import common.Status;
@@ -62,12 +63,13 @@ public class ItemListViewCell extends ListCell<Item>{
     	    }
     	});
     }
-    	
 
     @FXML
     void clickadd(ActionEvent event) {
+    	System.out.println("send add to cart");
     	ArrayList<Object> args =  new ArrayList<Object>();
-    	args.add(myItem);
+    	args.add(MainController.getClient().client.getLoggedUser());
+    	args.add(new CartItem(myItem,1));
     	UserRequest user_request = new UserRequest("#addtocart",  args);
     	Platform.runLater(new Runnable() {
     	    @Override

@@ -270,7 +270,7 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  Complaint complaint  = (Complaint) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement addComplaint = con.prepareStatement("INSERT INTO `Complaint`(`description`, `Status`, `refund`, `user`, `title`,`reply`,`timer`) VALUES (?,?,?,?,?,?,?)");
+				      PreparedStatement addComplaint = con.prepareStatement("INSERT INTO `Complaint`(`description`, `Status`, `refund`, `user`, `title`,`reply`,`timer`,`store`) VALUES (?,?,?,?,?,?,?,?)");
 				      addComplaint.setString(1, complaint.description);
 				      addComplaint.setBoolean(2, complaint.status);
 				      addComplaint.setDouble(3, complaint.refund);
@@ -278,6 +278,7 @@ public class EchoServer extends AbstractServer
 				      addComplaint.setString(5, complaint.title);
 				      addComplaint.setString(6, complaint.reply);
 				      addComplaint.setInt(7, complaint.timer);
+				      addComplaint.setInt(8, complaint.store);
 				      addComplaint.executeUpdate();
 					  client.sendToClient(new ReturnStatus("#addComplaint", true));
 					  con.close();
@@ -409,7 +410,7 @@ public class EchoServer extends AbstractServer
 		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
 
 		      while(rs.next()) { 
-		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(8)));
+		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(9),rs.getInt(8)));
 		    	  System.out.println("getting item");
 		      }
 		      con.close();  
@@ -439,7 +440,7 @@ public class EchoServer extends AbstractServer
 		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
 
 		      while(rs.next()) { 
-		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(8)));
+		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(9),rs.getInt(8)));
 		    	  System.out.println("getting item");
 		      }
 		      con.close();  

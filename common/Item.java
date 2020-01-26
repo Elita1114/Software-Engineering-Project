@@ -66,12 +66,6 @@ public class Item implements Serializable{
 	      // the state of 'this' Object. 
 	      return (other_item.name == this.name && other_item.description == this.description && other_item.color == this.color); 
 	}
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 
 }

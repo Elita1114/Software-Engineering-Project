@@ -53,21 +53,14 @@ public class MonthlyTimer {
     private Date nextDate() { 
     	System.out.println("getting next date");
         Calendar runDate = Calendar.getInstance();
-        //runDate.set(Calendar.DAY_OF_MONTH, 1);
-        //runDate.set(Calendar.HOUR_OF_DAY, 10);
-        // runDate.set(Calendar.MINUTE, 0);
-        runDate.add(Calendar.SECOND, 10);//set to next month
-        // runDate.add(Calendar.MONTH, 1);//set to next month
+        runDate.set(Calendar.DAY_OF_MONTH, this.dayOfMonth);
+        runDate.set(Calendar.HOUR_OF_DAY, this.hourOfDay);
+        runDate.set(Calendar.MINUTE, 0);
+        runDate.set(Calendar.SECOND, 0);
+        runDate.add(runDate.MONTH, 1);//set to next month
 
-        //System.out.println(runDate.DAY_OF_MONTH);
-        //System.out.println(runDate.HOUR_OF_DAY);
-        //System.out.println(runDate.MINUTE);
-        // Creating a calendar 
         System.out.println("The next run date is "+ runDate.getTime());
 
-        //runDate.add(Calendar.MINUTE, 1);//set to next month
-        // System.out.println(runDate);
-        // System.out.println(runDate.getTimeInMillis()-Calendar.getInstance().getTimeInMillis());
         return runDate.getTime();
     }
 }

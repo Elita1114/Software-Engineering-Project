@@ -76,5 +76,13 @@ public class Item implements Serializable{
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", color=" + color + "]";
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 }

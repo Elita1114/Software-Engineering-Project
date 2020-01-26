@@ -32,7 +32,7 @@ public class MainController {
 	@FXML private UpdateCatalogController updatecatalogController;//update catalog controller
 	@FXML private OrderController orderController;//update order controller
 	@FXML private HandleComplaintController handleComplaintController;//update order controller
-
+	@FXML private addItemController addCatalogItemController;
 
 	static public ClientConsole client;
 	private boolean flagCheck=false;
@@ -101,8 +101,9 @@ public class MainController {
 			
 		}
 		else if(tabOrder.isSelected()) {
-			orderController.fetchOrder();
 			System.out.println("Getting cart for user");
+			orderController.fetchOrder();
+			
 		}
 		return null;
 		

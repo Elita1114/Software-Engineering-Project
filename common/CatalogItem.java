@@ -9,13 +9,20 @@ public class CatalogItem extends Item implements Serializable {
 	private static final long serialVersionUID = -3897068652305367050L;
 	private float price;
 	private String imagePath;
+	private float sale;
+	private int store;
+	private int id;
+
 	
 	
-	public CatalogItem(String name_, String description_, String color_,float price_,int id_,String imagePath_) {
-		super(id_, name_, description_, color_);
+	public CatalogItem(String name_, String description_, String color_,float price_,int id_,String imagePath_, int type_, int store_, float sale_) {
+		super( id_,  name_,  description_,  color_,  type_);
 		// TODO Auto-generated constructor stub
 		price=price_;
 		imagePath=imagePath_;
+		id=id_;
+		setStore(store_);
+		setSale(sale_);
 	}
 	
 	public float getPrice() {
@@ -42,8 +49,29 @@ public class CatalogItem extends Item implements Serializable {
 	      CatalogItem other_item = (CatalogItem) obj; 	          
 	      // comparing the state of argument with  
 	      // the state of 'this' Object. 
-	      return (other_item.price == this.price && other_item.imagePath == this.imagePath
+	      return (other_item.price == this.price && other_item.imagePath == this.imagePath && other_item.getSale() == this.getSale() && other_item.getStore() == this.getStore() && other_item.id == this.id
 	    		  && super.equals(obj)); 
+	}
+
+	public int getId() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+
+	public int getStore() {
+		return store;
+	}
+
+	public void setStore(int store) {
+		this.store = store;
+	}
+
+	public float getSale() {
+		return sale;
+	}
+
+	public void setSale(float sale) {
+		this.sale = sale;
 	}
 
 }

@@ -203,7 +203,7 @@ public class EchoServer extends AbstractServer
 				    	  }
 				      }
 				      
-				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`) VALUES (NULL,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				      insertorder.setInt(1, user.user_id); // User id
 				      insertorder.setString(2, order.get_shipping_address());  // reciever
 				      insertorder.setInt(3, order.want_shipping()?1:0);  // reciever
@@ -213,6 +213,7 @@ public class EchoServer extends AbstractServer
 				      insertorder.setString(7, order.get_shipping_reciever()); // reciver
 				      insertorder.setString(8, order.get_recievre_phone_number());  // ID
 				      insertorder.setFloat(9, price);  // ID
+				      insertorder.setInt(10, user.store);  // store
 				      insertorder.executeUpdate();
 				      ResultSet insertedorder = insertorder.getGeneratedKeys();
 				      insertedorder.next();
@@ -307,7 +308,7 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  Complaint complaint  = (Complaint) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement addComplaint = con.prepareStatement("INSERT INTO `Complaint`(`description`, `Status`, `refund`, `user`, `title`,`reply`,`timer`) VALUES (?,?,?,?,?,?,?)");
+				      PreparedStatement addComplaint = con.prepareStatement("INSERT INTO `Complaint`(`description`, `Status`, `refund`, `user`, `title`,`reply`,`timer`,`store`) VALUES (?,?,?,?,?,?,?,?)");
 				      addComplaint.setString(1, complaint.description);
 				      addComplaint.setBoolean(2, complaint.status);
 				      addComplaint.setDouble(3, complaint.refund);
@@ -315,6 +316,7 @@ public class EchoServer extends AbstractServer
 				      addComplaint.setString(5, complaint.title);
 				      addComplaint.setString(6, complaint.reply);
 				      addComplaint.setInt(7, complaint.timer);
+				      addComplaint.setInt(8, complaint.store);
 				      addComplaint.executeUpdate();
 					  client.sendToClient(new ReturnStatus("#addComplaint", true));
 					  con.close();
@@ -331,6 +333,28 @@ public class EchoServer extends AbstractServer
 				      addComplaint.setInt(1, idItem);
 				      addComplaint.executeUpdate();
 					  client.sendToClient("#dropCatalog");
+					  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#addCatalogItem")) {
+				  System.out.println("add catalog item");
+				  try { 
+				      CatalogItem addedItem  = (CatalogItem) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement addCayalogItemSql = con.prepareStatement("INSERT INTO `Products`(`name`, `description`, `type`, `price`, `Color`, `Image Path`, `store`, `sale`) VALUES (?,?,?,?,?,?,?,?)");
+				      addCayalogItemSql.setString(1, addedItem.getName());
+				      addCayalogItemSql.setString(2, addedItem.getDescription());
+				      addCayalogItemSql.setInt(3, addedItem.getType());
+				      addCayalogItemSql.setDouble(4, addedItem.getPrice());
+				      addCayalogItemSql.setString(5, addedItem.getColor());
+				      addCayalogItemSql.setString(6, addedItem.getImagePath());
+				      addCayalogItemSql.setInt(7, addedItem.getStore());
+				      addCayalogItemSql.setDouble(8, addedItem.getSale());
+				      
+				      addCayalogItemSql.executeUpdate();
+					  client.sendToClient("#addCatalogItem");
 					  
 				  }catch(Exception e) {
 					  System.out.println(e);
@@ -416,7 +440,7 @@ public class EchoServer extends AbstractServer
 		      System.out.println("3");
 		      client.sendToClient("getting catalog");
 		      while(rs.next()) {
-		    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path")));
+		    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path"),rs.getInt("type") , rs.getInt("store") , rs.getInt("sale")));
 		    	  System.out.println("2");
 		    	  System.out.println("getting item");
 		      }
@@ -446,7 +470,7 @@ public class EchoServer extends AbstractServer
 		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
 
 		      while(rs.next()) { 
-		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(8)));
+		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(9),rs.getInt(8)));
 		    	  System.out.println("getting item");
 		      }
 		      con.close();  
@@ -476,7 +500,7 @@ public class EchoServer extends AbstractServer
 		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
 
 		      while(rs.next()) { 
-		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(8)));
+		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(9),rs.getInt(8)));
 		    	  System.out.println("getting item");
 		      }
 		      con.close();  
@@ -665,49 +689,82 @@ public class EchoServer extends AbstractServer
     		  
 		    con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 			Statement stmt = con.createStatement();
-			ResultSet cartqtys = stmt.executeQuery("SELECT `productID`, SUM(`quantity`) AS quantity FROM Cart WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH)) GROUP BY `productID`");
-			String reportText = "Number of items bought from the catalog: \n";
-			while(cartqtys.next())
+			PreparedStatement prep_stmt = null;
+			ResultSet stores = stmt.executeQuery("SELECT `store_num` FROM `Store`");
+			while(stores.next())
 			{
-				PreparedStatement prep_stmt = con.prepareStatement("SELECT `name` FROM `Products` WHERE `id`=?");
-				prep_stmt.setInt(1, cartqtys.getInt("productID"));
-				ResultSet nameofitem = prep_stmt.executeQuery();
-				nameofitem.next();
-				reportText += nameofitem.getString("name") + ": " + cartqtys.getInt("quantity") + "\n";		
+				int storeid = stores.getInt("store_num");
+				prep_stmt = con.prepareStatement("SELECT `productID`, SUM(`quantity`) AS quantity FROM Cart WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH) AND `store`=?) GROUP BY `productID`");
+				prep_stmt.setInt(1, storeid);
+				ResultSet cartqtys = prep_stmt.executeQuery();
+				String reportText = "Number of items bought from the catalog: \n";
+				while(cartqtys.next())
+				{
+					prep_stmt = con.prepareStatement("SELECT `name` FROM `Products` WHERE `id`=?");
+					prep_stmt.setInt(1, cartqtys.getInt("productID"));
+					ResultSet nameofitem = prep_stmt.executeQuery();
+					nameofitem.next();
+					reportText += nameofitem.getString("name") + ": " + cartqtys.getInt("quantity") + "\n";		
+				}
+				reportText += "Number of custom items bought: \n";
+				prep_stmt = con.prepareStatement("SELECT `type`,count(*) as Qty FROM `CustomItem` WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH) AND `store`=?) GROUP BY `type`");
+				prep_stmt.setInt(1, storeid);
+				ResultSet customeitems = prep_stmt.executeQuery(); 
+				while(customeitems.next())
+				{
+					reportText += customeitems.getInt("type") + ": " + customeitems.getInt("Qty") + "\n";	
+				}
+				reportText += "Which contains the following arguments: \n";
+				prep_stmt = con.prepareStatement("SELECT SUM(`Daisy`) AS DaisyQty, SUM(`Orchid`) AS OrchidQty, SUM(`Iris`) AS IrisQty, SUM(`Rose`) AS RoseQty, SUM(`Lily`) AS LilyQty, SUM(`hydrangea`) AS hydrangeaQty FROM `CustomItem` WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH) AND `store`=?)");
+				prep_stmt.setInt(1, storeid);
+				ResultSet customeitemsargs = prep_stmt.executeQuery(); 
+				customeitemsargs.next();
+				reportText += "Daisy: " + customeitemsargs.getInt("DaisyQty") + "\n";
+				reportText += "Orchid: " + customeitemsargs.getInt("OrchidQty") + "\n";
+				reportText += "Iris: " + customeitemsargs.getInt("IrisQty") + "\n";
+				reportText += "Rose: " + customeitemsargs.getInt("RoseQty") + "\n";
+				reportText += "Lily: " + customeitemsargs.getInt("LilyQty") + "\n";
+				reportText += "hydrangea: " + customeitemsargs.getInt("hydrangeaQty") + "\n";
+				reportText += "Total Money income: ";
+				prep_stmt = con.prepareStatement("SELECT `customprice`+`cartprice` as TotalinCome FROM ((SELECT IF(SUM(`price`) is NULL,0, SUM(`price`)) as `cartprice` FROM `Cart` WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH) AND `store`=?)) as cart JOIN (SELECT IF(SUM(`price`) is NULL,0, SUM(`price`)) as `customprice` FROM `CustomItem` WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH) AND `store`=?)) as custom)");
+				prep_stmt.setInt(1, storeid);
+				prep_stmt.setInt(2, storeid);
+				ResultSet totalincome = prep_stmt.executeQuery(); 
+				totalincome.next();
+				float totalincomef = totalincome.getFloat("TotalinCome");
+				reportText += Float.toString(totalincomef) + "\n";
+				reportText += "Complaints statistic: \n";
+				prep_stmt = con.prepareStatement("SELECT `Status`,count(*) AS stat FROM `Complaint` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH) AND `store`=? GROUP by `Status`");
+				prep_stmt.setInt(1, storeid);
+				ResultSet complaints = prep_stmt.executeQuery(); 
+				int handledcomplaints=0, unhandledcomplaints=0;
+				while(complaints.next())
+				{
+					if(complaints.getInt("Status") == 1)
+					{
+						handledcomplaints = complaints.getInt("stat");
+						reportText += "handled" + ": " + Integer.toString(handledcomplaints) + "\n";	
+					}
+					else
+					{
+						unhandledcomplaints = complaints.getInt("stat");
+						reportText += "unhandled" + ": " + Integer.toString(unhandledcomplaints) + "\n";	
+					}
+						
+				}
+				if(handledcomplaints == 0)
+					reportText += "handled" + ": 0\n";
+				if(unhandledcomplaints == 0)
+					reportText += "unhandled" + ": 0\n";
+				PreparedStatement insertuser = con.prepareStatement("INSERT INTO `reports`(`text`, `store`, `handledcomplaints`, `unhandledcomplaints`, `Revenue`) VALUES (?,?,?,?,?)");
+				insertuser.setString(1, reportText); // reportText
+				insertuser.setInt(2, storeid);  // storeid
+				insertuser.setInt(3, handledcomplaints); // handledcomplaints
+				insertuser.setInt(4, unhandledcomplaints); // unhandledcomplaints
+				insertuser.setFloat(5, totalincomef); // totalincome
+				insertuser.executeUpdate();
+				System.out.println(reportText);
 			}
-			System.out.println("1");
-			reportText += "Number of custom items bought: \n";
-			ResultSet customeitems = stmt.executeQuery("SELECT `type`,count(*) as Qty FROM `CustomItem` WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH)) GROUP BY `type`"); 
-			while(customeitems.next())
-			{
-				reportText += customeitems.getInt("type") + ": " + customeitems.getInt("Qty") + "\n";	
-			}
-			System.out.println("2");
-			reportText += "Which contains the following arguments: \n";
-			ResultSet customeitemsargs = stmt.executeQuery("SELECT SUM(`Daisy`) AS DaisyQty, SUM(`Orchid`) AS OrchidQty, SUM(`Iris`) AS IrisQty, SUM(`Rose`) AS RoseQty, SUM(`Lily`) AS LilyQty, SUM(`hydrangea`) AS hydrangeaQty FROM `CustomItem` WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH))"); 
-			customeitemsargs.next();
-			System.out.println("3");
-			reportText += "Daisy: " + customeitemsargs.getInt("DaisyQty") + "\n";
-			reportText += "Orchid: " + customeitemsargs.getInt("OrchidQty") + "\n";
-			reportText += "Iris: " + customeitemsargs.getInt("IrisQty") + "\n";
-			reportText += "Rose: " + customeitemsargs.getInt("RoseQty") + "\n";
-			reportText += "Lily: " + customeitemsargs.getInt("LilyQty") + "\n";
-			reportText += "hydrangea: " + customeitemsargs.getInt("hydrangeaQty") + "\n";
-			System.out.println("4");
-			reportText += "Total Money income: ";
-			ResultSet totalincome = stmt.executeQuery("SELECT `customprice`+`cartprice` as TotalinCome FROM ((SELECT SUM(`price`) as `cartprice` FROM `Cart` WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH))) as cart JOIN (SELECT SUM(`price`) as `customprice` FROM `CustomItem` WHERE `orderID` IN (SELECT `orderID` FROM `Orders` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH))) as custom) "); 
-			totalincome.next();
-			reportText += totalincome.getFloat("TotalinCome") + "\n";
-			System.out.println("5");
-			reportText += "Complaints statistic: \n";
-			ResultSet complaints = stmt.executeQuery("SELECT `Status`,count(*) AS stat FROM `Complaint` WHERE `date`>(CURRENT_DATE() - INTERVAL 1 MONTH) GROUP by `Status`"); 
-			while(complaints.next())
-			{
-				reportText += (complaints.getInt("Status") == 1? "handled" : "unhandled") + ": " + complaints.getInt("stat") + "\n";	
-			}
-			System.out.println("6");
-			System.out.println(reportText);
-		    
 		    con.close();  
  
 		  } catch(Exception e) {

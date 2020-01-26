@@ -27,7 +27,7 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	
 	@Override
     protected void updateItem(CatalogItem item, boolean empty) {
-        super.updateItem(item, empty);
+     /*   super.updateItem(item, empty);
 
         if(empty || item == null) {
 
@@ -56,7 +56,7 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
             setText(null);
             setGraphic(pane);
         }
-
+*/
     }
 	
 }

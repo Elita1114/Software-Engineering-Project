@@ -364,5 +364,13 @@ public StoresList getStoreslist() {
 public void setStoreslist(StoresList storeslist) {
 	this.storeslist = storeslist;
 }
+
+public boolean isLogged() {
+	return logged;
+}
+
+public void setLogged(boolean logged) {
+	this.logged = logged;
+}
 }
 //End of ChatClient class

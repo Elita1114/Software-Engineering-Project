@@ -63,5 +63,5 @@ public class MonthlyReport implements Serializable{
 	public void setUnhandledcomplaint(int unhandledcomplaint) {
 		this.unhandledcomplaint = unhandledcomplaint;
 	}
-	
+
 }

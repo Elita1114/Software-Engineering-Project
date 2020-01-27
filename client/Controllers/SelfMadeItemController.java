@@ -1,6 +1,7 @@
 package client.Controllers;
 
 
+import common.CustomItem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +13,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 public class SelfMadeItemController {
+	final int PaperCheck=1;
+	final int GlassCheck=2;
+	final int PlasticCheck=3;
+	final int VaseCheck=4;
+	private int containerNum=1;
+    private MainController mainController;
 
+    
+    public void injectMainController(MainController mainController_) {
+		mainController = mainController_;
+	}
+    
+    
+    
     @FXML
     private Button btnFinished;
     @FXML
@@ -124,7 +138,10 @@ public class SelfMadeItemController {
     
     @FXML
     void finishedPressed(ActionEvent event) {
-
+    	int DaisyAmount=Integer.parseInt(tvDaisy.getText()),OrchidAmount=Integer.parseInt(tvOrchid.getText()),RoseAmount=Integer.parseInt(tvRose.getText()),IrisAmount=Integer.parseInt(tvIris.getText()),
+    			HydrangeaAmount=Integer.parseInt(tvHydrangea.getText()),LilyAmount=Integer.parseInt(tvLily.getText()); ;
+    	CustomItem myItem=	new CustomItem(-1, "", "",mainController.getClient().client.getLoggedUser().user_id,DaisyAmount,OrchidAmount,IrisAmount,RoseAmount,LilyAmount,HydrangeaAmount,-2); /* change types */ 
+ 
     }
 
     @FXML
@@ -194,21 +211,25 @@ public class SelfMadeItemController {
     @FXML
     void glassPressed(ActionEvent event) {
     	upateRadio(35);
+    	containerNum=GlassCheck;
     }
 
     @FXML
     void paperPressed(ActionEvent event) {
     	upateRadio(15);
+    	containerNum=PaperCheck;
     }
 
     @FXML
     void plasticPressed(ActionEvent event) {
     	upateRadio(25);
+    	containerNum=PlasticCheck;
     }
 
     @FXML
     void vasePressed(ActionEvent event) {
     	upateRadio(40);
+    	containerNum=VaseCheck;
     }
     
     

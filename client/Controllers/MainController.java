@@ -150,6 +150,10 @@ public class MainController {
 		
 	}
 	
+	public static User getLoggedUser()
+	{
+		return getClient().client.getLoggedUser();
+	}
 	
 	//premision tabs
 	public void permissions()

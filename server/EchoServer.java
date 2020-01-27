@@ -163,6 +163,61 @@ public class EchoServer extends AbstractServer
 				  		System.out.println(e);
 				  	}
 			  }
+			  else if (user_request.get_request_str().startsWith("#getCatalog"))
+			    {
+			    	try {
+			    		System.out.println("entered");
+			    		  User user = (User) user_request.get_request_args().get(0);
+			    		  int type= Integer.parseInt(user_request.get_request_str().split(" ")[1]);
+					      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					      Statement stmt=con.createStatement();  
+					      ResultSet rs = null;
+					      PreparedStatement prep_stmt = null;
+					      if(type==0) {
+					    	  if(user != null)
+					    	  {
+					    		  prep_stmt = con.prepareStatement("select * from Products WHERE `store`=?");
+					    		  prep_stmt.setInt(1, user.store);
+					    	  }else
+					    	  {
+					    		  prep_stmt = con.prepareStatement("select * from Products");
+					    	  }
+					    	  
+					      }
+					      else {
+					    	  if(user != null)
+					    	  {
+					    		  prep_stmt = con.prepareStatement("select * from Products WHERE type = ? AND `store`=?");
+					    		  prep_stmt.setInt(1, type);
+					    		  prep_stmt.setInt(2, user.store);
+					    	  }else {
+					    		  prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+						    	  prep_stmt.setInt(1, type);
+					    	  }
+					      }
+					      rs = prep_stmt.executeQuery();
+					      rs=prep_stmt.executeQuery(); 
+					      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
+					      
+					      client.sendToClient("getting catalog");
+					      while(rs.next()) {
+					    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path"),rs.getInt("type") , rs.getInt("store") , rs.getInt("sale")));
+					    	  System.out.println("2");
+					    	  System.out.println("getting item");
+					      }
+					      con.close();  
+					      Catalog catalog=new Catalog(itemList,true);
+					      client.sendToClient(catalog);  
+					      System.out.println("after send catalog\n");
+					      client.sendToClient("after send catalog\n");  
+					      
+					      
+					  } catch(Exception e) {
+						  System.out.println("a");
+						  System.out.println(e);
+					  }
+					  return;
+			    }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#login"))
 			  {
 				  System.out.println("login");
@@ -497,7 +552,7 @@ public class EchoServer extends AbstractServer
     }
     else if (request.toString().startsWith("#getCatalog"))
     {
-    	System.out.println("1");
+    	System.out.println("entered2");
     	try {
     		  int type= Integer.parseInt(request.toString().split(" ")[1]);
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
@@ -511,20 +566,15 @@ public class EchoServer extends AbstractServer
 		    	  prep_stmt.setInt(1, type);
 		    	  rs = prep_stmt.executeQuery();
 		      }
-		      System.out.println("2");
 		      ArrayList<CatalogItem> itemList = new ArrayList<CatalogItem>();
 		      
-		      System.out.println("3");
 		      client.sendToClient("getting catalog");
 		      while(rs.next()) {
 		    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path"),rs.getInt("type") , rs.getInt("store") , rs.getInt("sale")));
-		    	  System.out.println("2");
 		    	  System.out.println("getting item");
 		      }
-		      System.out.println("2");
 		      con.close();  
 		      Catalog catalog=new Catalog(itemList,true);
-		      System.out.println("3");
 		      client.sendToClient(catalog);  
 		      System.out.println("after send catalog\n");
 		      client.sendToClient("after send catalog\n");  

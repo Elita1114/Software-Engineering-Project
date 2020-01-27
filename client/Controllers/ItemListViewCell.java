@@ -12,6 +12,7 @@ import common.User;
 import common.UserRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -28,15 +29,13 @@ public class ItemListViewCell extends ListCell<Item>{
 	@FXML private Label Price;
 	@FXML private ImageView ivIm1;
 	@FXML private AnchorPane pane;
-	
+	@FXML public Button btnAdd;
+	OrderController order_controller;
 	private FXMLLoader mLLoader;
 
-    User user= MainController.getClient().client.getLoggedUser();
+    User user = MainController.getClient().client.getLoggedUser();
     Item myItem;
-	
-	
-	
-
+	int order = 0;
 
     @FXML
     void clickadd(ActionEvent event) {
@@ -63,6 +62,15 @@ public class ItemListViewCell extends ListCell<Item>{
     	});
     }
     
+    public ItemListViewCell(OrderController order_controller_)
+    {
+    	order_controller = order_controller_;
+    }
+    
+    public ItemListViewCell()
+    {
+    }
+    
 	@Override
     protected void updateItem(Item item, boolean empty) {
         super.updateItem(item, empty);
@@ -87,11 +95,36 @@ public class ItemListViewCell extends ListCell<Item>{
             Title.setText(String.valueOf(item.getName()));
             Description.setText(String.valueOf(item.getDescription()));
             Color.setText(String.valueOf(item.getColor()));
-            if (item instanceof CatalogItem)
+            if (item instanceof CatalogItem && ((CatalogItem) item).getImagePath() != null)
             {
             	CatalogItem c_item = (CatalogItem) item;
             	Price.setText(String.valueOf(c_item.getPrice()));
             	ivIm1.setImage(new Image(c_item.getImagePath()));
+            }else {
+            	order=1;
+            	btnAdd.setText("Remove");
+            	btnAdd.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent e) {
+            		ArrayList<Object> args =  new ArrayList<Object>();
+                	args.add(MainController.getClient().client.getLoggedUser());
+                	args.add(new CartItem(myItem,1));
+                	UserRequest user_request = new UserRequest("#removefromcart",  args);
+                	Platform.runLater(new Runnable() {
+                	    @Override
+                	    public void run() {
+                	    	MainController.getClient().client.flagServerAns = false;
+                	    	MainController.getClient().client.handleMessageFromClientUI(user_request);
+                	    	while(!MainController.getClient().client.flagServerAns) {
+            	  				try {
+            	  					Thread.sleep(100);
+            	  				} catch (InterruptedException e) {
+            	  					// TODO Auto-generated catch block
+            					e.printStackTrace();
+            	  				}
+            	  				order_controller.fetchOrder();
+            	  			}
+                	    }
+                	});
+                } });
             }
 
             

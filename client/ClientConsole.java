@@ -45,6 +45,8 @@ public class ClientConsole extends Application implements ChatIF
   public Catalog catalog;
   public Cart cart;
   public MonthlyReportList monthly_reports;
+  public User foundUser;
+
 
   //Instance variables **********************************************
   
@@ -138,6 +140,10 @@ public class ClientConsole extends Application implements ChatIF
 		  System.out.println("got reports data");
 		  monthly_reports = (MonthlyReportList) data;
 		  System.out.println("item list contains: "+ monthly_reports.getItemList());
+	  }
+	  else if (data instanceof UserRequest && data.toString().equals("#findUser")) {
+		  System.out.println("user found");
+		  foundUser = (User) ((UserRequest)data).get_request_args().get(0);
 	  }
   }
   

@@ -514,6 +514,109 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#findUser")) {
+				  System.out.println("find user");
+				  try { 
+					  String username  = (String) user_request.get_request_args().get(0);
+					  User foundUser;
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement findUserSql = con.prepareStatement("select * from `Users` WHERE `Username`=?");
+				      findUserSql.setString(1, username);
+				      ResultSet rs = findUserSql.executeQuery();
+				      int cuser = rs.last() ? rs.getRow() : 0;
+				      System.out.println(cuser);
+				      if(cuser == 1){
+				    	  switch(rs.getInt("status")) {
+				    	  case 1:
+				    		  foundUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  case 2:
+				    		  foundUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  case 3:
+				    		  foundUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  case 4:
+				    		  foundUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  case 5:
+				    		  foundUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  default:				    	
+				    		  foundUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  }
+				    	ArrayList<Object> args =  new ArrayList<Object>();
+				    	args.add(foundUser);
+				    	UserRequest userFoundAns = new UserRequest("#findUser",  args);
+					  client.sendToClient(userFoundAns);
+				      } 
+				      else {
+				    	  client.sendToClient("#wrongUser");
+				    	  return;
+				      }
+				    	  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+				  
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#UpdateUser")) {
+				  System.out.println("update user");
+				  try { 
+					  User updateUser = (User) user_request.get_request_args().get(0);
+					  boolean passChange = (boolean) user_request.get_request_args().get(1);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement UserExistanceSql = con.prepareStatement("select * from `Users` WHERE `Username`=? ");
+
+				      UserExistanceSql.setString(1, updateUser.username);
+				      ResultSet rs = UserExistanceSql.executeQuery();
+				      int cuser = rs.last() ? rs.getRow() : 0;
+				      System.out.println(cuser);
+				      if(cuser > 0 && (rs.getInt("uid")!=(updateUser.user_id))){
+					  client.sendToClient("#useralreadyExist");
+				      }
+				      else {
+				    	  PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Users` SET `Username`=?,`Password`=?,`paymentdetails`=?,`status`=?,`store`=?,`phoneNumber`=?,`pay_method`=?,`ID`=? WHERE `uid`= ?");
+					      updateItemSQL.setString(1, updateUser.username);
+					      if(passChange) {
+					    	  //pass changed
+					    	  updateItemSQL.setString(2, generate_md5_hash(updateUser.password));
+					      }else {
+					    	  updateItemSQL.setString(2, updateUser.password);
+					      }
+					      updateItemSQL.setString(3, updateUser.credit_card_number);
+						   if(updateUser instanceof StoreManager) {
+							   updateItemSQL.setInt(4, 1);
+							}
+							else if(updateUser instanceof Customer) {
+								updateItemSQL.setInt(4, 0);
+							}
+							else if(updateUser instanceof Employee) {
+								updateItemSQL.setInt(4, 3);
+							}
+							else if(updateUser instanceof customerService) {
+								updateItemSQL.setInt(4, 4);
+							}
+							else if(updateUser instanceof SystemAdministrator) {
+								updateItemSQL.setInt(4, 5);
+							}
+							else if(updateUser instanceof ChainManager) {
+								updateItemSQL.setInt(4, 2);
+							}
+					      updateItemSQL.setInt(5, updateUser.store);
+					      updateItemSQL.setString(6, updateUser.phone_number);
+					      updateItemSQL.setInt(7, updateUser.pay_method);
+					      updateItemSQL.setString(8, updateUser.id);
+					      updateItemSQL.setInt(9, updateUser.user_id);
+					      
+					      updateItemSQL.executeUpdate();
+						  client.sendToClient("#UpdateUser");
+				      }
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
 		  
 		  return;
 			  }

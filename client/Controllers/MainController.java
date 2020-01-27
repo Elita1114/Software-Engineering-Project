@@ -5,10 +5,16 @@ import java.util.ArrayList;
 
 import client.ClientConsole;
 import common.CatalogItem;
+import common.ChainManager;
+import common.Customer;
+import common.Employee;
 import common.PayingMethod;
 import common.Status;
+import common.StoreManager;
+import common.SystemAdministrator;
 import common.User;
 import common.UserRequest;
+import common.customerService;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -22,6 +28,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.SingleSelectionModel;
 
 public class MainController {
 	
@@ -39,11 +46,15 @@ public class MainController {
 	private boolean flagCheck=false;
 	@FXML private TabPane tabPane;
 
+	@FXML public Tab catalogTab;
 	@FXML public Tab tabHandleComplaint;
 	@FXML public Tab tabComplaint;
 	@FXML public Tab tabOrder;
 	@FXML public Tab tabReports;
 	@FXML public Tab tabSignUp;
+	@FXML public Tab tabUpdateCatalog;
+	@FXML public Tab tabAddCatalogItem;
+	@FXML public Tab tabSignIn;
 
 	@FXML
 	private void initialize() {
@@ -55,8 +66,8 @@ public class MainController {
 		orderController.injectMainController(this);
 		handleComplaintController.injectMainController(this);
 		reportsController.injectMainController(this);
-		tabPane.getTabs().remove(tabHandleComplaint);
 		
+		permissions();
 	}
 	public static ClientConsole getClient() {
 		return client;
@@ -138,4 +149,66 @@ public class MainController {
 		return null;
 		
 	}
+	
+	
+	//premision tabs
+	public void permissions()
+	{
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(catalogTab);
+		//tabPane.getTabs().remove(catalogTab);
+		tabPane.getTabs().remove(tabHandleComplaint);
+		tabPane.getTabs().remove(tabComplaint);
+		tabPane.getTabs().remove(tabOrder);
+		tabPane.getTabs().remove(tabReports);
+		tabPane.getTabs().remove(tabSignUp);
+		tabPane.getTabs().remove(tabUpdateCatalog);
+		tabPane.getTabs().remove(tabAddCatalogItem);
+		tabPane.getTabs().remove(tabSignIn);
+
+		
+		if(client==null || client.client==null ||client.client==null || client.client.getLoggedUser()==null) {
+	//		tabPane.getTabs().add(catalogTab);
+			tabPane.getTabs().add(tabSignIn);
+			tabPane.getTabs().add(tabSignUp);
+			tabPane.getTabs().add(tabComplaint);
+		}
+		else if(client.client.getLoggedUser() instanceof StoreManager) {
+		//	tabPane.getTabs().add(catalogTab);
+			tabPane.getTabs().add(tabReports);
+			tabPane.getTabs().add(tabUpdateCatalog);
+			tabPane.getTabs().add(tabAddCatalogItem);
+		}
+		else if(client.client.getLoggedUser() instanceof Customer) {
+	//		tabPane.getTabs().add(catalogTab);
+			tabPane.getTabs().add(tabOrder);
+			tabPane.getTabs().add(tabComplaint);
+
+		}
+		else if(client.client.getLoggedUser() instanceof Employee) {
+	//		tabPane.getTabs().add(catalogTab);
+			tabPane.getTabs().add(tabUpdateCatalog);
+			tabPane.getTabs().add(tabAddCatalogItem);
+
+		}
+		else if(client.client.getLoggedUser() instanceof customerService) {
+	//		tabPane.getTabs().add(catalogTab);
+			tabPane.getTabs().add(tabHandleComplaint);
+
+		}
+		else if(client.client.getLoggedUser() instanceof SystemAdministrator) {
+	//		tabPane.getTabs().add(catalogTab);
+
+
+		}
+		else if(client.client.getLoggedUser() instanceof ChainManager) {
+	//		tabPane.getTabs().add(catalogTab);
+			tabPane.getTabs().add(tabReports);
+			tabPane.getTabs().add(tabUpdateCatalog);
+			tabPane.getTabs().add(tabAddCatalogItem);
+
+		}
+	}
+	
+	
 }

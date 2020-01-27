@@ -109,6 +109,7 @@ public class LoginController {
 		  			mainController.setUpdateCatalog(mainController.getClient().catalog.getList());
 	    			mainController.getClient().flagCatalog=false;
 					mainController.getTabPane().getSelectionModel().select(0);
+					mainController.permissions();
 	  			}else if(mainController.getClient().client.isWrongdetails())
 	  			{
 	  				Alert alert = new Alert(AlertType.ERROR, "Username or password incorrect!");

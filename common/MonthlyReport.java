@@ -35,6 +35,9 @@ public class MonthlyReport implements Serializable{
 	public void setDate(String date) {
 		Date = date;
 	}
+  public String getDate() {
+		return Date;
+	}
 	public void set_income_content(float income_content) {
 		this.income_content = income_content;
 	}

@@ -90,18 +90,21 @@ public class MainController {
 	
 	
 	static public void notifyCustomerService() {
-		Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Alert alert = new Alert(AlertType.WARNING);
-    	    	alert.setTitle("Warning");
-    	    	alert.setHeaderText(null);
-    	    	alert.setContentText("There are urgent unhandled complaints.");
-    	    	alert.showAndWait();
-			}
-		});
+		if(client.client.getLoggedUser() instanceof customerService)
+		{
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					Alert alert = new Alert(AlertType.WARNING);
+	    	    	alert.setTitle("Warning");
+	    	    	alert.setHeaderText(null);
+	    	    	alert.setContentText("There are urgent unhandled complaints.");
+	    	    	alert.showAndWait();
+				}
+			});
+		}
 	}
 	
 	@FXML
@@ -215,8 +218,9 @@ public class MainController {
     	client.client.setLoggedUser(null);
     	client.client.setLogged(false);
     	permissions();
+    	client.flagCatalog = false;
     	client.client.handleMessageFromClientUI("#getCatalog 0");
-		while(client.flagCatalog) {
+		while(!client.flagCatalog) {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {

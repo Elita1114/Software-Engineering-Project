@@ -158,6 +158,7 @@ public class EchoServer extends AbstractServer
 					      insertuser.setInt(6, new_user.pay_method); // subscription
 					      insertuser.setString(7, new_user.id);  // ID
 					      insertuser.executeUpdate();
+					      con.close(); 
 				      }
 				  	} catch(Exception e) {
 				  		System.out.println(e);
@@ -264,6 +265,7 @@ public class EchoServer extends AbstractServer
 				    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
 				    		  break;
 				    	  }
+				    	  con.close(); 
 				    	  client.sendToClient(loggedUser); 
 				      }
 				      else {
@@ -308,6 +310,7 @@ public class EchoServer extends AbstractServer
 				      updateCart.setInt(1, user.user_id);
 				      updateCart.setInt(2, insertedorder.getInt(1));
 				      updateCart.executeUpdate();
+				      con.close(); 
 			    	  client.sendToClient(order); 	
 				  }catch(Exception e) {
 					  System.out.println("a");
@@ -334,6 +337,7 @@ public class EchoServer extends AbstractServer
 						  addtocart.executeUpdate();
 						  client.sendToClient("#addedtocart");
 					  }
+					  con.close();
 					  
 				  }catch(Exception e) {
 					  System.out.println("a");
@@ -441,7 +445,7 @@ public class EchoServer extends AbstractServer
 				      addComplaint.setInt(1, idItem);
 				      addComplaint.executeUpdate();
 					  client.sendToClient("#dropCatalog");
-					  
+					  con.close();
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
@@ -463,7 +467,7 @@ public class EchoServer extends AbstractServer
 				      
 				      addCayalogItemSql.executeUpdate();
 					  client.sendToClient("#addCatalogItem");
-					  
+					  con.close();
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
@@ -485,7 +489,7 @@ public class EchoServer extends AbstractServer
 				      updateItemSQL.setInt(9, updatedItem.getId());
 				      updateItemSQL.executeUpdate();
 					  client.sendToClient("#UpdateItem");
-					  
+					  con.close();
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
@@ -499,7 +503,7 @@ public class EchoServer extends AbstractServer
 				      deleteItemSql.setInt(1, idItem);
 				      deleteItemSql.executeUpdate();
 					  client.sendToClient("#delCatalogItem");
-					  
+					  con.close();
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
@@ -872,6 +876,7 @@ public class EchoServer extends AbstractServer
 				insertuser.setInt(4, unhandledcomplaints); // unhandledcomplaints
 				insertuser.setFloat(5, totalincomef); // totalincome
 				insertuser.executeUpdate();
+				con.close();
 				System.out.println(reportText);
 			}
 		    con.close();  

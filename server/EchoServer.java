@@ -176,8 +176,13 @@ public class EchoServer extends AbstractServer
 					      if(type==0) {
 					    	  if(user != null)
 					    	  {
-					    		  prep_stmt = con.prepareStatement("select * from Products WHERE `store`=?");
-					    		  prep_stmt.setInt(1, user.store);
+					    		  if(user instanceof ChainManager)
+					    			  prep_stmt = con.prepareStatement("select * from Products");
+					    		  else
+					    		  {
+					    			  prep_stmt = con.prepareStatement("select * from Products WHERE `store`=?");
+				    		  		  prep_stmt.setInt(1, user.store);
+					    		  }
 					    	  }else
 					    	  {
 					    		  prep_stmt = con.prepareStatement("select * from Products");
@@ -187,9 +192,16 @@ public class EchoServer extends AbstractServer
 					      else {
 					    	  if(user != null)
 					    	  {
-					    		  prep_stmt = con.prepareStatement("select * from Products WHERE type = ? AND `store`=?");
-					    		  prep_stmt.setInt(1, type);
-					    		  prep_stmt.setInt(2, user.store);
+					    		  if(user instanceof ChainManager)
+					    		  {
+					    			  prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+					    			  prep_stmt.setInt(1, type);
+					    		  }else
+					    		  {
+					    			  prep_stmt = con.prepareStatement("select * from Products WHERE type = ? AND `store`=?");
+						    		  prep_stmt.setInt(1, type);
+						    		  prep_stmt.setInt(2, user.store);
+					    		  }
 					    	  }else {
 					    		  prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
 						    	  prep_stmt.setInt(1, type);
@@ -259,7 +271,7 @@ public class EchoServer extends AbstractServer
 				    	  return;
 				      }
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }else if(user_request.get_request_str().equalsIgnoreCase("#order"))
 			  {

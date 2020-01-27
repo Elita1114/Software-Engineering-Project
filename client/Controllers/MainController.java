@@ -170,13 +170,19 @@ public class MainController {
 		tabPane.getTabs().remove(tabUpdateCatalog);
 		tabPane.getTabs().remove(tabAddCatalogItem);
 		tabPane.getTabs().remove(tabSignIn);
-
+		tabPane.getTabs().remove(tabupdateUser);
+		
 		
 		if(client==null || client.client==null ||client.client==null || client.client.getLoggedUser()==null) {
 	//		tabPane.getTabs().add(catalogTab);
 			tabPane.getTabs().add(tabSignIn);
 			tabPane.getTabs().add(tabSignUp);
 			tabPane.getTabs().add(tabComplaint);
+		}
+		else if(client.client.getLoggedUser() instanceof SystemAdministrator) {
+	//		tabPane.getTabs().add(catalogTab);
+			tabPane.getTabs().add(tabupdateUser);
+
 		}
 		else if(client.client.getLoggedUser() instanceof StoreManager) {
 		//	tabPane.getTabs().add(catalogTab);
@@ -201,11 +207,7 @@ public class MainController {
 			tabPane.getTabs().add(tabHandleComplaint);
 
 		}
-		else if(client.client.getLoggedUser() instanceof SystemAdministrator) {
-	//		tabPane.getTabs().add(catalogTab);
 
-
-		}
 		else if(client.client.getLoggedUser() instanceof ChainManager) {
 	//		tabPane.getTabs().add(catalogTab);
 			tabPane.getTabs().add(tabReports);

@@ -28,7 +28,5 @@
       <Label layoutX="353.0" layoutY="219.0" text="pay method:" />
       <Label layoutX="353.0" layoutY="269.0" text="ID:" />
       <TextField fx:id="ID" layoutX="464.0" layoutY="264.0" />
-      <TextField fx:id="passBootField" layoutX="350.0" layoutY="332.0" />
-      <Button fx:id="passBootBtn" layoutX="565.0" layoutY="332.0" mnemonicParsing="false" text="boot password" />
    </children>
 </AnchorPane>

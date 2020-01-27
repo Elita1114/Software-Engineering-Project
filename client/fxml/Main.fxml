@@ -13,7 +13,7 @@
                   <fx:include fx:id="catalog" source="Catalog.fxml" />
                </content>
             </Tab>
-            <Tab text="Sign In">
+            <Tab fx:id="tabSignIn" text="Sign In">
                <content>
                   <fx:include fx:id="login" source="Login.fxml" />
                </content>
@@ -29,7 +29,7 @@
                 
               </content>
             </Tab>
-            <Tab text="updateCatalog">
+            <Tab fx:id="tabUpdateCatalog" text="updateCatalog">
                <content>
                   <fx:include fx:id="updatecatalog" source="CatalogUpdate.fxml" />
                </content>
@@ -44,7 +44,7 @@
                   <fx:include fx:id="handleComplaint" source="HandleComplaint.fxml" />
                </content>
             </Tab>
-            <Tab fx:id="addCatalogItem" text="add item">
+            <Tab fx:id="tabAddCatalogItem" text="add item">
                <content>
                   <fx:include fx:id="addCatalogItem" source="AddItem.fxml" />
                </content>

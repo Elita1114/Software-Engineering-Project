@@ -2,10 +2,9 @@ package common;
 
 public class Customer extends User {
 
-	public Customer(int user_id_, String username, String password, String id, String credit_card_number, int pay_method,
-			String phone_number, int store) {
-		super(user_id_, username, password, id, credit_card_number, pay_method,
-				phone_number, store, Status.client);
+	
+	public Customer(int user_id_, String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store,Status status){
+		super( user_id_,  username,  password,  id,  credit_card_number,  pay_method, phone_number,  store, status);
 	}
 
 	public String getDetails() {

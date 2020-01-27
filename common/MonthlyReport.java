@@ -32,6 +32,9 @@ public class MonthlyReport implements Serializable{
 	public void setStore(int store) {
 		this.store = store;
 	}
+	public String getDate() {
+		return Date;
+	}
 	public void setDate(String date) {
 		Date = date;
 	}

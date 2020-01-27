@@ -92,6 +92,7 @@ public class LoginController {
 					mainController.getTabPane().getTabs().remove(1);
 					mainController.getTabPane().getTabs().remove(1);
 					mainController.getTabPane().getSelectionModel().select(0);
+					mainController.permissions();
 	  			}else if(mainController.getClient().client.isWrongdetails())
 	  			{
 	  				Alert alert = new Alert(AlertType.ERROR, "Username or password incorrect!");

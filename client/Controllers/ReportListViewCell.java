@@ -19,6 +19,7 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 	  	@FXML private Button bttnIncome;
 	    @FXML private Button bttnComplaints;
 	    @FXML private Button bttnOrders;
+	    @FXML private Button bttnCompare;
 	    @FXML private Label tvTitle;
 	    @FXML private Label tvStore;
 	    @FXML private AnchorPane pane;
@@ -28,6 +29,7 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 
 	    @FXML
 	    void incomeBttnPressed(ActionEvent event) {
+	    	report_controller.curr_display = 1;
 	    	report_controller.complaintBarChart.setVisible(false);
 	    	report_controller.tvContent.setVisible(true);
 	    	report_controller.tvDescription.setText("Generated report for store " + monthly_report.getStore() + " on " + monthly_report.getDate());
@@ -36,6 +38,7 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 
 	    @FXML
 	    void complaintsBttnPressed(ActionEvent event) {
+	    	report_controller.curr_display = 2;
 	     	report_controller.complaintBarChart.setVisible(true);
 	    	report_controller.tvContent.setVisible(false);
 	    	report_controller.tvDescription.setText("Generated report for store " + monthly_report.getStore() + " on " + monthly_report.getDate());
@@ -43,16 +46,50 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 	    	set.getData().add(new XYChart.Data<>("Handled Complaints", monthly_report.getHandledcomplaint()));
 	    	set.getData().add(new XYChart.Data<>("Unhandled Complaints", monthly_report.getUnhandledcomplaint()));
 	    	report_controller.xAxis.setCategories(FXCollections.observableArrayList("Handled Complaints", "Unhandled Complaints"));
-	    	// report_controller.complaintBarChart.getData().clear();
 	    	report_controller.complaintBarChart.getData().setAll(set);
 	    }
 
 	    @FXML
 	    void ordersBttnPressed(ActionEvent event) {
+	    	report_controller.curr_display = 3;
 	    	report_controller.complaintBarChart.setVisible(false);
 	    	report_controller.tvContent.setVisible(true);
 	    	report_controller.tvDescription.setText("Generated report for store " + monthly_report.getStore() + " on " + monthly_report.getDate());
 	    	report_controller.tvContent.setText(monthly_report.get_order_content());
+	    }
+	    
+	    @FXML
+	    void compareBttnPressed(ActionEvent event) {
+	    	if (report_controller.curr_display == -1) 
+	    		return;
+	    	report_controller.bttnExitCompare.setVisible(true);;
+	    	report_controller.tlDescriptCompare.setVisible(true);
+	    	report_controller.tlContentCompare.setVisible(true);
+	    	report_controller.tvDescriptionCompare.setVisible(true);
+	    	report_controller.tvDescriptionCompare.setText("Generated report for store " + monthly_report.getStore() + " on " + monthly_report.getDate());
+	    	if (report_controller.curr_display == 1) // income 
+	    	{
+	    		report_controller.complaintBarChartCompare.setVisible(false);
+		    	report_controller.tvContentCompare.setVisible(true);
+		    	report_controller.tvContentCompare.setText(monthly_report.get_order_content());
+
+	    	}
+	    	else if(report_controller.curr_display == 2) // complaint
+	    	{
+	    		report_controller.complaintBarChartCompare.setVisible(true);
+		    	report_controller.tvContentCompare.setVisible(false);
+		    	XYChart.Series<String, Number>  set = new XYChart.Series<>();
+		    	set.getData().add(new XYChart.Data<>("Handled Complaints", monthly_report.getHandledcomplaint()));
+		    	set.getData().add(new XYChart.Data<>("Unhandled Complaints", monthly_report.getUnhandledcomplaint()));
+		    	report_controller.xAxis.setCategories(FXCollections.observableArrayList("Handled Complaints", "Unhandled Complaints"));
+		    	report_controller.complaintBarChartCompare.getData().setAll(set);
+	    	}
+	    	else if(report_controller.curr_display == 3) // orders
+	    	{
+	    		report_controller.complaintBarChartCompare.setVisible(false);
+		    	report_controller.tvContentCompare.setVisible(true);
+		    	report_controller.tvContentCompare.setText(monthly_report.get_order_content());
+	    	}
 	    }
 	    
 	    public ReportListViewCell(ReportController report_controller_)

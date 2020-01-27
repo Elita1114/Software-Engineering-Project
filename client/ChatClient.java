@@ -113,6 +113,9 @@ public class ChatClient extends AbstractClient
 	  else if(msg.toString().equals("#addedtocart")) {
 		  this.flagServerAns=true;
 	  }
+	  else if(msg.toString().equals("#removefromcart")) {
+		  this.flagServerAns=true;
+	  }
 	  else if(msg.toString().equals("#wrongdetails")) {
 		  this.setWrongdetails(true); 
 	  }

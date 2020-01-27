@@ -83,6 +83,9 @@ public class MainController {
 	public void setCatalog(ArrayList<CatalogItem> list) {
 		catalogController.setCatalog(list);
 	}
+	public void fetchOrder() {
+		orderController.fetchOrder();
+	}
 	public void setUpdateCatalog(ArrayList<CatalogItem> list) {
 		updatecatalogController.setCatalog(list);
 	}

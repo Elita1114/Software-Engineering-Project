@@ -11,6 +11,7 @@ public class Item implements Serializable{
 	private String name;
 	private String description;
 	private String color;
+	private float price;
 	private int type;
 	
 	public Item(int id_, String name_, String description_, String color_, int type_){
@@ -31,10 +32,11 @@ public class Item implements Serializable{
 		this.type = type;
 	}
 	
-	public Item(int id_, String name_, String description_){
+	public Item(int id_, String name_, String description_, int type_, float price_){
 		setId(id_);
 		name=name_;
 		description=description_;
+		price = price_;
 	}
 
 	public String getName() {
@@ -83,6 +85,18 @@ public class Item implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+
+	public float getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(float price) {
+		this.price = price;
 	}
 
 }

@@ -57,6 +57,6 @@
             </Tab>
          </tabs>
       </TabPane>
-      <Button layoutX="738.0" layoutY="512.0" mnemonicParsing="false" text="Logout" />
+      <Button layoutX="738.0" layoutY="512.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
    </children>
 </AnchorPane>

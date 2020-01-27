@@ -41,7 +41,9 @@ public class MainController {
 	@FXML private HandleComplaintController handleComplaintController;//update order controller
 	@FXML private addItemController addCatalogItemController;
 	@FXML private ReportController reportsController;
+	@FXML private UpdateUserController updateUserController;
 
+	
 	static public ClientConsole client;
 	private boolean flagCheck=false;
 	@FXML private TabPane tabPane;
@@ -55,6 +57,8 @@ public class MainController {
 	@FXML public Tab tabUpdateCatalog;
 	@FXML public Tab tabAddCatalogItem;
 	@FXML public Tab tabSignIn;
+	@FXML public Tab tabupdateUser;
+
 
 	@FXML
 	private void initialize() {
@@ -66,7 +70,8 @@ public class MainController {
 		orderController.injectMainController(this);
 		handleComplaintController.injectMainController(this);
 		reportsController.injectMainController(this);
-		
+		updateUserController.injectMainController(this);
+
 		permissions();
 	}
 	public static ClientConsole getClient() {

@@ -54,6 +54,11 @@
                   <fx:include fx:id="reports" source="ReportViewer.fxml" />
                </content>
             </Tab>
+            <Tab fx:id="tabupdateUser" text="update User">
+               <content>
+                  <fx:include fx:id="updateUser" source="UpdateUser.fxml" />
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
    </children>

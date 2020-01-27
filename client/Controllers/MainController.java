@@ -210,5 +210,22 @@ public class MainController {
 		}
 	}
 	
-	
+    @FXML
+    void logout(ActionEvent event) {
+    	client.client.setLoggedUser(null);
+    	client.client.setLogged(false);
+    	permissions();
+    	client.client.handleMessageFromClientUI("#getCatalog 0");
+		while(client.flagCatalog) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+		e.printStackTrace();
+			}
+		}
+		setCatalog(client.catalog.getList());
+		tabPane.getSelectionModel().select(0);
+    }
+    
 }

@@ -11,10 +11,13 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -24,20 +27,25 @@ public class ReportController {
 	private MainController mainController;
     @FXML private ListView<MonthlyReport> lvReports;
     static public ObservableList<MonthlyReport> itemObservableList;
-    @FXML
-    public TextField tvDescription;
-
-    @FXML
-    public TextArea tvContent;
+    @FXML public TextField tvDescription;
+    @FXML public TextArea tvContent;
+    @FXML public TextField tvDescriptionCompare;
+    @FXML public Label tlContentCompare;
+    @FXML public BarChart<String, Number> complaintBarChartCompare;
+    @FXML public BarChart<String, Number> complaintBarChart;
+    @FXML public Label tlDescriptCompare;
+    @FXML public TextArea tvContentCompare;
+    @FXML public Button bttnExitCompare;
+    public int curr_display;
     
     public NumberAxis yAxis;
     public CategoryAxis xAxis;
-    
-    @FXML
-    public BarChart<String, Number> complaintBarChart;
+    public NumberAxis yAxis_;
+    public CategoryAxis xAxis_;
     
     public ReportController() {
     	itemObservableList = FXCollections.observableArrayList();
+    	curr_display = -1;
     	if(complaintBarChart == null)
     	{
     			xAxis = new CategoryAxis();
@@ -45,7 +53,14 @@ public class ReportController {
     			xAxis.setCategories(FXCollections.observableArrayList("Handled Complaints", "Unhandled Complaints"));
     	      //Creating the Bar chart
     			BarChart<String, Number> complaintBarChart = new BarChart<>(xAxis, yAxis);
-    	
+    	}
+    	if(complaintBarChartCompare == null)
+    	{
+    			xAxis_ = new CategoryAxis();
+    			yAxis_ = new NumberAxis();
+    			xAxis_.setCategories(FXCollections.observableArrayList("Handled Complaints", "Unhandled Complaints"));
+    			//Creating the Bar chart
+    			BarChart<String, Number> complaintBarChartCompare = new BarChart<>(xAxis_, yAxis_);
     	}
     	// complaintBarChart.setVisible(false);
     }
@@ -73,6 +88,12 @@ public class ReportController {
     @FXML
     public void initialize() {
     	complaintBarChart.setVisible(false);
+    	complaintBarChartCompare.setVisible(false);
+    	tlContentCompare.setVisible(false);
+    	tlDescriptCompare.setVisible(false);
+    	tvContentCompare.setVisible(false);
+    	tvDescriptionCompare.setVisible(false);
+    	bttnExitCompare.setVisible(false);
     	Platform.runLater(() -> {
     		lvReports.setItems(itemObservableList);
     		lvReports.setCellFactory(itemListView  -> new ReportListViewCell(this));
@@ -109,6 +130,15 @@ public class ReportController {
     			mainController.getClient().client.flagServerAns = false;
     	    }
     	});
-    	
+    }
+    
+    @FXML
+    void extCompareBttnPressed(ActionEvent event) {
+    	complaintBarChartCompare.setVisible(false);
+    	tlContentCompare.setVisible(false);
+    	tlDescriptCompare.setVisible(false);
+    	tvContentCompare.setVisible(false);
+    	tvDescriptionCompare.setVisible(false);
+    	bttnExitCompare.setVisible(false);
     }
 }

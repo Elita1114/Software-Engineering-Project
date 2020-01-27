@@ -496,12 +496,10 @@ public class EchoServer extends AbstractServer
 				  System.out.println("find user");
 				  try { 
 					  String username  = (String) user_request.get_request_args().get(0);
-					  int store  = (int) user_request.get_request_args().get(1);
 					  User foundUser;
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement findUserSql = con.prepareStatement("select * from `Users` WHERE `Username`=? AND `store`=?");
+				      PreparedStatement findUserSql = con.prepareStatement("select * from `Users` WHERE `Username`=?");
 				      findUserSql.setString(1, username);
-				      findUserSql.setInt(2, store);
 				      ResultSet rs = findUserSql.executeQuery();
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      System.out.println(cuser);
@@ -545,7 +543,7 @@ public class EchoServer extends AbstractServer
 				  System.out.println("update user");
 				  try { 
 					  User updateUser = (User) user_request.get_request_args().get(0);
-
+					  boolean passChange = (boolean) user_request.get_request_args().get(1);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      PreparedStatement UserExistanceSql = con.prepareStatement("select * from `Users` WHERE `Username`=? ");
 
@@ -559,7 +557,12 @@ public class EchoServer extends AbstractServer
 				      else {
 				    	  PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Users` SET `Username`=?,`Password`=?,`paymentdetails`=?,`status`=?,`store`=?,`phoneNumber`=?,`pay_method`=?,`ID`=? WHERE `uid`= ?");
 					      updateItemSQL.setString(1, updateUser.username);
-					      updateItemSQL.setString(2, updateUser.password);
+					      if(passChange) {
+					    	  //pass changed
+					    	  updateItemSQL.setString(2, generate_md5_hash(updateUser.password));
+					      }else {
+					    	  updateItemSQL.setString(2, updateUser.password);
+					      }
 					      updateItemSQL.setString(3, updateUser.credit_card_number);
 						   if(updateUser instanceof StoreManager) {
 							   updateItemSQL.setInt(4, 1);

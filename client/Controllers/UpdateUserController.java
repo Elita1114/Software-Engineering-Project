@@ -56,9 +56,6 @@ public class UpdateUserController {
     private TextField storeText;
 
     @FXML
-    private TextField storeField;
-
-    @FXML
     private TextField ID;
 
     @FXML
@@ -67,7 +64,6 @@ public class UpdateUserController {
     @FXML
     private TextField paymentText;
 
-    
 
     @FXML
     void update(ActionEvent event) {
@@ -97,6 +93,12 @@ public class UpdateUserController {
     	ArrayList<Object> args =  new ArrayList<Object>();
     	
     	args.add(UpdatedUser);
+    	if(userChange.password.equals(pass)) {
+    		args.add(false);
+    	}
+    	else {
+    		args.add(true);
+    	}
     	UserRequest user_request = new UserRequest("#UpdateUser",  args);
     	Platform.runLater(new Runnable() {
     	    @Override
@@ -116,8 +118,8 @@ public class UpdateUserController {
 	  				}
 	  				if(MainController.getClient().client.useralreadyExist) {
 	  	    	    	MainController.getClient().client.useralreadyExist= false;
-	  	  			Alert alert = new Alert(AlertType.ERROR, "Username already exist with this username");
-	  				alert.show();
+		  	  			Alert alert = new Alert(AlertType.ERROR, "Username already exist with this username");
+		  				alert.show();
 	  				}
 	  				
 	  			}
@@ -130,10 +132,8 @@ public class UpdateUserController {
     void find(ActionEvent event) {
     	
         String username= userNameField.getText();
-        int store= Integer.parseInt(storeField.getText());
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(username);
-    	args.add(store);
     	UserRequest user_request = new UserRequest("#findUser",  args);
 
     	System.out.println("entered");

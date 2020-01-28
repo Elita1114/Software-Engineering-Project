@@ -110,6 +110,12 @@ public class ChatClient extends AbstractClient
 		  System.out.println(storeslist.stores);
 		  this.flagServerAns=true;
 	  }
+	  else if(msg.toString().equals("#setdelivered")) {
+		  this.flagServerAns=true;
+	  }
+	  else if(msg.toString().equals("#deleteorder")) {
+		  this.flagServerAns=true;
+	  }
 	  else if(msg.toString().equals("#addedtocart")) {
 		  this.flagServerAns=true;
 	  }

@@ -1,6 +1,7 @@
 package client.Controllers;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -195,4 +196,6 @@ public class HandleComplaintController {
     	}
     	
     }
+    
+
 }

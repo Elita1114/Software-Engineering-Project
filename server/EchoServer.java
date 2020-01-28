@@ -250,22 +250,22 @@ public class EchoServer extends AbstractServer
 				    	  {
 					    	  switch(rs.getInt("status")) {
 						    	  case 1:
-						    		  loggedUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  case 2:
-						    		  loggedUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  case 3:
-						    		  loggedUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  case 4:
-						    		  loggedUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  case 5:
-						    		  loggedUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  default:				    	
-						    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 					    	  }
 					    	  PreparedStatement setlogged = con.prepareStatement("UPDATE `Users` SET `logged`=1 WHERE `uid`=?");
@@ -526,21 +526,17 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  Order order = (Order) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      long diff = order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime();
-				      System.out.println("requested " + order.get_requested_delivery_date());
-				      System.out.println("requested " +order.get_requested_delivery_date().getTime() );
-				      System.out.println("current " +(new Date(Calendar.getInstance().getTimeInMillis())).getTime());
-				      System.out.println(order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime());
-				      diff = diff/1000/60/60;
-				      System.out.println("Time diff " + diff);
-				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price` FROM `Orders` WHERE `orderID`=?");
+				      
+				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price`,(TIMESTAMPDIFF(MINUTE, NOW(), `timeToTransport`)) AS hours_difference FROM `Orders` WHERE `orderID`=?");
 				      orderdetails.setInt(1, order.getId());
 				      ResultSet rs = orderdetails.executeQuery();
 				      rs.next();
+				      int diff = rs.getInt("hours_difference");
+				      System.out.println(diff);
 				      PreparedStatement promo = con.prepareStatement("UPDATE `Users` SET `promotional`=`promotional`+? WHERE `uid`=?");
-				      if(diff > 3)
+				      if(diff > 3*60)
 				    	  promo.setFloat(1, rs.getFloat("price"));
-				      else if(diff < 3 && diff > 1)
+				      else if(diff < 3*60 && diff > 1*60)
 				    	  promo.setFloat(1, rs.getFloat("price")/2);
 				      else
 				    	  promo.setFloat(1, 0);
@@ -691,22 +687,22 @@ public class EchoServer extends AbstractServer
 				      if(cuser == 1){
 				    	  switch(rs.getInt("status")) {
 				    	  case 1:
-				    		  foundUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  case 2:
-				    		  foundUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  case 3:
-				    		  foundUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  case 4:
-				    		  foundUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  case 5:
-				    		  foundUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  default:				    	
-				    		  foundUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  }
 				    	ArrayList<Object> args =  new ArrayList<Object>();
@@ -740,7 +736,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#useralreadyExist");
 				      }
 				      else {
-				    	  PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Users` SET `Username`=?,`Password`=?,`paymentdetails`=?,`status`=?,`store`=?,`phoneNumber`=?,`pay_method`=?,`ID`=? WHERE `uid`= ?");
+				    	  PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Users` SET `Username`=?,`Password`=?,`paymentdetails`=?,`status`=?,`store`=?,`phoneNumber`=?,`pay_method`=?,`ID`=?,`email`=? WHERE `uid`= ?");
 					      updateItemSQL.setString(1, updateUser.username);
 					      if(passChange) {
 					    	  //pass changed
@@ -771,7 +767,8 @@ public class EchoServer extends AbstractServer
 					      updateItemSQL.setString(6, updateUser.phone_number);
 					      updateItemSQL.setInt(7, updateUser.pay_method);
 					      updateItemSQL.setString(8, updateUser.id);
-					      updateItemSQL.setInt(9, updateUser.user_id);
+					      updateItemSQL.setString(9, updateUser.email);
+					      updateItemSQL.setInt(10, updateUser.user_id);
 					      
 					      updateItemSQL.executeUpdate();
 						  client.sendToClient("#UpdateUser");

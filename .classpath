@@ -8,7 +8,12 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.48-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX12"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/Benjamin/Downloads/javax.mail.jar" sourcepath="C:/Users/Benjamin/Downloads/javamail1_4_5.zip"/>
 	<classpathentry kind="lib" path="C:/Users/Benjamin/Downloads/jakarta.activation-1.2.1.jar" sourcepath="C:/Users/Benjamin/Downloads/jakarta.activation-1.2.1-sources.jar"/>
+=======
+	<classpathentry kind="lib" path="javax.mail.jar" sourcepath="/Software-Engineering-Project/javamail1_4_5.zip"/>
+	<classpathentry kind="lib" path="jakarta.activation-1.2.1.jar" sourcepath="/Software-Engineering-Project/jakarta.activation-1.2.1-sources.jar"/>
+>>>>>>> refs/remotes/origin/master
 	<classpathentry kind="output" path="bin"/>
 </classpath>

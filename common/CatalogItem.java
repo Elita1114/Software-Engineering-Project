@@ -26,6 +26,11 @@ public class CatalogItem extends Item implements Serializable {
 		sale = sale_;
 	}
 	
+	public CatalogItem(int id_, String name_, String description_, int type_, float price_, float sale_, String color_){
+		super(id_,name_,description_,color_,type_,price_);
+		sale = sale_;
+	}
+	
 	public CatalogItem(int id_, String name_, String description_, int type_, float price_){
 		super(id_,name_,description_,type_,price_);
 	}

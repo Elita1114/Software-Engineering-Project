@@ -149,7 +149,7 @@ public class EchoServer extends AbstractServer
 				      ResultSet rs = checkusername.executeQuery();
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      if(cuser == 0){
-					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`) VALUES (?,?,?,?,?,?,?)");
+					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`,`email`) VALUES (?,?,?,?,?,?,?,?)");
 					      insertuser.setString(1, new_user.username); // User name
 					      insertuser.setString(2, generate_md5_hash(new_user.password));  // Password
 					      insertuser.setString(3, new_user.credit_card_number); // payment details
@@ -157,6 +157,7 @@ public class EchoServer extends AbstractServer
 					      insertuser.setString(5, new_user.phone_number); 	// phoneNumber
 					      insertuser.setInt(6, new_user.pay_method); // subscription
 					      insertuser.setString(7, new_user.id);  // ID
+					      insertuser.setString(8, new_user.email);  // ID
 					      insertuser.executeUpdate();
 					      con.close(); 
 				      }

@@ -35,14 +35,14 @@ public class OrderListViewCell extends ListCell<Order>{
 
     @FXML
     void cancelBttnPressed(ActionEvent event) {
-
+    	orderslist_controller.delete_order(this.order);
     }
 
     @FXML
-    void orderBttnPressed(ActionEvent event) {
-
+    void orderDeliveredBttnPressed(ActionEvent event) {
+    	orderslist_controller.set_delivered(this.order);
     }
-
+    
     public Order order;
 	private FXMLLoader mLLoader;
 	OrderListController orderslist_controller;
@@ -63,7 +63,9 @@ public class OrderListViewCell extends ListCell<Order>{
         } 
         else {
             if (mLLoader == null) {
+            	System.out.println("Trying to load fxml");
                 mLLoader = new FXMLLoader(getClass().getResource("/client/fxml/OrderListViewCell.fxml"));
+                System.out.println("error loading fxml");
                 mLLoader.setController(this);
                 try {
                     mLLoader.load();
@@ -72,6 +74,9 @@ public class OrderListViewCell extends ListCell<Order>{
                     e.printStackTrace();
                 }
             }
+            System.out.println("reached here");
+            System.out.println(tvTitle);
+            System.out.println(taDescription);
             tvTitle.setText("Order ID  " + item.getId());
             taDescription.setText(item.toString());
             System.out.println("updating item ");

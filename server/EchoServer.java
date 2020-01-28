@@ -162,7 +162,7 @@ public class EchoServer extends AbstractServer
 					      con.close(); 
 				      }
 				  	} catch(Exception e) {
-				  		System.out.println(e);
+				  		e.printStackTrace();
 				  	}
 			  }
 			  else if (user_request.get_request_str().startsWith("#getCatalog"))
@@ -228,7 +228,7 @@ public class EchoServer extends AbstractServer
 					      
 					  } catch(Exception e) {
 						  System.out.println("a");
-						  System.out.println(e);
+						  e.printStackTrace();
 					  }
 					  return;
 			    }
@@ -342,7 +342,7 @@ public class EchoServer extends AbstractServer
 			    	  client.sendToClient(order); 	
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  
@@ -369,7 +369,7 @@ public class EchoServer extends AbstractServer
 					  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#removefromcart"))
@@ -390,7 +390,7 @@ public class EchoServer extends AbstractServer
 					  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getcart"))
@@ -427,7 +427,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient(cart);  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getReports"))
@@ -454,7 +454,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient(reportlist);  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getOrders"))
@@ -502,7 +502,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient(orderlist);  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#setdelivered"))
@@ -518,7 +518,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient("#setdelivered");  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#deleteorder"))
@@ -555,7 +555,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient("#deleteorder");  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#updateComplaint")) {
@@ -577,7 +577,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient(new ReturnStatus("#updateComplaint", true));
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#addComplaint")) {
@@ -599,7 +599,7 @@ public class EchoServer extends AbstractServer
 					  con.close();
 					  
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }else if(user_request.get_request_str().equalsIgnoreCase("#dropCatalog")) {
 				  System.out.println("drop");
@@ -612,7 +612,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#dropCatalog");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#addCatalogItem")) {
@@ -634,7 +634,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#addCatalogItem");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#UpdateItem")) {
@@ -656,7 +656,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#UpdateItem");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }			 
 			  else if(user_request.get_request_str().equalsIgnoreCase("#delCatalogItem")) {
@@ -670,7 +670,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#delCatalogItem");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#findUser")) {
@@ -716,7 +716,7 @@ public class EchoServer extends AbstractServer
 				      }
 				    	  
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 				  
 			  }
@@ -774,7 +774,7 @@ public class EchoServer extends AbstractServer
 						  client.sendToClient("#UpdateUser");
 				      }
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }	else if(user_request.get_request_str().equalsIgnoreCase("#customItem")) {
 				  System.out.println("adding custom item");
@@ -798,7 +798,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#customItem");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 
@@ -819,7 +819,7 @@ public class EchoServer extends AbstractServer
 		      con.close();  
 		  }catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
 	  }
@@ -840,7 +840,7 @@ public class EchoServer extends AbstractServer
 		      client.sendToClient("UPDATED Successfully");
 		  }catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
 	  }
@@ -891,7 +891,7 @@ public class EchoServer extends AbstractServer
 		      
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -916,7 +916,7 @@ public class EchoServer extends AbstractServer
 		      
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -946,7 +946,7 @@ public class EchoServer extends AbstractServer
 		      
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -969,7 +969,7 @@ public class EchoServer extends AbstractServer
 		      
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -989,7 +989,7 @@ public class EchoServer extends AbstractServer
 		      client.sendToClient(stores);   
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -1115,8 +1115,8 @@ public class EchoServer extends AbstractServer
 		    con.close();  
  
 		  } catch(Exception e) {
-			  System.out.println("b");
-			  System.out.println(e);
+			  
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -1205,8 +1205,8 @@ public class EchoServer extends AbstractServer
 		    con.close();  
  
 		  } catch(Exception e) {
-			  System.out.println("b");
-			  System.out.println(e);
+			  
+			  e.printStackTrace();
 		  }
 		  return;
     }

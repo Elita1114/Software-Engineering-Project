@@ -149,7 +149,7 @@ public class EchoServer extends AbstractServer
 				      ResultSet rs = checkusername.executeQuery();
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      if(cuser == 0){
-					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`) VALUES (?,?,?,?,?,?,?)");
+					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`,`email`) VALUES (?,?,?,?,?,?,?,?)");
 					      insertuser.setString(1, new_user.username); // User name
 					      insertuser.setString(2, generate_md5_hash(new_user.password));  // Password
 					      insertuser.setString(3, new_user.credit_card_number); // payment details
@@ -157,6 +157,7 @@ public class EchoServer extends AbstractServer
 					      insertuser.setString(5, new_user.phone_number); 	// phoneNumber
 					      insertuser.setInt(6, new_user.pay_method); // subscription
 					      insertuser.setString(7, new_user.id);  // ID
+					      insertuser.setString(8, new_user.email);  // ID
 					      insertuser.executeUpdate();
 					      con.close(); 
 				      }
@@ -489,7 +490,21 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  Order order = (Order) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      
+				      long diff = order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime();
+				      diff = diff/1000/60/60;
+				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price` FROM `Orders` WHERE `orderID`=?");
+				      orderdetails.setInt(1, order.getId());
+				      ResultSet rs = orderdetails.executeQuery();
+				      rs.next();
+				      PreparedStatement promo = con.prepareStatement("UPDATE `Users` SET `promotional`=`promotional`+? WHERE `uid`=?");
+				      if(diff > 3)
+				    	  promo.setFloat(1, rs.getFloat("price"));
+				      else if(diff < 3 && diff > 1)
+				    	  promo.setFloat(1, rs.getFloat("price")/2);
+				      else
+				    	  promo.setFloat(1, 0);
+				      promo.setInt(2, rs.getInt("userID"));
+				      promo.executeUpdate();
 				      PreparedStatement updateorder = con.prepareStatement("DELETE FROM `Cart` WHERE `orderID`=?");
 					  updateorder.setInt(1, order.getId());
 					  updateorder.executeUpdate();

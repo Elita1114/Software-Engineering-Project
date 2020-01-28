@@ -192,7 +192,8 @@ public class MainController {
 		tabPane.getTabs().remove(tabSignIn);
 		tabPane.getTabs().remove(tabupdateUser);
 		tabPane.getTabs().remove(tabCustomItem);
-		
+		tabPane.getTabs().remove(tabOrderList);
+
 		
 		if(client==null || client.client==null ||client.client==null || client.client.getLoggedUser()==null) {
 	//		tabPane.getTabs().add(catalogTab);

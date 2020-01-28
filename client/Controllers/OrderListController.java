@@ -3,6 +3,7 @@ package client.Controllers;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Calendar;
 
 import common.Complaint;
@@ -108,6 +109,23 @@ public class OrderListController {
     			}
     			mainController.getClient().client.flagServerAns = false;
     			fetchOrders();
+    			/*
+    			if(order.want_shipping() && !order.get_shipping_reciever().equals(mainController.getLoggedUser().username)) // send email
+    			{
+    				String client_email = mainController.getLoggedUser().email;
+    				String subject = "Order Delivery";
+    				Date delivery_date = new Date(); 
+    				String content = "Order number " + order.getId() + " was delievered to " + order.get_shipping_reciever() + " on " + delivery_date.toString();
+    				mainController.getClient().send_mail(client_email, subject, content);
+    			}
+    			*/
+    			System.out.println("Sending email about delivery");
+    			String client_email = mainController.getLoggedUser().email;
+    			System.out.println(client_email);
+				String subject = "Order Delivery";
+				Date delivery_date = new Date(); 
+				String content = "Order number " + order.getId() + " was delievered to " + order.get_shipping_reciever() + " on " + delivery_date.toString();
+				mainController.getClient().send_mail(client_email, subject, content);
     	    }
     	    
     	});

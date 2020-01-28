@@ -181,11 +181,15 @@ public class ChatClient extends AbstractClient
 		  flagServerAns=true;
 		  System.out.println("update User flag true\n");
 	  }
+	  else if(msg.toString().equals("#customItem")) {
+		  flagServerAns=true;
+		  System.out.println("custom Item flag true\n");
+	  }
 	  else{
 		  clientUI.display(msg.toString());
 	  }
   }
-
+ 
    /**
    * This method handles all data coming from the UI            
    *

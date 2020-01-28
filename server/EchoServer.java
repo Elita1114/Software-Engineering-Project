@@ -345,33 +345,6 @@ public class EchoServer extends AbstractServer
 				  }
 			  }
 			  
-			  else if(user_request.get_request_str().equalsIgnoreCase("#getcart"))
-			  {
-				  try { 
-					  System.out.println("entered here");
-					  User user = (User) user_request.get_request_args().get(0);
-				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      Statement stmt=con.createStatement();  
-				      System.out.println("The id is " + user.user_id);
-				      PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `userID`=? AND `orderID` is NULL");
-				      getcart.setInt(1, user.user_id);
-				      ResultSet rs = getcart.executeQuery();
-				      ArrayList<Item> itemList = new ArrayList<Item>();
-				      
-				      
-				      while(rs.next()) { 
-				    	  itemList.add(new Item(rs.getInt("productID"), rs.getString("name"), rs.getString("description")));
-				      }
-				      
-				      con.close();  
-				      Cart cart= new Cart(itemList);
-				      System.out.println(cart);
-				      client.sendToClient(cart);  
-				  }catch(Exception e) {
-					  System.out.println("a");
-					  System.out.println(e);
-				  }
-			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getReports"))
 			  {
 				  try { 
@@ -616,8 +589,32 @@ public class EchoServer extends AbstractServer
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
+			  }	else if(user_request.get_request_str().equalsIgnoreCase("#customItem")) {
+				  System.out.println("adding custom item");
+				  CustomItem customItemAdd = (CustomItem) user_request.get_request_args().get(0);
+				  try { 
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					  PreparedStatement addCustomItemSQL = con.prepareStatement("INSERT INTO `CustomItem`( `type`, `price`, `color`, `userID`, `Daisy`, `Orchid`, `Iris`, `Rose`, `Lily`, `hydrangea`, `description`,`container`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+					  addCustomItemSQL.setInt(1, customItemAdd.getType()); 
+					  addCustomItemSQL.setDouble(2, customItemAdd.getPrice());  
+					  addCustomItemSQL.setString(3, customItemAdd.getColor()); 
+					  addCustomItemSQL.setInt(4, customItemAdd.getUserID()); 
+					  addCustomItemSQL.setInt(5, customItemAdd.getDaisy()); 	
+					  addCustomItemSQL.setInt(6, customItemAdd.getOrchid()); 
+					  addCustomItemSQL.setInt(7, customItemAdd.getIris()); 
+					  addCustomItemSQL.setInt(8, customItemAdd.getRose()); 
+					  addCustomItemSQL.setInt(9, customItemAdd.getLily()); 	
+					  addCustomItemSQL.setInt(10, customItemAdd.getHydrangea()); 
+					  addCustomItemSQL.setString(11, customItemAdd.getDescription()); 
+					  addCustomItemSQL.setInt(12, customItemAdd.getContainer()); 
+					  addCustomItemSQL.executeUpdate();
+					  client.sendToClient("#customItem");
+					  con.close();
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
 			  }
-		  
+
 		  return;
 			  }
 

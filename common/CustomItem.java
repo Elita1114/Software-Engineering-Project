@@ -11,14 +11,14 @@ public class CustomItem  extends Item implements Serializable{
 	private int Lily;
 	private int hydrangea;
 	private int orderID;
+	private int container;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1218774016502592391L;
 	// private Range<Integer> price_range
-	
-	public CustomItem(int type, String description, String color,int userID_,int Daisy_,int Orchid_,int Iris_,int Rose_,int Lily_,int hydrangea_,int orderID_) {
-		super(-1, "", description, color,  type);
+	public CustomItem(int type, String description, String color,int userID_,int Daisy_,int Orchid_,int Iris_,int Rose_,int Lily_,int hydrangea_,int orderID_, float price_,int container_) {
+		super(-1, "", description, type,  price_);
 		userID=userID_;	
 		Daisy=Daisy_;
 		Orchid=Orchid_;
@@ -27,6 +27,7 @@ public class CustomItem  extends Item implements Serializable{
 		Lily=Lily_;
 		hydrangea=hydrangea_;
 		orderID=orderID_;
+		container=container_;
 	}
 
 
@@ -138,6 +139,18 @@ public class CustomItem  extends Item implements Serializable{
 
 	public void setOrderID(int orderID) {
 		this.orderID = orderID;
+	}
+
+
+
+	public int getContainer() {
+		return container;
+	}
+
+
+
+	public void setContainer(int container) {
+		this.container = container;
 	}
 	
 	

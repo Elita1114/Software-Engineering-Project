@@ -177,6 +177,7 @@ public class MainController {
 		tabPane.getTabs().remove(tabAddCatalogItem);
 		tabPane.getTabs().remove(tabSignIn);
 		tabPane.getTabs().remove(tabupdateUser);
+		tabPane.getTabs().remove(tabCustomItem);
 		
 		
 		if(client==null || client.client==null ||client.client==null || client.client.getLoggedUser()==null) {
@@ -200,7 +201,7 @@ public class MainController {
 	//		tabPane.getTabs().add(catalogTab);
 			tabPane.getTabs().add(tabOrder);
 			tabPane.getTabs().add(tabComplaint);
-
+			tabPane.getTabs().add(tabCustomItem);
 		}
 		else if(client.client.getLoggedUser() instanceof Employee) {
 	//		tabPane.getTabs().add(catalogTab);

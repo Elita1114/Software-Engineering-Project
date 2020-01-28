@@ -423,6 +423,65 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#getOrders"))
+			  {
+				  try { 
+					  User user = (User) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement getorders = null;
+				      if(user instanceof ChainManager)
+				      {
+				    	  getorders = con.prepareStatement("select * from `Orders`");
+				      }else {
+				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `userID`=?");
+				    	  getorders.setInt(1, user.user_id);
+				      }
+			      	  ResultSet orders = getorders.executeQuery();
+				      ArrayList<Order> ordersList = new ArrayList<Order>();
+				      while(orders.next()) { 
+				    	  PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `orderID`=?");
+					      getcart.setInt(1, orders.getInt("orderID"));
+					      ResultSet rs = getcart.executeQuery();
+					      ArrayList<Item> itemList = new ArrayList<Item>();
+					      
+					      while(rs.next()) { 
+					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price")));
+					      }
+					      
+					      getcart = con.prepareStatement("select * from CustomItem WHERE `orderID`=?");
+					      getcart.setInt(1, user.user_id);
+					      rs = getcart.executeQuery();
+					      while(rs.next()) {
+					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
+					      }
+					      
+					      ordersList.add(new Order(itemList, orders.getDate("date"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));
+				      }
+				      con.close();  
+				      OrdersList orderlist= new OrdersList(ordersList);
+				      System.out.println(orderlist);
+				      client.sendToClient(orderlist);  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#setdelivered"))
+			  {
+				  try { 
+					  Order order = (Order) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      
+				      PreparedStatement updateorder = con.prepareStatement("UPDATE `Orders` SET `deliveryTime`=NOW() WHERE `orderID`=?");
+					  updateorder.setInt(1, order.getId());
+					  updateorder.executeUpdate();
+				      con.close();  
+				      client.sendToClient("#setdelivered");  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#updateComplaint")) {
 				  try { 
 					  int complaintID  = (Integer) user_request.get_request_args().get(0);

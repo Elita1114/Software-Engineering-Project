@@ -23,8 +23,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
     User user;
-
-	
+    UpdateCatalogController updateCatalog_controller;	
     @FXML
     private Label tvColor;
 
@@ -76,7 +75,11 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	private FXMLLoader mLLoader;
     CatalogItem myItem;
 
-	
+    public updateCatalog_ItemListViewCell(UpdateCatalogController updateCatalog_controller_)
+    {
+    	updateCatalog_controller = updateCatalog_controller_;
+    }
+    
 	
     @FXML
     void deleteItem(ActionEvent event) {
@@ -179,6 +182,22 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	  				}
 	  				
 	  			}
+	  			updateCatalog_controller.getMainController().getClient().flagCatalog = false;
+  				ArrayList<Object> args =  new ArrayList<Object>();
+  		    	args.add(updateCatalog_controller.getMainController().getClient().client.getLoggedUser());
+  		    	UserRequest user_request = new UserRequest("#getCatalog 0",  args);
+  		    	updateCatalog_controller.getMainController().getClient().client.handleMessageFromClientUI(user_request);
+	  			while(!(updateCatalog_controller.getMainController()).getClient().flagCatalog) {
+	  				try {
+	  					Thread.sleep(100);
+	  				} catch (InterruptedException e) {
+	  					// TODO Auto-generated catch block
+					e.printStackTrace();
+	  				}
+	  			}
+	  			updateCatalog_controller.getMainController().setCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
+	  			updateCatalog_controller.getMainController().setUpdateCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
+	  			updateCatalog_controller.getMainController().getClient().flagCatalog=false;
     	    }
     	});
     }

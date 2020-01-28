@@ -430,9 +430,10 @@ public class EchoServer extends AbstractServer
 					  User user = (User) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      PreparedStatement getorders = null;
-				      if(user instanceof ChainManager)
+				      if(user instanceof customerService)
 				      {
-				    	  getorders = con.prepareStatement("select * from `Orders`");
+				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `store`=?");
+				    	  getorders.setInt(1, user.store);
 				      }else {
 				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `userID`=?");
 				    	  getorders.setInt(1, user.user_id);
@@ -499,7 +500,7 @@ public class EchoServer extends AbstractServer
 					  updateorder.setInt(1, order.getId());
 					  updateorder.executeUpdate();
 				      con.close();  
-				      client.sendToClient("#setdelivered");  
+				      client.sendToClient("#deleteorder");  
 				  }catch(Exception e) {
 					  System.out.println("a");
 					  System.out.println(e);

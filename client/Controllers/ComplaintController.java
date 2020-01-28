@@ -1,6 +1,7 @@
 package client.Controllers;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import common.Complaint;
@@ -178,6 +179,12 @@ public class ComplaintController {
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
+    	    	try {
+    	    		checkInput(tvTitle.getText(), tvDescription.getText());
+    	    	} catch(IOException e) {
+    	    		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+    	    		return;
+    	    	} 	
     	    	if(mainController.getClient().client.getlogged()) {
 	    	    	String title=tvTitle.getText().toString();
 	    	    	String description=tvDescription.getText().toString();
@@ -216,4 +223,15 @@ public class ComplaintController {
 
     }
 
+    
+    private void checkInput(String tvTitle1,String Description1) throws IOException {
+    	String error_message = "";
+    	if(!(tvTitle1.length()>0))
+    		error_message += "fill user name\n";
+    	if(!(Description1.length()>0))
+    		error_message += "fill description\n";        
+    	if(error_message.length() > 0)
+    		throw(new IOException(error_message));
+    		
+    }
 }

@@ -85,6 +85,32 @@ public class OrderListController {
     	});
     }
     
+    public void set_delivered(Order order)
+    {
+    	ArrayList<Object> args =  new ArrayList<Object>();
+		args.add(order);
+    	UserRequest user_request = new UserRequest("#setdelivered",  args);
+		Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	mainController.getClient().client.flagServerAns=false;
+    	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
+    			while(!mainController.getClient().client.flagServerAns) {
+    				try {
+    					Thread.sleep(100);
+    					System.out.println("waiitng for server");
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				};
+    			}
+    			mainController.getClient().client.flagServerAns = false;
+    			fetchOrders();
+    	    }
+    	    
+    	});
+    }
+    
     public void fetchOrders() { 
     	System.out.println("fetching orders");
 		ArrayList<Object> args =  new ArrayList<Object>();

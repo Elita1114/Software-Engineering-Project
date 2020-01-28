@@ -1,6 +1,5 @@
 package client.Controllers;
 
-
 import java.io.IOException;
 
 import common.Complaint;
@@ -41,7 +40,7 @@ public class OrderListViewCell extends ListCell<Order>{
 
     @FXML
     void orderDeliveredBttnPressed(ActionEvent event) {
-
+    	orderslist_controller.set_delivered(this.order);
     }
     
     public Order order;

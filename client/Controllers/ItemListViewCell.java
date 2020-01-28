@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import common.CartItem;
 import common.CatalogItem;
+import common.ChainManager;
 import common.Item;
 import common.Status;
 import common.User;
@@ -69,6 +70,12 @@ public class ItemListViewCell extends ListCell<Item>{
     
     public ItemListViewCell()
     {
+    }
+    
+    @FXML
+    public void initialize() {
+    	if((MainController.getLoggedUser() == null))
+    		btnAdd.setDisable(true);
     }
     
 	@Override

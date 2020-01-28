@@ -37,6 +37,7 @@ public class Item implements Serializable{
 		name=name_;
 		description=description_;
 		price = price_;
+		color="";
 	}
 
 	public String getName() {
@@ -98,5 +99,4 @@ public class Item implements Serializable{
 	public void setPrice(float price) {
 		this.price = price;
 	}
-
 }

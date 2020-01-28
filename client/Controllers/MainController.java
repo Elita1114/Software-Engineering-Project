@@ -42,7 +42,7 @@ public class MainController {
 	@FXML private addItemController addCatalogItemController;
 	@FXML private ReportController reportsController;
 	@FXML private UpdateUserController updateUserController;
-
+	@FXML private SelfMadeItemController customitemController;
 	
 	static public ClientConsole client;
 	private boolean flagCheck=false;
@@ -58,6 +58,7 @@ public class MainController {
 	@FXML public Tab tabAddCatalogItem;
 	@FXML public Tab tabSignIn;
 	@FXML public Tab tabupdateUser;
+	@FXML public Tab tabCustomItem;
 
 
 	@FXML
@@ -71,6 +72,8 @@ public class MainController {
 		handleComplaintController.injectMainController(this);
 		reportsController.injectMainController(this);
 		updateUserController.injectMainController(this);
+		customitemController.injectMainController(this);
+
 
 		permissions();
 	}
@@ -181,6 +184,7 @@ public class MainController {
 		tabPane.getTabs().remove(tabAddCatalogItem);
 		tabPane.getTabs().remove(tabSignIn);
 		tabPane.getTabs().remove(tabupdateUser);
+		tabPane.getTabs().remove(tabCustomItem);
 		
 		
 		if(client==null || client.client==null ||client.client==null || client.client.getLoggedUser()==null) {
@@ -204,7 +208,7 @@ public class MainController {
 	//		tabPane.getTabs().add(catalogTab);
 			tabPane.getTabs().add(tabOrder);
 			tabPane.getTabs().add(tabComplaint);
-
+			tabPane.getTabs().add(tabCustomItem);
 		}
 		else if(client.client.getLoggedUser() instanceof Employee) {
 	//		tabPane.getTabs().add(catalogTab);

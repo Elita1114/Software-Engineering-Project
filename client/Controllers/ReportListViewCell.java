@@ -2,6 +2,7 @@ package client.Controllers;
 
 import java.io.IOException;
 
+import common.ChainManager;
 import common.Complaint;
 import common.Item;
 import common.MonthlyReport;
@@ -96,6 +97,13 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 	    {
 	    	report_controller = report_controller_;
 	    }
+	    
+	    @FXML
+	    public void initialize() {
+	    	if(!(MainController.getLoggedUser() instanceof ChainManager))
+	    		bttnCompare.setDisable(true);
+	    }
+	    
 	    @Override
 	    protected void updateItem(MonthlyReport item, boolean empty) {
 	        super.updateItem(item, empty);

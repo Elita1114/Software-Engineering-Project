@@ -407,18 +407,18 @@ public class EchoServer extends AbstractServer
 				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
 				      while(rs.next()) { 
-				    	  PreparedStatement getsale = con.prepareStatement("SELECT `sale` FROM Products WHERE `type`=?");
-					      getsale.setInt(1, rs.getInt("productID"));
-					      ResultSet sale = getsale.executeQuery();
-					      sale.next();
-				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price"), sale.getFloat("sale")));
+				    	  PreparedStatement productdetails = con.prepareStatement("SELECT `sale`,`color` FROM Products WHERE `type`=?");
+				    	  productdetails.setInt(1, rs.getInt("productID"));
+					      ResultSet pdetails = productdetails.executeQuery();
+					      pdetails.next();
+				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price"), pdetails.getFloat("sale"), pdetails.getString("color")));
 				      }
 				      
 				      getcart = con.prepareStatement("select * from CustomItem WHERE `userID`=? AND `orderID` is NULL");
 				      getcart.setInt(1, user.user_id);
 				      rs = getcart.executeQuery();
 				      while(rs.next()) {
-				    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
+				    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price"), rs.getString("color")));
 				      }
 				      
 				      con.close();  

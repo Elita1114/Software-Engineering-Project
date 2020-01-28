@@ -68,6 +68,11 @@
                   <fx:include fx:id="customitem" source="SelfMadeItem.fxml" />
                </content>
             </Tab>
+             <Tab fx:id="tabOrderList" onSelectionChanged="#handleClick" text="Orders list">
+               <content>
+                  <fx:include fx:id="orderList" source="OrderList.fxml" />
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
       <Button layoutX="738.0" layoutY="512.0" mnemonicParsing="false" onAction="#logout" text="Logout" />

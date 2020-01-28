@@ -43,6 +43,7 @@ public class MainController {
 	@FXML private ReportController reportsController;
 	@FXML private UpdateUserController updateUserController;
 	@FXML private SelfMadeItemController customitemController;
+	@FXML private OrderListController orderListController;
 	
 	static public ClientConsole client;
 	private boolean flagCheck=false;
@@ -59,7 +60,7 @@ public class MainController {
 	@FXML public Tab tabSignIn;
 	@FXML public Tab tabupdateUser;
 	@FXML public Tab tabCustomItem;
-
+	@FXML public Tab tabOrderList;
 
 	@FXML
 	private void initialize() {
@@ -73,7 +74,7 @@ public class MainController {
 		reportsController.injectMainController(this);
 		updateUserController.injectMainController(this);
 		customitemController.injectMainController(this);
-
+		orderListController.injectMainController(this);
 
 		permissions();
 	}
@@ -120,6 +121,7 @@ public class MainController {
 	
 	@FXML
 	public final EventHandler<Event> handleClick(){
+		System.out.println("clicked");
 		if(tabHandleComplaint.isSelected()) {
 			
 			handleComplaintController.complaintsOpened();
@@ -136,6 +138,11 @@ public class MainController {
 		else if(tabReports.isSelected()) {
 			System.out.println("Getting reports for user");
 			reportsController.fetchReports();
+			
+		}
+		else if(tabOrderList.isSelected()) {
+			System.out.println("Getting orders for user");
+			orderListController.fetchOrders();
 			
 		}
 		return null;
@@ -209,6 +216,7 @@ public class MainController {
 			tabPane.getTabs().add(tabOrder);
 			tabPane.getTabs().add(tabComplaint);
 			tabPane.getTabs().add(tabCustomItem);
+			tabPane.getTabs().add(tabOrderList);
 		}
 		else if(client.client.getLoggedUser() instanceof Employee) {
 	//		tabPane.getTabs().add(catalogTab);
@@ -219,7 +227,7 @@ public class MainController {
 		else if(client.client.getLoggedUser() instanceof customerService) {
 	//		tabPane.getTabs().add(catalogTab);
 			tabPane.getTabs().add(tabHandleComplaint);
-
+			tabPane.getTabs().add(tabOrderList);
 		}
 
 		else if(client.client.getLoggedUser() instanceof ChainManager) {

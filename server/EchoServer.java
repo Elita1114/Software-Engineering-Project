@@ -289,17 +289,16 @@ public class EchoServer extends AbstractServer
 			    		  price += catalogitem.getPrice();
 				      }
 				      
-				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				      insertorder.setInt(1, user.user_id); // User id
 				      insertorder.setString(2, order.get_shipping_address());  // reciever
 				      insertorder.setInt(3, order.want_shipping()?1:0);  // reciever
 				      insertorder.setDate(4, order.get_requested_delivery_date()); // delivery date
 				      insertorder.setString(5, order.get_letter()); // letter
-				      insertorder.setDate(6, order.get_requested_delivery_date()); 	// phoneNumber
-				      insertorder.setString(7, order.get_shipping_reciever()); // reciver
-				      insertorder.setString(8, order.get_recievre_phone_number());  // ID
-				      insertorder.setFloat(9, price);  // ID
-				      insertorder.setInt(10, user.store);  // store
+				      insertorder.setString(6, order.get_shipping_reciever()); // reciver
+				      insertorder.setString(7, order.get_recievre_phone_number());  // ID
+				      insertorder.setFloat(8, price);  // ID
+				      insertorder.setInt(9, user.store);  // store
 				      insertorder.executeUpdate();
 				      ResultSet insertedorder = insertorder.getGeneratedKeys();
 				      insertedorder.next();

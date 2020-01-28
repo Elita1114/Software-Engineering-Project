@@ -23,15 +23,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class OrdersListController {
+public class OrderListController {
 
 	private MainController mainController;
-    @FXML private ListView<Order> lvReports;
+    @FXML private ListView<Order> lvOrders;
     static public ObservableList<Order> itemObservableList;
 
-    public OrdersListController() {
+    public OrderListController() {
     	itemObservableList = FXCollections.observableArrayList();
-    	// complaintBarChart.setVisible(false);
     }
     
     public void injectMainController(MainController mainController_) {
@@ -48,14 +47,14 @@ public class OrdersListController {
     }
     
     public void updateOrder() {
-    	lvReports.setItems(itemObservableList);
-    	lvReports.setCellFactory(itemListView  -> new OrderListViewCell(this));
+    	lvOrders.setItems(itemObservableList);
+    	lvOrders.setCellFactory(itemListView  -> new OrderListViewCell(this));
     }
     @FXML
     public void initialize() {
     	Platform.runLater(() -> {
-    		lvReports.setItems(itemObservableList);
-    		lvReports.setCellFactory(itemListView  -> new OrderListViewCell(this));
+    		lvOrders.setItems(itemObservableList);
+    		lvOrders.setCellFactory(itemListView  -> new OrderListViewCell(this));
 
         });	
     }
@@ -64,7 +63,7 @@ public class OrdersListController {
     	System.out.println("fetching orders");
 		ArrayList<Object> args =  new ArrayList<Object>();
 		args.add(mainController.getLoggedUser());
-    	UserRequest user_request = new UserRequest("#getorders",  args);
+    	UserRequest user_request = new UserRequest("#getOrders",  args);
 		Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
@@ -80,7 +79,7 @@ public class OrdersListController {
     				};
     			}
     			System.out.println("got Orders");
-    			System.out.println("reports are "+ mainController.getClient().monthly_reports.getItemList());
+    			System.out.println("orders are "+ mainController.getClient().orders.getItemList());
     			setOrder(mainController.getClient().orders.getItemList());
     			updateOrder();
     			System.out.println("finished displaying reports");

@@ -18,15 +18,21 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.AnchorPane;
 
 public class OrderListViewCell extends ListCell<Order>{
-    @FXML private Button bttnCancel;
-    @FXML private TextArea taDescription;
-    @FXML private Button bttnOrder;
-    @FXML private Label tvTitle;
-    @FXML private AnchorPane pane;
-    public Order order;
-	private FXMLLoader mLLoader;
-	OrdersListController orderslist_controller;
-	
+    @FXML
+    private Button bttnCancel;
+
+    @FXML
+    private TextArea taDescription;
+
+    @FXML
+    private Button bttnOrder;
+
+    @FXML
+    private Label tvTitle;
+
+    @FXML
+    private AnchorPane pane;
+
     @FXML
     void cancelBttnPressed(ActionEvent event) {
 
@@ -36,8 +42,13 @@ public class OrderListViewCell extends ListCell<Order>{
     void orderBttnPressed(ActionEvent event) {
 
     }
+
+    public Order order;
+	private FXMLLoader mLLoader;
+	OrderListController orderslist_controller;
+
 	    
-	public OrderListViewCell(OrdersListController orderslist_controller_)
+	public OrderListViewCell(OrderListController orderslist_controller_)
 	{
 	 	orderslist_controller = orderslist_controller_;
 	}
@@ -61,6 +72,8 @@ public class OrderListViewCell extends ListCell<Order>{
                     e.printStackTrace();
                 }
             }
+            tvTitle.setText("Order ID  " + item.getId());
+            taDescription.setText(item.toString());
             System.out.println("updating item ");
             tvTitle.setText("Order ID  " + item.getId());
             taDescription.setText(item.toString());

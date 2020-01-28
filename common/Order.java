@@ -96,14 +96,6 @@ public class Order implements Serializable{
 		this.reciever_phone_number = reciever_phone_number;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String toString()
 	{
 		return "#gotOrder";

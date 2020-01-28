@@ -39,15 +39,17 @@ public class Item implements Serializable{
 		System.out.println(price_);
 		price = price_;
 		color="";
+		type =type_;
 	}
 	
-	public Item(int id_, String name_, String description_, String color_, int type, float price_){
+	public Item(int id_, String name_, String description_, String color_, int type_, float price_){
 		setId(id_);
 		name=name_;
 		description=description_;
 		System.out.println(price_);
 		price = price_;
 		color=color_;
+		type =type_;
 	}
 
 	public String getName() {

@@ -131,28 +131,6 @@ public class CatalogController implements Initializable {
     	}
     }
     
-
-    @FXML
-    void openloginscene(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/Login.fxml"));     
-		Parent root = (Parent)fxmlLoader.load();
-		Scene scene = new Scene(root); 
-		Stage appstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		appstage.setScene(scene);    	
-		appstage.show(); 
-    }
-
-    @FXML
-    void opensignupscene(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/client/fxml/SignUp.fxml"));     
-		Parent root = (Parent)fxmlLoader.load();
-		Scene scene = new Scene(root); 
-		Stage appstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		appstage.setScene(scene);    	
-		appstage.show(); 
-    }
-    
-    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	

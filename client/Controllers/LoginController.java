@@ -110,6 +110,7 @@ public class LoginController {
 	    			mainController.getClient().flagCatalog=false;
 					mainController.getTabPane().getSelectionModel().select(0);
 					mainController.permissions();
+					mainController.logoutbtn.setVisible(true);
 	  			}else if(mainController.getClient().client.isWrongdetails())
 	  			{
 	  				Alert alert = new Alert(AlertType.ERROR, "Username or password incorrect!");

@@ -482,6 +482,28 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#deleteorder"))
+			  {
+				  try { 
+					  Order order = (Order) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      
+				      PreparedStatement updateorder = con.prepareStatement("DELETE FROM `Cart` WHERE `orderID`=?");
+					  updateorder.setInt(1, order.getId());
+					  updateorder.executeUpdate();
+					  updateorder = con.prepareStatement("DELETE FROM `CustomItem` WHERE `orderID`=?");
+					  updateorder.setInt(1, order.getId());
+					  updateorder.executeUpdate();
+					  updateorder = con.prepareStatement("DELETE FROM `Orders` WHERE `orderID`=?");
+					  updateorder.setInt(1, order.getId());
+					  updateorder.executeUpdate();
+				      con.close();  
+				      client.sendToClient("#setdelivered");  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#updateComplaint")) {
 				  try { 
 					  int complaintID  = (Integer) user_request.get_request_args().get(0);

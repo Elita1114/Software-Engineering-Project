@@ -265,6 +265,7 @@ public class MainController {
 				}
 			}
 			setCatalog(client.catalog.getList());
+			logoutbtn.setVisible(false);
 			tabPane.getSelectionModel().select(0);
     	}
     }

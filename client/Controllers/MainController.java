@@ -28,6 +28,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.SingleSelectionModel;
 
 public class MainController {
@@ -44,6 +45,7 @@ public class MainController {
 	@FXML private UpdateUserController updateUserController;
 	@FXML private SelfMadeItemController customitemController;
 	@FXML private OrderListController orderListController;
+	@FXML public Button logoutbtn;
 	
 	static public ClientConsole client;
 	private boolean flagCheck=false;
@@ -61,6 +63,7 @@ public class MainController {
 	@FXML public Tab tabupdateUser;
 	@FXML public Tab tabCustomItem;
 	@FXML public Tab tabOrderList;
+	
 
 	@FXML
 	private void initialize() {
@@ -75,7 +78,7 @@ public class MainController {
 		updateUserController.injectMainController(this);
 		customitemController.injectMainController(this);
 		orderListController.injectMainController(this);
-
+		logoutbtn.setVisible(false);
 		permissions();
 	}
 	public static ClientConsole getClient() {

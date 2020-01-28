@@ -494,7 +494,7 @@ public class EchoServer extends AbstractServer
 					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price"), rs.getString("color")));
 					      }
 					      
-					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));
+					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID"), user.email));
 				      }
 				      con.close();  
 				      OrdersList orderlist= new OrdersList(ordersList);

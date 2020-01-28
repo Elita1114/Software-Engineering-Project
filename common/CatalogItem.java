@@ -14,7 +14,7 @@ public class CatalogItem extends Item implements Serializable {
 	
 	
 	public CatalogItem(String name_, String description_, String color_,float price_,int id_,String imagePath_, int type_, int store_, float sale_) {
-		super( id_,  name_,  description_,  color_,  type_);
+		super( id_,  name_,  description_,  color_,  type_, price_);
 		// TODO Auto-generated constructor stub
 		imagePath=imagePath_;
 		setStore(store_);

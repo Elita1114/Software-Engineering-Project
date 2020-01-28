@@ -42,7 +42,7 @@ public class Order implements Serializable{
 		this.letter = letter;
 		this.requested_delivery_date_time = date;
 		this.want_shipping = want_shipping;
-		this.id = id;
+		this.setId(id);
 		if(want_shipping) 
 		{
 			this.shipping_address = shipping_address;
@@ -114,5 +114,13 @@ public class Order implements Serializable{
 		return "Order [order_items=" + order_items + ", requested_delivery_date_time=" + requested_delivery_date_time
 				+ ", letter=" + letter + ", want_shipping=" + want_shipping + ", shipping_address=" + shipping_address
 				+ ", shipping_reciever=" + shipping_reciever + ", reciever_phone_number=" + reciever_phone_number + "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

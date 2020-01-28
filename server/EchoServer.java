@@ -361,7 +361,6 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
-			  
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getcart"))
 			  {
 				  try { 
@@ -418,6 +417,65 @@ public class EchoServer extends AbstractServer
 				      MonthlyReportList reportlist= new MonthlyReportList(itemList);
 				      System.out.println(reportlist);
 				      client.sendToClient(reportlist);  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#getOrders"))
+			  {
+				  try { 
+					  User user = (User) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement getorders = null;
+				      if(user instanceof ChainManager)
+				      {
+				    	  getorders = con.prepareStatement("select * from `Orders`");
+				      }else {
+				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `userID`=?");
+				    	  getorders.setInt(1, user.user_id);
+				      }
+			      	  ResultSet orders = getorders.executeQuery();
+				      ArrayList<Order> ordersList = new ArrayList<Order>();
+				      while(orders.next()) { 
+				    	  PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `orderID`=?");
+					      getcart.setInt(1, orders.getInt("orderID"));
+					      ResultSet rs = getcart.executeQuery();
+					      ArrayList<Item> itemList = new ArrayList<Item>();
+					      
+					      while(rs.next()) { 
+					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price")));
+					      }
+					      
+					      getcart = con.prepareStatement("select * from CustomItem WHERE `orderID`=?");
+					      getcart.setInt(1, user.user_id);
+					      rs = getcart.executeQuery();
+					      while(rs.next()) {
+					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
+					      }
+					      
+					      ordersList.add(new Order(itemList, orders.getDate("date"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));
+				      }
+				      con.close();  
+				      OrdersList orderlist= new OrdersList(ordersList);
+				      System.out.println(orderlist);
+				      client.sendToClient(orderlist);  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#setdelivered"))
+			  {
+				  try { 
+					  Order order = (Order) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      
+				      PreparedStatement updateorder = con.prepareStatement("UPDATE `Orders` SET `deliveryTime`=NOW() WHERE `orderID`=?");
+					  updateorder.setInt(1, order.getId());
+					  updateorder.executeUpdate();
+				      con.close();  
+				      client.sendToClient("#setdelivered");  
 				  }catch(Exception e) {
 					  System.out.println("a");
 					  System.out.println(e);
@@ -640,8 +698,32 @@ public class EchoServer extends AbstractServer
 				  }catch(Exception e) {
 					  System.out.println(e);
 				  }
+			  }	else if(user_request.get_request_str().equalsIgnoreCase("#customItem")) {
+				  System.out.println("adding custom item");
+				  CustomItem customItemAdd = (CustomItem) user_request.get_request_args().get(0);
+				  try { 
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					  PreparedStatement addCustomItemSQL = con.prepareStatement("INSERT INTO `CustomItem`( `type`, `price`, `color`, `userID`, `Daisy`, `Orchid`, `Iris`, `Rose`, `Lily`, `hydrangea`, `description`,`container`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+					  addCustomItemSQL.setInt(1, customItemAdd.getType()); 
+					  addCustomItemSQL.setDouble(2, customItemAdd.getPrice());  
+					  addCustomItemSQL.setString(3, customItemAdd.getColor()); 
+					  addCustomItemSQL.setInt(4, customItemAdd.getUserID()); 
+					  addCustomItemSQL.setInt(5, customItemAdd.getDaisy()); 	
+					  addCustomItemSQL.setInt(6, customItemAdd.getOrchid()); 
+					  addCustomItemSQL.setInt(7, customItemAdd.getIris()); 
+					  addCustomItemSQL.setInt(8, customItemAdd.getRose()); 
+					  addCustomItemSQL.setInt(9, customItemAdd.getLily()); 	
+					  addCustomItemSQL.setInt(10, customItemAdd.getHydrangea()); 
+					  addCustomItemSQL.setString(11, customItemAdd.getDescription()); 
+					  addCustomItemSQL.setInt(12, customItemAdd.getContainer()); 
+					  addCustomItemSQL.executeUpdate();
+					  client.sendToClient("#customItem");
+					  con.close();
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
 			  }
-		  
+
 		  return;
 			  }
 

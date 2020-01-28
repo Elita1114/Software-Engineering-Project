@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.SelfMadeItemController">
    <children>
-      <Button fx:id="btnFinished" layoutX="655.0" layoutY="400.0" mnemonicParsing="false" onAction="#finishedPressed" text="Finished" />
+     <Button fx:id="btnFinished" layoutX="655.0" layoutY="400.0" mnemonicParsing="false" onAction="#finishedPressed" text="Finished" />
       <Text layoutX="266.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Your Own" textAlignment="CENTER" wrappingWidth="287.13671875">
          <font>
             <Font name="System Bold" size="32.0" />
@@ -133,21 +133,21 @@
                            </image>
                         </ImageView>
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
                                     <TextField fx:id="tvLily" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.rowIndex="2">
                            <GridPane.margin>
@@ -194,17 +194,17 @@
                            </image>
                         </ImageView>
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         <TextField fx:id="tvOrchid" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="162.0" top="60.0" />
@@ -250,11 +250,11 @@
                            </image>
                         </ImageView>
             
+                                                
                                     
                                     
-                        
                                     
-                        <TextField fx:id="tvRose" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <TextField fx:id="tvRose" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="162.0" top="60.0" />
                            </GridPane.margin>
@@ -299,13 +299,13 @@
                            </image>
                         </ImageView>
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    <TextField fx:id="tvHydrangea" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <TextField fx:id="tvHydrangea" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="162.0" top="60.0" />
                            </GridPane.margin>
@@ -350,27 +350,27 @@
                            </image>
                         </ImageView>
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                         
-                                    
+                                                
                      </children>
                   </GridPane>
                </children>
@@ -389,6 +389,5 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="btnCancel" layoutX="725.0" layoutY="400.0" mnemonicParsing="false" onAction="#cancelPressed" text="Cancel" />
    </children>
 </AnchorPane>

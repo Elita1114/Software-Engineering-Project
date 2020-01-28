@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="929.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.MainController">
    <children>
       <TabPane fx:id="tabPane" layoutY="-1.0" prefHeight="471.0" prefWidth="820.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
          <tabs>
@@ -58,6 +61,11 @@
             <Tab fx:id="tabupdateUser" text="update User">
                <content>
                   <fx:include fx:id="updateUser" source="UpdateUser.fxml" />
+               </content>
+            </Tab>
+            <Tab fx:id="tabCustomItem" text="customItem">
+               <content>
+                  <fx:include fx:id="customitem" source="SelfMadeItem.fxml" />
                </content>
             </Tab>
          </tabs>

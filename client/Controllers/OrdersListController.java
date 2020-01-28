@@ -60,12 +60,11 @@ public class OrdersListController {
         });	
     }
     
-    public void fetchReports() { 
-    	System.out.println("fetching reports");
+    public void fetchOrders() { 
+    	System.out.println("fetching orders");
 		ArrayList<Object> args =  new ArrayList<Object>();
-		args.add(mainController.getClient().client.getLoggedUser());
-    	UserRequest user_request = new UserRequest("#getreports",  args);
-    	
+		args.add(mainController.getLoggedUser());
+    	UserRequest user_request = new UserRequest("#getorders",  args);
 		Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
@@ -80,7 +79,7 @@ public class OrdersListController {
     					e.printStackTrace();
     				};
     			}
-    			System.out.println("got Reports");
+    			System.out.println("got Orders");
     			System.out.println("reports are "+ mainController.getClient().monthly_reports.getItemList());
     			setOrder(mainController.getClient().orders.getItemList());
     			updateOrder();

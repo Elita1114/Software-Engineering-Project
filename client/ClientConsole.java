@@ -45,6 +45,7 @@ public class ClientConsole extends Application implements ChatIF
   public Catalog catalog;
   public Cart cart;
   public MonthlyReportList monthly_reports;
+  public OrderLis monthly_reports;
   public User foundUser;
 
 

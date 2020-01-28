@@ -107,7 +107,8 @@ public class ItemListViewCell extends ListCell<Item>{
             	System.out.println("is a catalog item ");
             	CatalogItem c_item = (CatalogItem) item;
             	Price.setText(String.valueOf(c_item.getPrice()));
-            	ivIm1.setImage(new Image(c_item.getImagePath()));
+            	if(!(c_item.getImagePath().equals("")))
+            		ivIm1.setImage(new Image(c_item.getImagePath()));
             }
             else if (item instanceof CatalogItem)
             {

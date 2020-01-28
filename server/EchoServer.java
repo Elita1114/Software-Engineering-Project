@@ -246,25 +246,35 @@ public class EchoServer extends AbstractServer
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      System.out.println(cuser);
 				      if(cuser == 1){
-				    	  switch(rs.getInt("status")) {
-				    	  case 1:
-				    		  loggedUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  case 2:
-				    		  loggedUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  case 3:
-				    		  loggedUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  case 4:
-				    		  loggedUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  case 5:
-				    		  loggedUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  default:				    	
-				    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
+				    	  if(rs.getBoolean("logged") == false)
+				    	  {
+					    	  switch(rs.getInt("status")) {
+						    	  case 1:
+						    		  loggedUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  case 2:
+						    		  loggedUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  case 3:
+						    		  loggedUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  case 4:
+						    		  loggedUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  case 5:
+						    		  loggedUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  default:				    	
+						    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+					    	  }
+					    	  PreparedStatement setlogged = con.prepareStatement("UPDATE `Users` SET `logged`=1 WHERE `uid`=?");
+					    	  setlogged.setInt(1, rs.getInt("uid"));
+					    	  setlogged.executeUpdate();
+				    	  }else
+				    	  {
+				    		  client.sendToClient("#useralreadylogged");
+				    		  return;
 				    	  }
 				    	  con.close(); 
 				    	  client.sendToClient(loggedUser); 
@@ -273,6 +283,18 @@ public class EchoServer extends AbstractServer
 				    	  client.sendToClient("#wrongdetails");
 				    	  return;
 				      }
+				  }catch(Exception e) {
+					  e.printStackTrace();
+				  }
+			  }else if(user_request.get_request_str().equalsIgnoreCase("#logout"))
+			  {
+
+				  try { 
+					  User new_user = (User) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					  PreparedStatement logout = con.prepareStatement("UPDATE `Users` SET `logged`=0 WHERE `uid`=?");
+					  logout.setInt(1, new_user.user_id);
+				      logout.executeUpdate();
 				  }catch(Exception e) {
 					  e.printStackTrace();
 				  }
@@ -385,18 +407,18 @@ public class EchoServer extends AbstractServer
 				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
 				      while(rs.next()) { 
-				    	  PreparedStatement getsale = con.prepareStatement("SELECT `sale` FROM Products WHERE `type`=?");
-					      getsale.setInt(1, rs.getInt("productID"));
-					      ResultSet sale = getsale.executeQuery();
-					      sale.next();
-				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price"), sale.getFloat("sale")));
+				    	  PreparedStatement productdetails = con.prepareStatement("SELECT `sale`,`color` FROM Products WHERE `type`=?");
+				    	  productdetails.setInt(1, rs.getInt("productID"));
+					      ResultSet pdetails = productdetails.executeQuery();
+					      pdetails.next();
+				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price"), pdetails.getFloat("sale"), pdetails.getString("color")));
 				      }
 				      
 				      getcart = con.prepareStatement("select * from CustomItem WHERE `userID`=? AND `orderID` is NULL");
 				      getcart.setInt(1, user.user_id);
 				      rs = getcart.executeQuery();
 				      while(rs.next()) {
-				    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
+				    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price"), rs.getString("color")));
 				      }
 				      
 				      con.close();  
@@ -458,17 +480,21 @@ public class EchoServer extends AbstractServer
 					      ArrayList<Item> itemList = new ArrayList<Item>();
 					      
 					      while(rs.next()) { 
-					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price")));
+					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+					    	  prep_stmt.setInt(1, rs.getInt("productID"));
+					    	  ResultSet productsdetails = prep_stmt.executeQuery();
+					    	  productsdetails.next();
+					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), productsdetails.getFloat("sale"), productsdetails.getString("color")));
 					      }
 					      
 					      getcart = con.prepareStatement("select * from CustomItem WHERE `orderID`=?");
 					      getcart.setInt(1, user.user_id);
 					      rs = getcart.executeQuery();
 					      while(rs.next()) {
-					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
+					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price"), rs.getString("color")));
 					      }
 					      
-					      ordersList.add(new Order(itemList, orders.getDate("date"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));
+					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));
 				      }
 				      con.close();  
 				      OrdersList orderlist= new OrdersList(ordersList);
@@ -501,7 +527,12 @@ public class EchoServer extends AbstractServer
 					  Order order = (Order) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      long diff = order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime();
+				      System.out.println("requested " + order.get_requested_delivery_date());
+				      System.out.println("requested " +order.get_requested_delivery_date().getTime() );
+				      System.out.println("current " +(new Date(Calendar.getInstance().getTimeInMillis())).getTime());
+				      System.out.println(order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime());
 				      diff = diff/1000/60/60;
+				      System.out.println("Time diff " + diff);
 				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price` FROM `Orders` WHERE `orderID`=?");
 				      orderdetails.setInt(1, order.getId());
 				      ResultSet rs = orderdetails.executeQuery();

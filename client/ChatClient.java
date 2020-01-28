@@ -43,6 +43,7 @@ public class ChatClient extends AbstractClient
   private boolean wrongdetails;
   public boolean flagServerAns;
   public boolean useralreadyExist;
+  private boolean loggedalready;
   //Constructors ****************************************************
   
   /**
@@ -118,6 +119,9 @@ public class ChatClient extends AbstractClient
 	  }
 	  else if(msg.toString().equals("#addedtocart")) {
 		  this.flagServerAns=true;
+	  }
+	  else if(msg.toString().equals("#useralreadylogged")) {
+		  this.loggedalready=true;
 	  }
 	  else if(msg.toString().equals("#removefromcart")) {
 		  this.flagServerAns=true;
@@ -409,6 +413,14 @@ public boolean isLogged() {
 
 public void setLogged(boolean logged) {
 	this.logged = logged;
+}
+
+public boolean isLoggedalready() {
+	return loggedalready;
+}
+
+public void setLoggedalready(boolean loggedalready) {
+	this.loggedalready = loggedalready;
 }
 }
 //End of ChatClient class

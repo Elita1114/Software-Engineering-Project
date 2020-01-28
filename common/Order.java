@@ -101,7 +101,18 @@ public class Order implements Serializable{
 		return "#gotOrder";
 	}
 
-
+	public String print_order()
+	{
+		String str =   "Order Items: " + order_items + "\nRequested delivery date: " + requested_delivery_date_time;
+		if(!letter.contentEquals("")) {
+			str += "\nletter " + letter;
+		}
+		if(want_shipping) {
+			str	+= "\nShipping Details: "+ "\nShipping Reciever " + shipping_reciever + "\nShipping Address " + shipping_address + "\nReciever Phone Number "+ reciever_phone_number;
+		}
+		return str;
+		
+	}
 	public String getDetails() {
 		return "Order [order_items=" + order_items + ", requested_delivery_date_time=" + requested_delivery_date_time
 				+ ", letter=" + letter + ", want_shipping=" + want_shipping + ", shipping_address=" + shipping_address

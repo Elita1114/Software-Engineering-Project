@@ -2,10 +2,14 @@ package client.Controllers;
 
 import java.io.IOException;
 
+import common.ChainManager;
 import common.Complaint;
+import common.Customer;
+import common.Employee;
 import common.Item;
 import common.MonthlyReport;
 import common.Order;
+import common.customerService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,7 +56,13 @@ public class OrderListViewCell extends ListCell<Order>{
 	{
 	 	orderslist_controller = orderslist_controller_;
 	}
-	    
+    @FXML
+    public void initialize() {
+    	if(!(MainController.getLoggedUser() instanceof Customer))
+    		bttnCancel.setVisible(false);
+    	if(!(MainController.getLoggedUser() instanceof Employee))
+    		bttnOrder.setVisible(false);
+    }    
 	@Override
     protected void updateItem(Order item, boolean empty) {
         super.updateItem(item, empty);
@@ -78,10 +88,9 @@ public class OrderListViewCell extends ListCell<Order>{
             System.out.println(tvTitle);
             System.out.println(taDescription);
             tvTitle.setText("Order ID  " + item.getId());
-            taDescription.setText(item.toString());
+            taDescription.setText(item.print_order());
             System.out.println("updating item ");
-            tvTitle.setText("Order ID  " + item.getId());
-            taDescription.setText(item.toString());
+
             setText(null);
             setGraphic(pane);
         }

@@ -1,6 +1,5 @@
 package client.Controllers;
 
-import java.awt.TextArea;
 import java.io.IOException;
 
 import common.Complaint;
@@ -15,6 +14,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 
 public class OrderListViewCell extends ListCell<Order>{

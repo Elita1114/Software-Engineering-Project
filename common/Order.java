@@ -16,6 +16,7 @@ public class Order implements Serializable{
 	private String shipping_address;
 	private String shipping_reciever;
 	private String reciever_phone_number;
+	private int id;
 	
 	static final double shipping_price = 20; 
 	
@@ -26,6 +27,22 @@ public class Order implements Serializable{
 		this.letter = letter;
 		this.requested_delivery_date_time = date;
 		this.want_shipping = want_shipping;
+		if(want_shipping) 
+		{
+			this.shipping_address = shipping_address;
+			this.shipping_reciever = shipping_reciever;
+			this.reciever_phone_number = reciever_phone_number;
+		}
+	}
+	
+	public Order(ArrayList<Item> order_items, Date date, String letter, boolean want_shipping,
+			String shipping_address, String shipping_reciever, String reciever_phone_number, int id) {
+		super();
+		this.order_items = order_items;
+		this.letter = letter;
+		this.requested_delivery_date_time = date;
+		this.want_shipping = want_shipping;
+		this.id = id;
 		if(want_shipping) 
 		{
 			this.shipping_address = shipping_address;

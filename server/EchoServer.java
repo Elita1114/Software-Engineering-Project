@@ -285,24 +285,20 @@ public class EchoServer extends AbstractServer
 				      float price = 0;
 				      for(Item item: order_items)
 				      {
-				    	  if(item instanceof CatalogItem)
-				    	  {
-				    		  CatalogItem catalogitem = (CatalogItem) item;
-				    		  price += catalogitem.getPrice();
-				    	  }
+			    		  CatalogItem catalogitem = (CatalogItem) item;
+			    		  price += catalogitem.getPrice();
 				      }
 				      
-				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				      insertorder.setInt(1, user.user_id); // User id
 				      insertorder.setString(2, order.get_shipping_address());  // reciever
 				      insertorder.setInt(3, order.want_shipping()?1:0);  // reciever
 				      insertorder.setDate(4, order.get_requested_delivery_date()); // delivery date
 				      insertorder.setString(5, order.get_letter()); // letter
-				      insertorder.setDate(6, order.get_requested_delivery_date()); 	// phoneNumber
-				      insertorder.setString(7, order.get_shipping_reciever()); // reciver
-				      insertorder.setString(8, order.get_recievre_phone_number());  // ID
-				      insertorder.setFloat(9, price);  // ID
-				      insertorder.setInt(10, user.store);  // store
+				      insertorder.setString(6, order.get_shipping_reciever()); // reciver
+				      insertorder.setString(7, order.get_recievre_phone_number());  // ID
+				      insertorder.setFloat(8, price);  // ID
+				      insertorder.setInt(9, user.store);  // store
 				      insertorder.executeUpdate();
 				      ResultSet insertedorder = insertorder.getGeneratedKeys();
 				      insertedorder.next();
@@ -344,7 +340,61 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
-			  
+			  else if(user_request.get_request_str().equalsIgnoreCase("#removefromcart"))
+			  {
+				  try { 
+					  User user = (User) user_request.get_request_args().get(0);
+					  CartItem citem = (CartItem) user_request.get_request_args().get(1);
+					  con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					  PreparedStatement deletefromcart = null;
+					  if(citem.getItem() instanceof CustomItem)
+						  deletefromcart = con.prepareStatement("DELETE FROM `CustomItem` WHERE `id`=?");
+					  else if(citem.getItem() instanceof CatalogItem)
+						  deletefromcart = con.prepareStatement("DELETE FROM `Cart` WHERE `id`=?");
+					  deletefromcart.setInt(1, citem.getItem().getId());
+					  deletefromcart.executeUpdate();
+					  client.sendToClient("#removefromcart");
+					  con.close();
+					  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#getcart"))
+			  {
+				  try { 
+					  System.out.println("entered here");
+					  User user = (User) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      Statement stmt=con.createStatement();  
+				      System.out.println("The id is " + user.user_id);
+				      PreparedStatement getcart = con.prepareStatement("select * from Cart WHERE `userID`=? AND `orderID` is NULL");
+				      getcart.setInt(1, user.user_id);
+				      ResultSet rs = getcart.executeQuery();
+				      ArrayList<Item> itemList = new ArrayList<Item>();
+				      
+				      
+				      while(rs.next()) { 
+				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price")));
+				      }
+				      
+				      getcart = con.prepareStatement("select * from CustomItem WHERE `userID`=? AND `orderID` is NULL");
+				      getcart.setInt(1, user.user_id);
+				      rs = getcart.executeQuery();
+				      while(rs.next()) {
+				    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
+				      }
+				      
+				      con.close();  
+				      Cart cart= new Cart(itemList);
+				      System.out.println(cart);
+				      client.sendToClient(cart);  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getReports"))
 			  {
 				  try { 

@@ -99,5 +99,4 @@ public class Item implements Serializable{
 	public void setPrice(float price) {
 		this.price = price;
 	}
-
 }

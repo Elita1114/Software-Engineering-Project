@@ -154,7 +154,7 @@ public class OrderController {
 		
       	Platform.runLater(() -> {
     		lvItems.setItems(itemObservableList);
-    		lvItems.setCellFactory(itemListView  -> new ItemListViewCell());
+    		lvItems.setCellFactory(itemListView  -> new ItemListViewCell(this));
         });
     }
     
@@ -165,7 +165,7 @@ public class OrderController {
     	}
     	*/
     	lvItems.setItems(itemObservableList);
-    	lvItems.setCellFactory(itemListView  -> new ItemListViewCell());
+    	lvItems.setCellFactory(itemListView  -> new ItemListViewCell(this));
     }
     
     @FXML

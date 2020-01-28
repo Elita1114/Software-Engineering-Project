@@ -483,7 +483,8 @@ public class EchoServer extends AbstractServer
 					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
 					    	  prep_stmt.setInt(1, rs.getInt("productID"));
 					    	  ResultSet productsdetails = prep_stmt.executeQuery();
-					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), rs.getFloat("sale"), productsdetails.getString("color")));
+					    	  productsdetails.next();
+					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), productsdetails.getFloat("sale"), productsdetails.getString("color")));
 					      }
 					      
 					      getcart = con.prepareStatement("select * from CustomItem WHERE `orderID`=?");

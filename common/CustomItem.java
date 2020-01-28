@@ -15,7 +15,9 @@ public class CustomItem  extends Item implements Serializable{
 		super(-1, "", description, color,  type);
 	}
 
-
+	public CustomItem(int id_, String name_, String description_, int type_, float price_){
+		super(id_,name_,description_,type_,price_);
+	}
 	
 	public boolean equals(Object obj)
 	{

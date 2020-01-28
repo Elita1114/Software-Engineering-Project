@@ -2,11 +2,6 @@ package common;
 
 import java.io.Serializable;
 
-
-
-
-
-
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 276134203467033903L;

@@ -41,7 +41,9 @@ public class MainController {
 	@FXML private HandleComplaintController handleComplaintController;//update order controller
 	@FXML private addItemController addCatalogItemController;
 	@FXML private ReportController reportsController;
+	@FXML private UpdateUserController updateUserController;
 
+	
 	static public ClientConsole client;
 	private boolean flagCheck=false;
 	@FXML private TabPane tabPane;
@@ -55,6 +57,8 @@ public class MainController {
 	@FXML public Tab tabUpdateCatalog;
 	@FXML public Tab tabAddCatalogItem;
 	@FXML public Tab tabSignIn;
+	@FXML public Tab tabupdateUser;
+
 
 	@FXML
 	private void initialize() {
@@ -66,7 +70,8 @@ public class MainController {
 		orderController.injectMainController(this);
 		handleComplaintController.injectMainController(this);
 		reportsController.injectMainController(this);
-		
+		updateUserController.injectMainController(this);
+
 		permissions();
 	}
 	public static ClientConsole getClient() {
@@ -77,6 +82,9 @@ public class MainController {
 	}
 	public void setCatalog(ArrayList<CatalogItem> list) {
 		catalogController.setCatalog(list);
+	}
+	public void fetchOrder() {
+		orderController.fetchOrder();
 	}
 	public void setUpdateCatalog(ArrayList<CatalogItem> list) {
 		updatecatalogController.setCatalog(list);
@@ -172,13 +180,19 @@ public class MainController {
 		tabPane.getTabs().remove(tabUpdateCatalog);
 		tabPane.getTabs().remove(tabAddCatalogItem);
 		tabPane.getTabs().remove(tabSignIn);
-
+		tabPane.getTabs().remove(tabupdateUser);
+		
 		
 		if(client==null || client.client==null ||client.client==null || client.client.getLoggedUser()==null) {
 	//		tabPane.getTabs().add(catalogTab);
 			tabPane.getTabs().add(tabSignIn);
 			tabPane.getTabs().add(tabSignUp);
 			tabPane.getTabs().add(tabComplaint);
+		}
+		else if(client.client.getLoggedUser() instanceof SystemAdministrator) {
+	//		tabPane.getTabs().add(catalogTab);
+			tabPane.getTabs().add(tabupdateUser);
+
 		}
 		else if(client.client.getLoggedUser() instanceof StoreManager) {
 		//	tabPane.getTabs().add(catalogTab);
@@ -203,11 +217,7 @@ public class MainController {
 			tabPane.getTabs().add(tabHandleComplaint);
 
 		}
-		else if(client.client.getLoggedUser() instanceof SystemAdministrator) {
-	//		tabPane.getTabs().add(catalogTab);
 
-
-		}
 		else if(client.client.getLoggedUser() instanceof ChainManager) {
 	//		tabPane.getTabs().add(catalogTab);
 			tabPane.getTabs().add(tabReports);

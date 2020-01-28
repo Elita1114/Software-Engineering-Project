@@ -7,6 +7,7 @@ package client;
 
 import common.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.io.*;
 
@@ -41,6 +42,7 @@ public class ChatClient extends AbstractClient
   private boolean logged;
   private boolean wrongdetails;
   public boolean flagServerAns;
+  public boolean useralreadyExist;
   //Constructors ****************************************************
   
   /**
@@ -111,6 +113,9 @@ public class ChatClient extends AbstractClient
 	  else if(msg.toString().equals("#addedtocart")) {
 		  this.flagServerAns=true;
 	  }
+	  else if(msg.toString().equals("#removefromcart")) {
+		  this.flagServerAns=true;
+	  }
 	  else if(msg.toString().equals("#wrongdetails")) {
 		  this.setWrongdetails(true); 
 	  }
@@ -160,6 +165,24 @@ public class ChatClient extends AbstractClient
 	  else if(msg.toString().equals("#addCatalogItem")) {
 		  flagServerAns=true;
 		  System.out.println("add catalog item flag true\n");
+	  }
+	  else if(msg.toString().equals("#findUser")) {
+		  flagServerAns=true;
+	  		clientUI.getData(msg);
+		  System.out.println("find User flag true\n");
+	  }
+	  else if(msg.toString().equals("#wrongUser")) {
+		  flagServerAns=true;
+		  System.out.println("find User flag true\n");
+	  }
+	  else if(msg.toString().equals("#UpdateUser")) {
+		  flagServerAns=true;
+		  System.out.println("update User flag true\n");
+	  }
+	  else if(msg.toString().equals("#useralreadyExist")) {
+		  useralreadyExist= true;
+		  flagServerAns=true;
+		  System.out.println("update User flag true\n");
 	  }
 	  else{
 		  clientUI.display(msg.toString());

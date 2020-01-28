@@ -285,24 +285,20 @@ public class EchoServer extends AbstractServer
 				      float price = 0;
 				      for(Item item: order_items)
 				      {
-				    	  if(item instanceof CatalogItem)
-				    	  {
-				    		  CatalogItem catalogitem = (CatalogItem) item;
-				    		  price += catalogitem.getPrice();
-				    	  }
+			    		  CatalogItem catalogitem = (CatalogItem) item;
+			    		  price += catalogitem.getPrice();
 				      }
 				      
-				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `deliveryTime`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				      insertorder.setInt(1, user.user_id); // User id
 				      insertorder.setString(2, order.get_shipping_address());  // reciever
 				      insertorder.setInt(3, order.want_shipping()?1:0);  // reciever
 				      insertorder.setDate(4, order.get_requested_delivery_date()); // delivery date
 				      insertorder.setString(5, order.get_letter()); // letter
-				      insertorder.setDate(6, order.get_requested_delivery_date()); 	// phoneNumber
-				      insertorder.setString(7, order.get_shipping_reciever()); // reciver
-				      insertorder.setString(8, order.get_recievre_phone_number());  // ID
-				      insertorder.setFloat(9, price);  // ID
-				      insertorder.setInt(10, user.store);  // store
+				      insertorder.setString(6, order.get_shipping_reciever()); // reciver
+				      insertorder.setString(7, order.get_recievre_phone_number());  // ID
+				      insertorder.setFloat(8, price);  // ID
+				      insertorder.setInt(9, user.store);  // store
 				      insertorder.executeUpdate();
 				      ResultSet insertedorder = insertorder.getGeneratedKeys();
 				      insertedorder.next();
@@ -344,6 +340,27 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#removefromcart"))
+			  {
+				  try { 
+					  User user = (User) user_request.get_request_args().get(0);
+					  CartItem citem = (CartItem) user_request.get_request_args().get(1);
+					  con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					  PreparedStatement deletefromcart = null;
+					  if(citem.getItem() instanceof CustomItem)
+						  deletefromcart = con.prepareStatement("DELETE FROM `CustomItem` WHERE `id`=?");
+					  else if(citem.getItem() instanceof CatalogItem)
+						  deletefromcart = con.prepareStatement("DELETE FROM `Cart` WHERE `id`=?");
+					  deletefromcart.setInt(1, citem.getItem().getId());
+					  deletefromcart.executeUpdate();
+					  client.sendToClient("#removefromcart");
+					  con.close();
+					  
+				  }catch(Exception e) {
+					  System.out.println("a");
+					  System.out.println(e);
+				  }
+			  }
 			  
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getcart"))
 			  {
@@ -360,7 +377,14 @@ public class EchoServer extends AbstractServer
 				      
 				      
 				      while(rs.next()) { 
-				    	  itemList.add(new Item(rs.getInt("productID"), rs.getString("name"), rs.getString("description")));
+				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price")));
+				      }
+				      
+				      getcart = con.prepareStatement("select * from CustomItem WHERE `userID`=? AND `orderID` is NULL");
+				      getcart.setInt(1, user.user_id);
+				      rs = getcart.executeQuery();
+				      while(rs.next()) {
+				    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
 				      }
 				      
 				      con.close();  
@@ -377,9 +401,15 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  User user = (User) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      PreparedStatement getreports = con.prepareStatement("select * from `reports` WHERE `store`=?");
-				      getreports.setInt(1, user.store);
-				      ResultSet rs = getreports.executeQuery();
+				      PreparedStatement getreports = null;
+				      if(user instanceof ChainManager)
+				      {
+				    	  getreports = con.prepareStatement("select * from `reports`");
+				      }else {
+				    	  getreports = con.prepareStatement("select * from `reports` WHERE `store`=?");
+				      	  getreports.setInt(1, user.store);
+				      }
+			      	  ResultSet rs = getreports.executeQuery();
 				      ArrayList<MonthlyReport> itemList = new ArrayList<MonthlyReport>();
 				      while(rs.next()) { 
 				    	  itemList.add(new MonthlyReport(rs.getInt("store"), rs.getString("date"), rs.getFloat("Revenue"), rs.getString("text"), rs.getInt("handledcomplaints"), rs.getInt("unhandledcomplaints")));
@@ -508,6 +538,109 @@ public class EchoServer extends AbstractServer
 					  System.out.println(e);
 				  }
 			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#findUser")) {
+				  System.out.println("find user");
+				  try { 
+					  String username  = (String) user_request.get_request_args().get(0);
+					  User foundUser;
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement findUserSql = con.prepareStatement("select * from `Users` WHERE `Username`=?");
+				      findUserSql.setString(1, username);
+				      ResultSet rs = findUserSql.executeQuery();
+				      int cuser = rs.last() ? rs.getRow() : 0;
+				      System.out.println(cuser);
+				      if(cuser == 1){
+				    	  switch(rs.getInt("status")) {
+				    	  case 1:
+				    		  foundUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  case 2:
+				    		  foundUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  case 3:
+				    		  foundUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  case 4:
+				    		  foundUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  case 5:
+				    		  foundUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  default:				    	
+				    		  foundUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  break;
+				    	  }
+				    	ArrayList<Object> args =  new ArrayList<Object>();
+				    	args.add(foundUser);
+				    	UserRequest userFoundAns = new UserRequest("#findUser",  args);
+					  client.sendToClient(userFoundAns);
+				      } 
+				      else {
+				    	  client.sendToClient("#wrongUser");
+				    	  return;
+				      }
+				    	  
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+				  
+			  }
+			  else if(user_request.get_request_str().equalsIgnoreCase("#UpdateUser")) {
+				  System.out.println("update user");
+				  try { 
+					  User updateUser = (User) user_request.get_request_args().get(0);
+					  boolean passChange = (boolean) user_request.get_request_args().get(1);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+				      PreparedStatement UserExistanceSql = con.prepareStatement("select * from `Users` WHERE `Username`=? ");
+
+				      UserExistanceSql.setString(1, updateUser.username);
+				      ResultSet rs = UserExistanceSql.executeQuery();
+				      int cuser = rs.last() ? rs.getRow() : 0;
+				      System.out.println(cuser);
+				      if(cuser > 0 && (rs.getInt("uid")!=(updateUser.user_id))){
+					  client.sendToClient("#useralreadyExist");
+				      }
+				      else {
+				    	  PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Users` SET `Username`=?,`Password`=?,`paymentdetails`=?,`status`=?,`store`=?,`phoneNumber`=?,`pay_method`=?,`ID`=? WHERE `uid`= ?");
+					      updateItemSQL.setString(1, updateUser.username);
+					      if(passChange) {
+					    	  //pass changed
+					    	  updateItemSQL.setString(2, generate_md5_hash(updateUser.password));
+					      }else {
+					    	  updateItemSQL.setString(2, updateUser.password);
+					      }
+					      updateItemSQL.setString(3, updateUser.credit_card_number);
+						   if(updateUser instanceof StoreManager) {
+							   updateItemSQL.setInt(4, 1);
+							}
+							else if(updateUser instanceof Customer) {
+								updateItemSQL.setInt(4, 0);
+							}
+							else if(updateUser instanceof Employee) {
+								updateItemSQL.setInt(4, 3);
+							}
+							else if(updateUser instanceof customerService) {
+								updateItemSQL.setInt(4, 4);
+							}
+							else if(updateUser instanceof SystemAdministrator) {
+								updateItemSQL.setInt(4, 5);
+							}
+							else if(updateUser instanceof ChainManager) {
+								updateItemSQL.setInt(4, 2);
+							}
+					      updateItemSQL.setInt(5, updateUser.store);
+					      updateItemSQL.setString(6, updateUser.phone_number);
+					      updateItemSQL.setInt(7, updateUser.pay_method);
+					      updateItemSQL.setString(8, updateUser.id);
+					      updateItemSQL.setInt(9, updateUser.user_id);
+					      
+					      updateItemSQL.executeUpdate();
+						  client.sendToClient("#UpdateUser");
+				      }
+				  }catch(Exception e) {
+					  System.out.println(e);
+				  }
+			  }
 		  
 		  return;
 			  }
@@ -602,7 +735,7 @@ public class EchoServer extends AbstractServer
 		  }
 		  return;
     }
-    else if(request.toString().startsWith("#getComplaints")) {
+    else if(request.toString().equalsIgnoreCase("#getComplaints")) {
     	try {
   		  
 		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
@@ -618,6 +751,36 @@ public class EchoServer extends AbstractServer
 		      }
 		      con.close();  
 		      ComplaintsList complaints=new ComplaintsList(itemList);
+		      client.sendToClient(complaints);  
+		      
+		      
+		  } catch(Exception e) {
+			  System.out.println("a");
+			  System.out.println(e);
+		  }
+		  return;
+    }
+    else if(request.toString().startsWith("#getComplaints")) {
+    	try {
+  		  
+    		 int id= Integer.parseInt(request.toString().split(" ")[1]);
+		      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+		      Statement stmt=con.createStatement();  
+
+		      
+		      PreparedStatement getComplaint = con.prepareStatement("select * from Complaint WHERE user = ?");
+		      getComplaint.setInt(1, id);
+		      ResultSet rs = getComplaint.executeQuery();
+		      
+		      
+		      ArrayList<Complaint> itemList = new ArrayList<Complaint>();
+
+		      while(rs.next()) { 
+		    	  itemList.add(new Complaint(rs.getString(6),rs.getString(1),rs.getBoolean(2),rs.getDouble(3),rs.getInt(5),rs.getString(7),rs.getInt(4),rs.getInt(9),rs.getInt(8)));
+		    	  System.out.println("getting item");
+		      }
+		      con.close();  
+		      ComplaintsList complaints=new ComplaintsList(itemList,"#userGetComplaints");
 		      client.sendToClient(complaints);  
 		      
 		      

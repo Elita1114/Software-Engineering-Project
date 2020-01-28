@@ -269,7 +269,7 @@ public class EchoServer extends AbstractServer
 						    		  break;
 					    	  }
 					    	  PreparedStatement setlogged = con.prepareStatement("UPDATE `Users` SET `logged`=1 WHERE `uid`=?");
-					    	  setlogged.setString(1, new_user.username);
+					    	  setlogged.setInt(1, new_user.user_id);
 					    	  setlogged.executeUpdate();
 				    	  }else
 				    	  {

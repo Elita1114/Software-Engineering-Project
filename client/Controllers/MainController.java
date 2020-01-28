@@ -241,7 +241,7 @@ public class MainController {
 	}
 	
     @FXML
-    void logout(ActionEvent event) {
+    public void logout(ActionEvent event) {
     	if(client.client.isLogged())
     	{
     		ArrayList<Object> args =  new ArrayList<Object>();

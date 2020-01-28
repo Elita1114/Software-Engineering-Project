@@ -480,14 +480,17 @@ public class EchoServer extends AbstractServer
 					      ArrayList<Item> itemList = new ArrayList<Item>();
 					      
 					      while(rs.next()) { 
-					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price")));
+					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+					    	  prep_stmt.setInt(1, rs.getInt("productID"));
+					    	  ResultSet productsdetails = prep_stmt.executeQuery();
+					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), rs.getFloat("sale"), productsdetails.getString("color")));
 					      }
 					      
 					      getcart = con.prepareStatement("select * from CustomItem WHERE `orderID`=?");
 					      getcart.setInt(1, user.user_id);
 					      rs = getcart.executeQuery();
 					      while(rs.next()) {
-					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
+					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price"), rs.getString("color")));
 					      }
 					      
 					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));

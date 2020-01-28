@@ -242,21 +242,28 @@ public class MainController {
 	
     @FXML
     void logout(ActionEvent event) {
-    	client.client.setLoggedUser(null);
-    	client.client.setLogged(false);
-    	permissions();
-    	client.flagCatalog = false;
-    	client.client.handleMessageFromClientUI("#getCatalog 0");
-		while(!client.flagCatalog) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-		e.printStackTrace();
+    	if(client.client.isLogged())
+    	{
+    		ArrayList<Object> args =  new ArrayList<Object>();
+        	args.add(client.client.getLoggedUser());
+        	UserRequest user_request = new UserRequest("#logout",  args);
+	    	client.client.setLoggedUser(null);
+	    	client.client.setLogged(false);
+	    	permissions();
+	    	client.flagCatalog = false;
+	    	client.client.handleMessageFromClientUI(user_request);
+	    	client.client.handleMessageFromClientUI("#getCatalog 0");
+			while(!client.flagCatalog) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+			e.printStackTrace();
+				}
 			}
-		}
-		setCatalog(client.catalog.getList());
-		tabPane.getSelectionModel().select(0);
+			setCatalog(client.catalog.getList());
+			tabPane.getSelectionModel().select(0);
+    	}
     }
     
 }

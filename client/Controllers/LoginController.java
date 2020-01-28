@@ -56,7 +56,7 @@ public class LoginController {
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(new_user);
     	UserRequest user_request = new UserRequest("#login",  args);
-
+    	mainController.getClient().client.setLoggedalready(false);
     	System.out.println("sending request to server");
     	Platform.runLater(new Runnable() {
     	    @Override
@@ -71,7 +71,7 @@ public class LoginController {
 		Platform.runLater(new Runnable() {
 	  	    @Override
 	  	    public void run() {
-	  			while(!mainController.getClient().client.getlogged() && !mainController.getClient().client.isWrongdetails()) {
+	  			while(!mainController.getClient().client.getlogged() && !mainController.getClient().client.isWrongdetails() && !mainController.getClient().client.isLoggedalready()) {
 	  				try {
 	  					Thread.sleep(100);
 	  				} catch (InterruptedException e) {
@@ -115,6 +115,10 @@ public class LoginController {
 	  				Alert alert = new Alert(AlertType.ERROR, "Username or password incorrect!");
 	  				alert.show();
 	  				mainController.getClient().client.setWrongdetails(false);
+	  			}else if(mainController.getClient().client.isLoggedalready())
+	  			{
+	  				Alert alert = new Alert(AlertType.ERROR, "User already logged in the system!");
+	  				alert.show();
 	  			}
 		    }
 		});

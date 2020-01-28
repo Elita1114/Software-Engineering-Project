@@ -526,21 +526,17 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  Order order = (Order) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      long diff = order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime();
-				      System.out.println("requested " + order.get_requested_delivery_date());
-				      System.out.println("requested " +order.get_requested_delivery_date().getTime() );
-				      System.out.println("current " +(new Date(Calendar.getInstance().getTimeInMillis())).getTime());
-				      System.out.println(order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime());
-				      diff = diff/1000/60/60;
-				      System.out.println("Time diff " + diff);
-				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price` FROM `Orders` WHERE `orderID`=?");
+				      
+				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price`,(TIMESTAMPDIFF(MINUTE, NOW(), `timeToTransport`)) AS hours_difference FROM `Orders` WHERE `orderID`=?");
 				      orderdetails.setInt(1, order.getId());
 				      ResultSet rs = orderdetails.executeQuery();
 				      rs.next();
+				      int diff = rs.getInt("hours_difference");
+				      System.out.println(diff);
 				      PreparedStatement promo = con.prepareStatement("UPDATE `Users` SET `promotional`=`promotional`+? WHERE `uid`=?");
-				      if(diff > 3)
+				      if(diff > 3*60)
 				    	  promo.setFloat(1, rs.getFloat("price"));
-				      else if(diff < 3 && diff > 1)
+				      else if(diff < 3*60 && diff > 1*60)
 				    	  promo.setFloat(1, rs.getFloat("price")/2);
 				      else
 				    	  promo.setFloat(1, 0);

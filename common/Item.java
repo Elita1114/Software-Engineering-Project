@@ -40,6 +40,15 @@ public class Item implements Serializable{
 		price = price_;
 		color="";
 	}
+	
+	public Item(int id_, String name_, String description_, String color_, int type, float price_){
+		setId(id_);
+		name=name_;
+		description=description_;
+		System.out.println(price_);
+		price = price_;
+		color=color_;
+	}
 
 	public String getName() {
 		return name;

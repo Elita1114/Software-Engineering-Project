@@ -1,6 +1,6 @@
 package client.Controllers;
 
-import java.awt.TextArea;
+
 import java.io.IOException;
 
 import common.Complaint;
@@ -15,6 +15,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 
 public class OrderListViewCell extends ListCell<Order>{
@@ -35,14 +36,14 @@ public class OrderListViewCell extends ListCell<Order>{
 
     @FXML
     void cancelBttnPressed(ActionEvent event) {
-
+    	orderslist_controller.delete_order(this.order);
     }
 
     @FXML
-    void orderBttnPressed(ActionEvent event) {
+    void orderDeliveredBttnPressed(ActionEvent event) {
 
     }
-
+    
     public Order order;
 	private FXMLLoader mLLoader;
 	OrderListController orderslist_controller;
@@ -63,7 +64,9 @@ public class OrderListViewCell extends ListCell<Order>{
         } 
         else {
             if (mLLoader == null) {
+            	System.out.println("Trying to load fxml");
                 mLLoader = new FXMLLoader(getClass().getResource("/client/fxml/OrderListViewCell.fxml"));
+                System.out.println("error loading fxml");
                 mLLoader.setController(this);
                 try {
                     mLLoader.load();
@@ -72,6 +75,9 @@ public class OrderListViewCell extends ListCell<Order>{
                     e.printStackTrace();
                 }
             }
+            System.out.println("reached here");
+            System.out.println(tvTitle);
+            System.out.println(taDescription);
             tvTitle.setText("Order ID  " + item.getId());
             taDescription.setText(item.toString());
             System.out.println("updating item ");

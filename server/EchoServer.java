@@ -286,8 +286,9 @@ public class EchoServer extends AbstractServer
 				      float price = 0;
 				      for(Item item: order_items)
 				      {
+				    	  System.out.println(item.getPrice());
 				    	  if(item instanceof CatalogItem)
-				    		  price += ((CatalogItem)item).getPrice()*(1-((CatalogItem)item).getSale());
+				    		  price += (item.getPrice())*(1-((CatalogItem)item).getSale());
 				    	  else
 				    		  price += item.getPrice();
 				      }
@@ -305,9 +306,15 @@ public class EchoServer extends AbstractServer
 				      insertorder.executeUpdate();
 				      ResultSet insertedorder = insertorder.getGeneratedKeys();
 				      insertedorder.next();
-				      PreparedStatement updateCart = con.prepareStatement("UPDATE `Cart` SET `orderID`=? WHERE `userID`=? AND `orderID`=NULL");
-				      updateCart.setInt(1, user.user_id);
-				      updateCart.setInt(2, insertedorder.getInt(1));
+				      PreparedStatement updateCart = con.prepareStatement("UPDATE `Cart` SET `orderID`=? WHERE `userID`=? AND `orderID` is NULL");
+				      updateCart.setInt(2, user.user_id);
+				      updateCart.setInt(1, insertedorder.getInt(1));
+				      System.out.println(user.user_id);
+				      System.out.println(insertedorder.getInt(1));
+				      updateCart.executeUpdate();
+				      updateCart = con.prepareStatement("UPDATE `CustomItem` SET `orderID`=? WHERE `userID`=? AND `orderID` is NULL");
+				      updateCart.setInt(2, user.user_id);
+				      updateCart.setInt(1, insertedorder.getInt(1));
 				      updateCart.executeUpdate();
 				      con.close(); 
 			    	  client.sendToClient(order); 	
@@ -377,9 +384,12 @@ public class EchoServer extends AbstractServer
 				      ResultSet rs = getcart.executeQuery();
 				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
-				      
 				      while(rs.next()) { 
-				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price")));
+				    	  PreparedStatement getsale = con.prepareStatement("SELECT `sale` FROM Products WHERE `type`=?");
+					      getsale.setInt(1, rs.getInt("productID"));
+					      ResultSet sale = getsale.executeQuery();
+					      sale.next();
+				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price"), sale.getFloat("sale")));
 				      }
 				      
 				      getcart = con.prepareStatement("select * from CustomItem WHERE `userID`=? AND `orderID` is NULL");

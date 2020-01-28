@@ -246,25 +246,35 @@ public class EchoServer extends AbstractServer
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      System.out.println(cuser);
 				      if(cuser == 1){
-				    	  switch(rs.getInt("status")) {
-				    	  case 1:
-				    		  loggedUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  case 2:
-				    		  loggedUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  case 3:
-				    		  loggedUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  case 4:
-				    		  loggedUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  case 5:
-				    		  loggedUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
-				    	  default:				    	
-				    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
-				    		  break;
+				    	  if(rs.getBoolean("logged") == false)
+				    	  {
+					    	  switch(rs.getInt("status")) {
+						    	  case 1:
+						    		  loggedUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  case 2:
+						    		  loggedUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  case 3:
+						    		  loggedUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  case 4:
+						    		  loggedUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  case 5:
+						    		  loggedUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+						    	  default:				    	
+						    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  break;
+					    	  }
+					    	  PreparedStatement setlogged = con.prepareStatement("UPDATE `Users` SET `logged`=1 WHERE `uid`=?");
+					    	  setlogged.setString(1, new_user.username);
+					    	  setlogged.executeUpdate();
+				    	  }else
+				    	  {
+				    		  client.sendToClient("#useralreadylogged");
+				    		  return;
 				    	  }
 				    	  con.close(); 
 				    	  client.sendToClient(loggedUser); 
@@ -273,6 +283,18 @@ public class EchoServer extends AbstractServer
 				    	  client.sendToClient("#wrongdetails");
 				    	  return;
 				      }
+				  }catch(Exception e) {
+					  e.printStackTrace();
+				  }
+			  }else if(user_request.get_request_str().equalsIgnoreCase("#logout"))
+			  {
+
+				  try { 
+					  User new_user = (User) user_request.get_request_args().get(0);
+				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
+					  PreparedStatement logout = con.prepareStatement("UPDATE `Users` SET `logged`=0 WHERE `uid`=?");
+					  logout.setInt(1, new_user.user_id);
+				      logout.executeUpdate();
 				  }catch(Exception e) {
 					  e.printStackTrace();
 				  }

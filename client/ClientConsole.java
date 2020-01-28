@@ -5,6 +5,7 @@ package client;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -313,6 +314,13 @@ public class ClientConsole extends Application implements ChatIF
 	
 	}
 
-
+	@Override
+	public void stop() {
+		ArrayList<Object> args =  new ArrayList<Object>();
+    	args.add(MainController.getClient().client.getLoggedUser());
+    	UserRequest user_request = new UserRequest("#logout",  args);
+    	MainController.getClient().client.handleMessageFromClientUI(user_request);
+	}
+  
 }
 //End of ConsoleChat class

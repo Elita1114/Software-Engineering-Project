@@ -28,6 +28,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.SingleSelectionModel;
 
 public class MainController {
@@ -44,6 +45,7 @@ public class MainController {
 	@FXML private UpdateUserController updateUserController;
 	@FXML private SelfMadeItemController customitemController;
 	@FXML private OrderListController orderListController;
+	@FXML public Button logoutbtn;
 	
 	static public ClientConsole client;
 	private boolean flagCheck=false;
@@ -61,6 +63,7 @@ public class MainController {
 	@FXML public Tab tabupdateUser;
 	@FXML public Tab tabCustomItem;
 	@FXML public Tab tabOrderList;
+	
 
 	@FXML
 	private void initialize() {
@@ -75,7 +78,7 @@ public class MainController {
 		updateUserController.injectMainController(this);
 		customitemController.injectMainController(this);
 		orderListController.injectMainController(this);
-
+		logoutbtn.setVisible(false);
 		permissions();
 	}
 	public static ClientConsole getClient() {
@@ -241,22 +244,29 @@ public class MainController {
 	}
 	
     @FXML
-    void logout(ActionEvent event) {
-    	client.client.setLoggedUser(null);
-    	client.client.setLogged(false);
-    	permissions();
-    	client.flagCatalog = false;
-    	client.client.handleMessageFromClientUI("#getCatalog 0");
-		while(!client.flagCatalog) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-		e.printStackTrace();
+    public void logout(ActionEvent event) {
+    	if(client.client.isLogged())
+    	{
+    		ArrayList<Object> args =  new ArrayList<Object>();
+        	args.add(client.client.getLoggedUser());
+        	UserRequest user_request = new UserRequest("#logout",  args);
+	    	client.client.setLoggedUser(null);
+	    	client.client.setLogged(false);
+	    	permissions();
+	    	client.flagCatalog = false;
+	    	client.client.handleMessageFromClientUI(user_request);
+	    	client.client.handleMessageFromClientUI("#getCatalog 0");
+			while(!client.flagCatalog) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+			e.printStackTrace();
+				}
 			}
-		}
-		setCatalog(client.catalog.getList());
-		tabPane.getSelectionModel().select(0);
+			setCatalog(client.catalog.getList());
+			tabPane.getSelectionModel().select(0);
+    	}
     }
     
 }

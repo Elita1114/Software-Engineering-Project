@@ -285,8 +285,10 @@ public class EchoServer extends AbstractServer
 				      float price = 0;
 				      for(Item item: order_items)
 				      {
-			    		  CatalogItem catalogitem = (CatalogItem) item;
-			    		  price += catalogitem.getPrice();
+				    	  if(item instanceof CatalogItem)
+				    		  price += ((CatalogItem)item).getPrice()*(1-((CatalogItem)item).getSale());
+				    	  else
+				    		  price += item.getPrice();
 				      }
 				      
 				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);

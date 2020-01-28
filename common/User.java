@@ -14,6 +14,7 @@ public class User implements Serializable {
 	public int store;
 	public int user_id;
 	public Status status;
+	public String email = "messermanbenjamin@gmail.com";
 
 
 	public User(int user_id_, String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store,Status status) {
@@ -27,6 +28,20 @@ public class User implements Serializable {
 		this.phone_number = phone_number;
 		this.store = store;
 		this.status = status;
+	}
+	
+	public User(int user_id_, String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store,Status status, String email) {
+		super();
+		this.user_id = user_id_;
+		this.username = username;
+		this.password = password;
+		this.id = id;
+		this.credit_card_number = credit_card_number;
+		this.pay_method = pay_method;
+		this.phone_number = phone_number;
+		this.store = store;
+		this.status = status;
+		this.email = email;
 	}
 	
 	public User(String username, String password)

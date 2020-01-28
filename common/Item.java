@@ -36,6 +36,7 @@ public class Item implements Serializable{
 		setId(id_);
 		name=name_;
 		description=description_;
+		System.out.println(price_);
 		price = price_;
 		color="";
 	}

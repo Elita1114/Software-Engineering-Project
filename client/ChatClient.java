@@ -110,6 +110,12 @@ public class ChatClient extends AbstractClient
 		  System.out.println(storeslist.stores);
 		  this.flagServerAns=true;
 	  }
+	  else if(msg.toString().equals("#setdelivered")) {
+		  this.flagServerAns=true;
+	  }
+	  else if(msg.toString().equals("#deleteorder")) {
+		  this.flagServerAns=true;
+	  }
 	  else if(msg.toString().equals("#addedtocart")) {
 		  this.flagServerAns=true;
 	  }
@@ -151,6 +157,11 @@ public class ChatClient extends AbstractClient
 	  }
 	  else if(msg instanceof MonthlyReportList) {
 		  System.out.println("Got reports");
+	  		clientUI.getData(msg);
+			this.flagServerAns=true;
+	  }
+	  else if(msg instanceof OrdersList) {
+		  System.out.println("Got orders");
 	  		clientUI.getData(msg);
 			this.flagServerAns=true;
 	  }

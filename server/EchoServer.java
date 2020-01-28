@@ -149,7 +149,7 @@ public class EchoServer extends AbstractServer
 				      ResultSet rs = checkusername.executeQuery();
 				      int cuser = rs.last() ? rs.getRow() : 0;
 				      if(cuser == 0){
-					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`) VALUES (?,?,?,?,?,?,?)");
+					      PreparedStatement insertuser = con.prepareStatement("INSERT INTO `Users`(`Username`, `Password`, `paymentdetails`, `store`, `phoneNumber`, `pay_method`, `ID`,`email`) VALUES (?,?,?,?,?,?,?,?)");
 					      insertuser.setString(1, new_user.username); // User name
 					      insertuser.setString(2, generate_md5_hash(new_user.password));  // Password
 					      insertuser.setString(3, new_user.credit_card_number); // payment details
@@ -157,6 +157,7 @@ public class EchoServer extends AbstractServer
 					      insertuser.setString(5, new_user.phone_number); 	// phoneNumber
 					      insertuser.setInt(6, new_user.pay_method); // subscription
 					      insertuser.setString(7, new_user.id);  // ID
+					      insertuser.setString(8, new_user.email);  // ID
 					      insertuser.executeUpdate();
 					      con.close(); 
 				      }
@@ -285,8 +286,11 @@ public class EchoServer extends AbstractServer
 				      float price = 0;
 				      for(Item item: order_items)
 				      {
-			    		  CatalogItem catalogitem = (CatalogItem) item;
-			    		  price += catalogitem.getPrice();
+				    	  System.out.println(item.getPrice());
+				    	  if(item instanceof CatalogItem)
+				    		  price += (item.getPrice())*(1-((CatalogItem)item).getSale());
+				    	  else
+				    		  price += item.getPrice();
 				      }
 				      
 				      PreparedStatement insertorder = con.prepareStatement("INSERT INTO `Orders`(`orderID`,`userID`, `address`, `wantshipping`, `timeToTransport`, `letter`, `reciever`, `recieverPhone`, `price`,`store`) VALUES (NULL,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -302,9 +306,15 @@ public class EchoServer extends AbstractServer
 				      insertorder.executeUpdate();
 				      ResultSet insertedorder = insertorder.getGeneratedKeys();
 				      insertedorder.next();
-				      PreparedStatement updateCart = con.prepareStatement("UPDATE `Cart` SET `orderID`=? WHERE `userID`=? AND `orderID`=NULL");
-				      updateCart.setInt(1, user.user_id);
-				      updateCart.setInt(2, insertedorder.getInt(1));
+				      PreparedStatement updateCart = con.prepareStatement("UPDATE `Cart` SET `orderID`=? WHERE `userID`=? AND `orderID` is NULL");
+				      updateCart.setInt(2, user.user_id);
+				      updateCart.setInt(1, insertedorder.getInt(1));
+				      System.out.println(user.user_id);
+				      System.out.println(insertedorder.getInt(1));
+				      updateCart.executeUpdate();
+				      updateCart = con.prepareStatement("UPDATE `CustomItem` SET `orderID`=? WHERE `userID`=? AND `orderID` is NULL");
+				      updateCart.setInt(2, user.user_id);
+				      updateCart.setInt(1, insertedorder.getInt(1));
 				      updateCart.executeUpdate();
 				      con.close(); 
 			    	  client.sendToClient(order); 	
@@ -374,9 +384,12 @@ public class EchoServer extends AbstractServer
 				      ResultSet rs = getcart.executeQuery();
 				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
-				      
 				      while(rs.next()) { 
-				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price")));
+				    	  PreparedStatement getsale = con.prepareStatement("SELECT `sale` FROM Products WHERE `type`=?");
+					      getsale.setInt(1, rs.getInt("productID"));
+					      ResultSet sale = getsale.executeQuery();
+					      sale.next();
+				    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("productID"), rs.getFloat("price"), sale.getFloat("sale")));
 				      }
 				      
 				      getcart = con.prepareStatement("select * from CustomItem WHERE `userID`=? AND `orderID` is NULL");
@@ -428,11 +441,12 @@ public class EchoServer extends AbstractServer
 					  User user = (User) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      PreparedStatement getorders = null;
-				      if(user instanceof ChainManager)
+				      if(user instanceof customerService)
 				      {
-				    	  getorders = con.prepareStatement("select * from `Orders`");
+				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `store`=? AND `deliveryTime` is NULL");
+				    	  getorders.setInt(1, user.store);
 				      }else {
-				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `userID`=?");
+				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `userID`=? AND `deliveryTime` is NULL");
 				    	  getorders.setInt(1, user.user_id);
 				      }
 			      	  ResultSet orders = getorders.executeQuery();
@@ -486,7 +500,21 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  Order order = (Order) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      
+				      long diff = order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime();
+				      diff = diff/1000/60/60;
+				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price` FROM `Orders` WHERE `orderID`=?");
+				      orderdetails.setInt(1, order.getId());
+				      ResultSet rs = orderdetails.executeQuery();
+				      rs.next();
+				      PreparedStatement promo = con.prepareStatement("UPDATE `Users` SET `promotional`=`promotional`+? WHERE `uid`=?");
+				      if(diff > 3)
+				    	  promo.setFloat(1, rs.getFloat("price"));
+				      else if(diff < 3 && diff > 1)
+				    	  promo.setFloat(1, rs.getFloat("price")/2);
+				      else
+				    	  promo.setFloat(1, 0);
+				      promo.setInt(2, rs.getInt("userID"));
+				      promo.executeUpdate();
 				      PreparedStatement updateorder = con.prepareStatement("DELETE FROM `Cart` WHERE `orderID`=?");
 					  updateorder.setInt(1, order.getId());
 					  updateorder.executeUpdate();
@@ -497,7 +525,7 @@ public class EchoServer extends AbstractServer
 					  updateorder.setInt(1, order.getId());
 					  updateorder.executeUpdate();
 				      con.close();  
-				      client.sendToClient("#setdelivered");  
+				      client.sendToClient("#deleteorder");  
 				  }catch(Exception e) {
 					  System.out.println("a");
 					  System.out.println(e);

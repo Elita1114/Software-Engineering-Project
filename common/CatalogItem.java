@@ -7,7 +7,6 @@ public class CatalogItem extends Item implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3897068652305367050L;
-	private float price;
 	private String imagePath;
 	private float sale;
 	private int store;
@@ -17,25 +16,26 @@ public class CatalogItem extends Item implements Serializable {
 	public CatalogItem(String name_, String description_, String color_,float price_,int id_,String imagePath_, int type_, int store_, float sale_) {
 		super( id_,  name_,  description_,  color_,  type_);
 		// TODO Auto-generated constructor stub
-		setPrice(price_);
 		imagePath=imagePath_;
 		setStore(store_);
 		setSale(sale_);
 	}
 	
+	public CatalogItem(int id_, String name_, String description_, int type_, float price_, float sale_){
+		super(id_,name_,description_,type_,price_);
+		sale = sale_;
+	}
+	
 	public CatalogItem(int id_, String name_, String description_, int type_, float price_){
 		super(id_,name_,description_,type_,price_);
 	}
+
 	
-	public float getPrice() {
-		return price;
-	}
+
 	public String getImagePath() {
 		return imagePath;
 	}
-	public void setPrice(float price_) {
-		price=price_;
-	}
+
 	public void setImagePath(String imagePath_) {
 		imagePath=imagePath_;
 	}

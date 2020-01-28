@@ -47,8 +47,7 @@ public class UpdateUserController {
     @FXML
     private Button findBtn;
 
-    @FXML
-    private TextField payMethod;
+
 
     @FXML
     private TextField passText;
@@ -83,7 +82,7 @@ public class UpdateUserController {
     	User UpdatedUser;
     	int pay_method = PayingMethod.pay_per_order;
         String name= nameText.getText(), pass= passText.getText(), payment=paymentText.getText(), phoneNumber1=phoneNumber.getText(), ID1 =ID.getText(), email=emailField.getText();
-        int payMethod1= Integer.parseInt(payMethod.getText()), store= Integer.parseInt(storeText.getText()), user_id = userChange.user_id,status=Integer.parseInt(statusText.getText());
+        int store= Integer.parseInt(storeText.getText()), user_id = userChange.user_id,status=Integer.parseInt(statusText.getText());
     	if(PayPErOrderRadio.isSelected())
     		pay_method = PayingMethod.pay_per_order; 
     	if(MonthlySubRadio.isSelected())
@@ -202,7 +201,6 @@ public class UpdateUserController {
 	    		MonthlySubRadio.setSelected(true);
 	    	if(PayingMethod.annual_subscription ==userChange.pay_method )
 	    		AnnualSubRadio.setSelected(true);
-		  	payMethod.setText(String.valueOf(userChange.pay_method));
 		  	ID.setText(String.valueOf(userChange.id));
 		  	emailField.setText(String.valueOf(userChange.email));
 	  	}
@@ -215,7 +213,6 @@ public class UpdateUserController {
 				statusText.setText("");
 			  	storeText.setText("");
 			  	phoneNumber.setText("");
-			  	payMethod.setText("");
 			  	ID.setText("");
 			  	emailField.setText("");
 	  	}

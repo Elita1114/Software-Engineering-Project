@@ -177,9 +177,11 @@ public class OrderController {
     void orderbttnPressed(ActionEvent event) {
     	String letter = letterText.getText();
     	LocalDate date_pick = dateSelect.getValue();
-    	//Date date = Date.from(date_pick.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    	//Date date = 
-    	Date date = new Date(System.currentTimeMillis());
+    	Date date = Date.valueOf(date_pick);
+    	// Date date = Date.from(date_pick.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    	// Date date = Date.from(date_pick.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    	// Date date = 
+    	// Date date = new Date(System.currentTimeMillis());
     	System.out.println("the selected date is: " + date);
     	String address="", recieverName="", phoneNumber="";
     	boolean want_shipping = shippingButton.isSelected();

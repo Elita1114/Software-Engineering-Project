@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import common.CartItem;
 import common.CatalogItem;
+import common.ChainManager;
 import common.Item;
 import common.Status;
 import common.User;
@@ -67,6 +68,12 @@ public class ItemListViewCell extends ListCell<Item>{
     	order_controller = order_controller_;
     }
     
+    @FXML
+    public void initialize() {
+    	if(MainController.getLoggedUser() == null)
+    		btnAdd .setDisable(true);
+    }
+    
     public ItemListViewCell()
     {
     }
@@ -91,16 +98,24 @@ public class ItemListViewCell extends ListCell<Item>{
                 }
 
             }
-
+            System.out.println("updating item " + String.valueOf(item.getName()));
             Title.setText(String.valueOf(item.getName()));
             Description.setText(String.valueOf(item.getDescription()));
             Color.setText(String.valueOf(item.getColor()));
             if (item instanceof CatalogItem && ((CatalogItem) item).getImagePath() != null)
             {
+            	System.out.println("is a catalog item ");
             	CatalogItem c_item = (CatalogItem) item;
             	Price.setText(String.valueOf(c_item.getPrice()));
             	ivIm1.setImage(new Image(c_item.getImagePath()));
-            }else {
+            }
+            else if (item instanceof CatalogItem)
+            {
+            	System.out.println("is a catalog item ");
+            	CatalogItem c_item = (CatalogItem) item;
+            	Price.setText(String.valueOf(c_item.getPrice()));
+            }
+            else {
             	order=1;
             	btnAdd.setText("Remove");
             	btnAdd.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent e) {

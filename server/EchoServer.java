@@ -490,7 +490,7 @@ public class EchoServer extends AbstractServer
 					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price")));
 					      }
 					      
-					      ordersList.add(new Order(itemList, orders.getDate("date"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));
+					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));
 				      }
 				      con.close();  
 				      OrdersList orderlist= new OrdersList(ordersList);
@@ -523,7 +523,12 @@ public class EchoServer extends AbstractServer
 					  Order order = (Order) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      long diff = order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime();
+				      System.out.println("requested " + order.get_requested_delivery_date());
+				      System.out.println("requested " +order.get_requested_delivery_date().getTime() );
+				      System.out.println("current " +(new Date(Calendar.getInstance().getTimeInMillis())).getTime());
+				      System.out.println(order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime());
 				      diff = diff/1000/60/60;
+				      System.out.println("Time diff " + diff);
 				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price` FROM `Orders` WHERE `orderID`=?");
 				      orderdetails.setInt(1, order.getId());
 				      ResultSet rs = orderdetails.executeQuery();

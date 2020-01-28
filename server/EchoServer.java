@@ -443,10 +443,10 @@ public class EchoServer extends AbstractServer
 				      PreparedStatement getorders = null;
 				      if(user instanceof customerService)
 				      {
-				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `store`=?");
+				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `store`=? AND `deliveryTime` is NULL");
 				    	  getorders.setInt(1, user.store);
 				      }else {
-				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `userID`=?");
+				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `userID`=? AND `deliveryTime` is NULL");
 				    	  getorders.setInt(1, user.user_id);
 				      }
 			      	  ResultSet orders = getorders.executeQuery();

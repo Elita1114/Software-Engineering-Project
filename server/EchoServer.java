@@ -489,7 +489,21 @@ public class EchoServer extends AbstractServer
 				  try { 
 					  Order order = (Order) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
-				      
+				      long diff = order.get_requested_delivery_date().getTime() - (new Date(Calendar.getInstance().getTimeInMillis())).getTime();
+				      diff = diff/1000/60/60;
+				      PreparedStatement orderdetails = con.prepareStatement("SELECT `userID`,`price` FROM `Orders` WHERE `orderID`=?");
+				      orderdetails.setInt(1, order.getId());
+				      ResultSet rs = orderdetails.executeQuery();
+				      rs.next();
+				      PreparedStatement promo = con.prepareStatement("UPDATE `Users` SET `promotional`=`promotional`+? WHERE `uid`=?");
+				      if(diff > 3)
+				    	  promo.setFloat(1, rs.getFloat("price"));
+				      else if(diff < 3 && diff > 1)
+				    	  promo.setFloat(1, rs.getFloat("price")/2);
+				      else
+				    	  promo.setFloat(1, 0);
+				      promo.setInt(2, rs.getInt("userID"));
+				      promo.executeUpdate();
 				      PreparedStatement updateorder = con.prepareStatement("DELETE FROM `Cart` WHERE `orderID`=?");
 					  updateorder.setInt(1, order.getId());
 					  updateorder.executeUpdate();

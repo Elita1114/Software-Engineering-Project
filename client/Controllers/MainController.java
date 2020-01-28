@@ -226,6 +226,7 @@ public class MainController {
 	//		tabPane.getTabs().add(catalogTab);
 			tabPane.getTabs().add(tabUpdateCatalog);
 			tabPane.getTabs().add(tabAddCatalogItem);
+			tabPane.getTabs().add(tabOrderList);
 
 		}
 		else if(client.client.getLoggedUser() instanceof customerService) {

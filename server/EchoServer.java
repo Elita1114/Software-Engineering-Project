@@ -883,7 +883,7 @@ public class EchoServer extends AbstractServer
 		      
 		      client.sendToClient("getting catalog");
 		      while(rs.next()) {
-		    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path"),rs.getInt("type") , rs.getInt("store") , rs.getInt("sale")));
+		    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path"),rs.getInt("type") , rs.getInt("store") , rs.getFloat("sale")));
 		    	  System.out.println("getting item");
 		      }
 		      con.close();  

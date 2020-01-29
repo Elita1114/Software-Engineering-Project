@@ -70,7 +70,10 @@ public class ItemListViewCell extends ListCell<Item>{
 	  				}
 	  				
 	  			}
+        	    new Alert(AlertType.INFORMATION, "Successfully added item to Catalog").show();
     	    }
+			
+    	    
     	});
     }
     

@@ -164,7 +164,7 @@ public class ClientConsole extends Application implements ChatIF
 	  else if (data instanceof OrdersList) {
 		  System.out.println("got orders data");
 		  orders = (OrdersList) data;
-		  System.out.println("item list contains: "+ orders.getItemList());
+		  System.out.println("item list contains: "+ orders.getItemList().size() + " elements");
 	  }
 	  else if (data instanceof UserRequest && data.toString().equals("#findUser")) {
 		  System.out.println("user found");

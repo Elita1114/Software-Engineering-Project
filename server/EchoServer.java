@@ -481,31 +481,24 @@ public class EchoServer extends AbstractServer
 					      
 					      while(rs.next()) { 
 					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE `id`= ?");
-					    	  System.out.println("id: " + rs.getInt("productID"));
 					    	  prep_stmt.setInt(1, rs.getInt("productID"));
 					    	  ResultSet productsdetails = prep_stmt.executeQuery();
 					    	  productsdetails.next();
-					    	  //productsdetails.next();
-					    	  System.out.println(productsdetails);
-					    	  System.out.println(rs);
-					    	  System.out.println(rs.getInt("id"));
-					    	  System.out.println(rs.getString("name"));
-					    	  System.out.println(rs.getString("description"));
-					    	  System.out.println(rs.getInt("productID"));
-					    	  System.out.println( rs.getFloat("price"));
-					    	  System.out.println( productsdetails.getString("Color"));
-					    	  //System.out.println( productsdetails.getString("Color"));
 					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), productsdetails.getFloat("sale"), productsdetails.getString("Color")));
 					      }
 					      
 					      getcart = con.prepareStatement("select * from CustomItem WHERE `orderID`=?");
-					      getcart.setInt(1, user.user_id);
+					      getcart.setInt(1, orders.getInt("orderID"));
 					      rs = getcart.executeQuery();
 					      while(rs.next()) {
 					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price"), rs.getString("color")));
 					      }
 					      
-					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID"), user.email));
+					      getcart = con.prepareStatement("select `email` from `Users` WHERE `uid`=?");
+					      getcart.setInt(1, orders.getInt("userID"));
+					      rs = getcart.executeQuery();
+					      rs.next();
+					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID"), rs.getString("email")));
 				      }
 				      con.close();  
 				      OrdersList orderlist= new OrdersList(ordersList);

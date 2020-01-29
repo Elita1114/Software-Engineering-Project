@@ -82,8 +82,7 @@ public class SignUpController {
     @FXML
     void signUp(ActionEvent event) {
     	String user_name = removeSpaces(nameText.getText());
-    	
-		String I_D = removeNonNumbers(removeSpaces(IDText.getText()));    	
+		  String I_D = removeNonNumbers(removeSpaces(IDText.getText()));    	
     	String passwd = removeSpaces(passText.getText());
     	String passValidate = removeSpaces(oassAgainText.getText());
     	String cardNumber = removeNonNumbers(removeSpaces(CardNumberText.getText()));
@@ -117,6 +116,7 @@ public class SignUpController {
     	UserRequest user_request = new UserRequest("#signup",  args);
 
     	System.out.println("sending request to server");
+    	/*
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
@@ -124,6 +124,33 @@ public class SignUpController {
     	    	System.out.println("entered");
     	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
     	    	System.out.println("finished_1");
+    	    }
+    	});*/
+    	
+    	Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	mainController.getClient().client.flagServerAns=false;
+    	    	mainController.getClient().client.useralreadyExist = false;
+    	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
+    			while(!mainController.getClient().client.flagServerAns) {
+    				try {
+    					Thread.sleep(100);
+    					System.out.println("waiitng for server");
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				};
+    			}
+    			mainController.getClient().client.flagServerAns = false;
+    			if(mainController.getClient().client.useralreadyExist)
+    			{
+    	    		new Alert(Alert.AlertType.ERROR, "Error: User already exists").showAndWait();
+    			}else
+    			{
+    				new Alert(Alert.AlertType.INFORMATION, "Sign up successfully").showAndWait();
+    				mainController.getTabPane().getSelectionModel().select(1);
+    			}
     	    }
     	});
     	System.out.println("finished");
@@ -167,7 +194,7 @@ public class SignUpController {
 		appstage.setScene(scene);    	
 		appstage.show(); 
     }
-    
+
     
     private void checkInput(String passwd, String passValidate, String user_name, String I_D, String cardNumber, 
     		String phoneNumber, String email, int pay_method, int store) throws IOException {
@@ -244,7 +271,7 @@ public class SignUpController {
 
     public static boolean is_numeritic(String str)
     {
-		return (str.matches("[0-9]+"));
+		    return (str.matches("[0-9]+"));
     }
     
     public static String removeSpaces(String str){

@@ -12,11 +12,13 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -104,6 +106,25 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	  				}
 	  				
 	  			}
+	  			MainController.getClient().client.flagServerAns=false;
+	  			updateCatalog_controller.getMainController().getClient().flagCatalog = false;
+  				ArrayList<Object> args =  new ArrayList<Object>();
+  		    	args.add(updateCatalog_controller.getMainController().getClient().client.getLoggedUser());
+  		    	UserRequest user_request = new UserRequest("#getCatalog 0",  args);
+  		    	updateCatalog_controller.getMainController().getClient().client.handleMessageFromClientUI(user_request);
+	  			while(!(updateCatalog_controller.getMainController()).getClient().flagCatalog) {
+	  				try {
+	  					Thread.sleep(100);
+	  				} catch (InterruptedException e) {
+	  					// TODO Auto-generated catch block
+					e.printStackTrace();
+	  				}
+	  			}
+	  			updateCatalog_controller.getMainController().setCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
+	  			updateCatalog_controller.getMainController().setUpdateCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
+	  			updateCatalog_controller.getMainController().getClient().flagCatalog=false;
+	  		    new Alert(AlertType.INFORMATION, "item deleted :)").showAndWait();
+	  		    
     	    }
     	});
     }
@@ -155,6 +176,12 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	
     @FXML
     void saveItem(ActionEvent event) {
+    	try {
+    		checkInput(Title.getText(), Description.getText(),Color.getText(),Price.getText(),typeField.getText(),saleField.getText(),Path.getText());
+    	} catch(IOException e) {
+    		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+    		return;
+    	} 	
     	//save the updated flower
         String titel= Title.getText(), description= Description.getText(), color=Color.getText(), path=Path.getText();
         float price=Float.valueOf(Price.getText()),sale=Float.valueOf(saleField.getText());
@@ -182,6 +209,7 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	  				}
 	  				
 	  			}
+	  			MainController.getClient().client.flagServerAns=false;
 	  			updateCatalog_controller.getMainController().getClient().flagCatalog = false;
   				ArrayList<Object> args =  new ArrayList<Object>();
   		    	args.add(updateCatalog_controller.getMainController().getClient().client.getLoggedUser());
@@ -198,12 +226,60 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	  			updateCatalog_controller.getMainController().setCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
 	  			updateCatalog_controller.getMainController().setUpdateCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
 	  			updateCatalog_controller.getMainController().getClient().flagCatalog=false;
+	  		    new Alert(AlertType.INFORMATION, "item updated :)").showAndWait();
+
     	    }
     	});
     }
 
 
+    private void checkInput(String Title1,String Description1,String Color1,String Price1,String typeField1,String saleField1,String Path1) throws IOException {
+    	String error_message = "";
+    	if(!(Title1.length()>0))
+    		error_message += "fill titel\n";
+    	if(!(Description1.length()>0))
+    		error_message += "fill description\n";
+    	if(!(Color1.length()>0))
+    		error_message += "fill color\n";
+    	if(!(Price1.length()>0))
+    		error_message += "fill price\n";
+    	else {
+            try{
+                Float.parseFloat(Price1);
+            }catch(NumberFormatException e){
+            	error_message += "price must be number\n";
+            }
+    	}
+    	if(!(typeField1.length()>0))
+    		error_message += "fill type\n";
+        else {
+            try{
+                Integer.parseInt(typeField1);
+                if(!(Integer.valueOf(typeField1)>=0 && Integer.valueOf(typeField1)<=12))
+                	error_message += "type must be 0-12\n";
+            }catch(NumberFormatException e){
+            	error_message += "type must be integer\n";
+            }
+        }
+    	if(!(saleField1.length()>0))
+    		error_message += "fill sale\n";
+    	else {
+            try{
+                Float.parseFloat(saleField1);
+                if(Float.valueOf(saleField1) <0 ||Float.valueOf(saleField1) >1)
+                	error_message += "sale must be number between 1 and 0\n";
+            }catch(NumberFormatException e){
+            	error_message += "sale must be number\n";
+            }
+    	}
+    	if(!(Path1.length()>0))
+    		error_message += "fill path\n";
 
+
+    	if(error_message.length() > 0)
+    		throw(new IOException(error_message));
+    		
+    }
 
 	
 }

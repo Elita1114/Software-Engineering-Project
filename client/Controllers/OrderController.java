@@ -33,6 +33,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -220,6 +221,9 @@ public class OrderController {
     	    	System.out.println("finished_1");
     	    }
     	});
+    	Alert alert = new Alert(AlertType.INFORMATION, "Order Successful!");
+		alert.show();
+		fetchOrder();
     	System.out.println("finished");
     	
     }

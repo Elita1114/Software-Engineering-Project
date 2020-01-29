@@ -82,7 +82,7 @@ public class SignUpController {
     @FXML
     void signUp(ActionEvent event) {
     	String user_name = removeSpaces(nameText.getText());
-		String I_D = removeNonNumbers(removeSpaces(IDText.getText()));    	
+		  String I_D = removeNonNumbers(removeSpaces(IDText.getText()));    	
     	String passwd = removeSpaces(passText.getText());
     	String passValidate = removeSpaces(oassAgainText.getText());
     	String cardNumber = removeNonNumbers(removeSpaces(CardNumberText.getText()));
@@ -90,7 +90,7 @@ public class SignUpController {
     	String phoneNumber = removeNonNumbers(removeSpaces(PhoneNumberText.getText()));
     	String email = removeSpaces(EmailText.getText());
     	int store = -1;
-    	if (storeselector.getText().substring(0,1).matches("[0-9]+") && storeselector.getText().substring(0,1).length() > 0) {
+    	if (is_numeritic(storeselector.getText().substring(0,1))) {
     		store = Integer.parseInt(storeselector.getText().substring(0,1));
     	}
     	
@@ -100,7 +100,7 @@ public class SignUpController {
     		pay_method = PayingMethod.monthly_subscription;
     	if(AnnualSubRadio.isSelected())
     		pay_method = PayingMethod.annual_subscription;
-    	
+    	    	
     	try {
     		checkInput(passwd, passValidate, user_name, I_D, cardNumber, 
     	    		phoneNumber, email, pay_method, store);
@@ -155,6 +155,7 @@ public class SignUpController {
     	});
     	System.out.println("finished");
     	
+		new Alert(Alert.AlertType.CONFIRMATION, "Sign up completed").showAndWait();
     	
     	/*
     	try{
@@ -171,7 +172,7 @@ public class SignUpController {
     void updateStoresList() {
     	EventHandler<ActionEvent> event1 = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
-            { 
+            {
             	storeselector.setText(((MenuItem)e.getSource()).getText() + ""); 
             } 
         }; 
@@ -220,13 +221,31 @@ public class SignUpController {
 		else if(cardNumber.length() == 0)
 			error_message += "No card number\n";
 		
+		boolean pass = true;
+		boolean passVal = true;
 		if(passwd == null)
+		{
 			error_message += "No Password\n";
+			pass = false;
+		}
 		else if(passwd.length() == 0)
+		{
 			error_message += "No Password\n";
-		else if(!(passwd.length()>=6))
+			pass = false;
+		}
+		else if(passValidate == null)
+		{
+			error_message += "No Password validation\n";
+			passVal = false;
+		}
+		else if(passValidate.length() == 0)
+		{
+			error_message += "No Password validation\n";
+			passVal = false;
+		}
+		if(!(passwd.length()>=6) && pass)
 			error_message += "Your password is too short\n";
-		else if(!passwd.equals(passValidate))
+		else if(pass && passVal && !passwd.equals(passValidate))
 			error_message += "Your enterd passwords are not equal\n";
 	
 		if(I_D.length()!=9)
@@ -235,7 +254,11 @@ public class SignUpController {
 		if(cardNumber.length()<11 || cardNumber.length()>19)
 			error_message += "Your card number isn't right\n";
 		
-		if(phoneNumber.length()!=10 && phoneNumber.length()!=12) // Israeli
+		if(phoneNumber == null)
+			error_message += "No phone number\n";
+		else if(phoneNumber.length() == 0)
+			error_message += "No phone number\n";
+		else if(phoneNumber.length()!=10 && phoneNumber.length()!=12) // Israeli
 			error_message += "Your phone number isn't right\n";
 				
 		if(!validEmail(email))
@@ -246,6 +269,11 @@ public class SignUpController {
     }
 
 
+    public static boolean is_numeritic(String str)
+    {
+		    return (str.matches("[0-9]+"));
+    }
+    
     public static String removeSpaces(String str){
     	int i;
 		for(i = str.length()-1; i >= 0 && str.charAt(i) == ' '; --i);
@@ -264,10 +292,6 @@ public class SignUpController {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regex);
      }
-    
-    
-
-    
     
     
 }

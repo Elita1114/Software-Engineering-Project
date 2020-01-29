@@ -124,7 +124,9 @@ public class ItemListViewCell extends ListCell<Item>{
             	if (item instanceof CatalogItem)
             	{
                 	CatalogItem c_item = (CatalogItem) item;
-                	Price.setText(String.valueOf(c_item.getPrice()));
+                	Price.setText(String.valueOf(c_item.getPrice()));  
+                	saleLabel.setText(String.valueOf(c_item.getSale()));
+                	afterSaleLabel.setText(String.valueOf((1-c_item.getSale())*c_item.getPrice()));
             	}
             	order=1;
             	btnAdd.setText("Remove");

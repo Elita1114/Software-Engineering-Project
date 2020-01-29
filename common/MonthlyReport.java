@@ -64,4 +64,13 @@ public class MonthlyReport implements Serializable{
 		this.unhandledcomplaint = unhandledcomplaint;
 	}
 
+	public float getIncome_content() {
+		return income_content;
+	}
+
+	public void setIncome_content(float income_content) {
+		this.income_content = income_content;
+	}
+	
+
 }

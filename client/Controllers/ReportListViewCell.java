@@ -34,7 +34,7 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 	    	report_controller.complaintBarChart.setVisible(false);
 	    	report_controller.tvContent.setVisible(true);
 	    	report_controller.tvDescription.setText("Generated report for store " + monthly_report.getStore() + " on " + monthly_report.getDate());
-	    	report_controller.tvContent.setText(monthly_report.get_order_content());
+	    	report_controller.tvContent.setText("Total income: " + monthly_report.getIncome_content());
 	    }
 
 	    @FXML
@@ -124,7 +124,7 @@ public class ReportListViewCell extends ListCell<MonthlyReport>{
 	                }
 	            }
 	            System.out.println("updating item ");
-	            tvTitle.setText("reported for: " + item.date);
+	            tvTitle.setText("reported for: " + item.getDate());
 	            tvStore.setText("Store " + String.valueOf(item.getStore()));
 	            System.out.println(tvTitle.getText());
 	            System.out.println(tvStore.getText());

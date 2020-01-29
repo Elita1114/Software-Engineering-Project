@@ -78,6 +78,8 @@ public class MainController {
 		updateUserController.injectMainController(this);
 		customitemController.injectMainController(this);
 		orderListController.injectMainController(this);
+		addCatalogItemController.injectMainController(this);
+
 		logoutbtn.setVisible(false);
 		permissions();
 	}

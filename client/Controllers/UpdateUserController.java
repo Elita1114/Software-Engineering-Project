@@ -134,14 +134,17 @@ public class UpdateUserController {
 	  				} catch (InterruptedException e) {
 	  					// TODO Auto-generated catch block
 					e.printStackTrace();
-	  				}
-	  				if(MainController.getClient().client.useralreadyExist) {
-	  	    	    	MainController.getClient().client.useralreadyExist= false;
-		  	  			Alert alert = new Alert(AlertType.ERROR, "Username already exist with this username");
-		  				alert.show();
-	  				}
-	  				
+	  				}	  				
 	  			}
+    	    	MainController.getClient().client.flagServerAns=false;
+  				if(MainController.getClient().client.useralreadyExist) {
+  	    	    	MainController.getClient().client.useralreadyExist= false;
+	  	  			Alert alert = new Alert(AlertType.ERROR, "Username already exist with this username");
+	  				alert.show();
+  				}
+  				else {
+  			    	new Alert(AlertType.INFORMATION, "user updated :)").showAndWait();
+  				}
 
     	    }
     	});
@@ -170,6 +173,7 @@ public class UpdateUserController {
 	  			e.printStackTrace();
 	  		}				
 	  	}
+    	MainController.getClient().client.flagServerAns=false;
 	  	if((userChange=mainController.getClient().foundUser)!=null) {
 		  	nameText.setText(String.valueOf(userChange.username));
 		  	passText.setText(String.valueOf(userChange.password));

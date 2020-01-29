@@ -12,11 +12,13 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -104,6 +106,25 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	  				}
 	  				
 	  			}
+	  			MainController.getClient().client.flagServerAns=false;
+	  			updateCatalog_controller.getMainController().getClient().flagCatalog = false;
+  				ArrayList<Object> args =  new ArrayList<Object>();
+  		    	args.add(updateCatalog_controller.getMainController().getClient().client.getLoggedUser());
+  		    	UserRequest user_request = new UserRequest("#getCatalog 0",  args);
+  		    	updateCatalog_controller.getMainController().getClient().client.handleMessageFromClientUI(user_request);
+	  			while(!(updateCatalog_controller.getMainController()).getClient().flagCatalog) {
+	  				try {
+	  					Thread.sleep(100);
+	  				} catch (InterruptedException e) {
+	  					// TODO Auto-generated catch block
+					e.printStackTrace();
+	  				}
+	  			}
+	  			updateCatalog_controller.getMainController().setCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
+	  			updateCatalog_controller.getMainController().setUpdateCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
+	  			updateCatalog_controller.getMainController().getClient().flagCatalog=false;
+	  		    new Alert(AlertType.INFORMATION, "item deleted :)").showAndWait();
+	  		    
     	    }
     	});
     }
@@ -182,6 +203,7 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	  				}
 	  				
 	  			}
+	  			MainController.getClient().client.flagServerAns=false;
 	  			updateCatalog_controller.getMainController().getClient().flagCatalog = false;
   				ArrayList<Object> args =  new ArrayList<Object>();
   		    	args.add(updateCatalog_controller.getMainController().getClient().client.getLoggedUser());
@@ -198,6 +220,8 @@ public class updateCatalog_ItemListViewCell extends ListCell<CatalogItem>{
 	  			updateCatalog_controller.getMainController().setCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
 	  			updateCatalog_controller.getMainController().setUpdateCatalog(updateCatalog_controller.getMainController().getClient().catalog.getList());
 	  			updateCatalog_controller.getMainController().getClient().flagCatalog=false;
+	  		    new Alert(AlertType.INFORMATION, "item updated :)").showAndWait();
+
     	    }
     	});
     }

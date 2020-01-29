@@ -192,15 +192,14 @@ public class OrderController {
     		address = addressText.getText();
     		recieverName = recieverText.getText();
     		phoneNumber = removeNonNumbers(removeSpaces(phonenumberText.getText()));
-
-    		try {
-        		checkInput(phoneNumber);
-        	} catch(IOException e) {
-        		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
-        		return;
-        	}
     	}
     	
+    	try {
+    		checkInput(letter, date, want_shipping, address, recieverName, phoneNumber);
+    	} catch(IOException e) {
+    		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+    		return;
+    	}
     	
     	Order my_order = new Order(order_items, date, letter, want_shipping, address, recieverName, phoneNumber);
     	System.out.println("Ordered:  " +order_items);
@@ -222,7 +221,7 @@ public class OrderController {
     	    }
     	});
     	System.out.println("finished");
- 
+    	
     }
     
     public static boolean is_numeritic(String str)
@@ -244,11 +243,43 @@ public class OrderController {
 		return temp;
     }
   
-    private void checkInput(String phoneNumber) throws IOException {
+    private void checkInput(String letter, Date date, boolean want_shipping, String address, String recieverName, String phoneNumber) throws IOException {
 	    String error_message = "";
 	
-		if(phoneNumber.length()!=10 && phoneNumber.length()!=12) // Israeli
-			error_message += "Your phone number isn't right\n";
+	    if(letter == null)
+			error_message += "No letter\n";
+		else if(letter.length() == 0)
+			error_message += "No letter\n";
+		
+		if(date == null)
+			error_message += "No date\n";
+		
+    	if(want_shipping)
+    	{
+    		if(address == null)
+    			error_message += "No address\n";
+    		else if(address.length() == 0)
+    			error_message += "No address\n";
+    		
+    		if(recieverName == null)
+    			error_message += "No reciever name\n";
+    		else if(recieverName.length() == 0)
+    			error_message += "No reciever name\n";
+    		
+    		if(phoneNumber == null)
+    			error_message += "No phone number\n";
+    		else if(phoneNumber.length() == 0)
+    			error_message += "No phone number\n";
+    		else if(phoneNumber.length()!=10 && phoneNumber.length()!=12) // Israeli
+    			error_message += "Your phone number isn't right\n";
+    	}
+	    
+		
+		
+	    
+	    
+	    
+		
 				
     	if(error_message.length() > 0)
     		throw(new IOException(error_message));

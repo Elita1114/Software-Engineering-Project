@@ -463,7 +463,7 @@ public class EchoServer extends AbstractServer
 					  User user = (User) user_request.get_request_args().get(0);
 				      con = DriverManager.getConnection("jdbc:mysql://remotemysql.com/" + DB + "?useSSL=false", USER, PASS);
 				      PreparedStatement getorders = null;
-				      if(user instanceof customerService)
+				      if(user instanceof customerService || user instanceof Employee)
 				      {
 				    	  getorders = con.prepareStatement("select * from `Orders` WHERE `store`=? AND `deliveryTime` is NULL");
 				    	  getorders.setInt(1, user.store);

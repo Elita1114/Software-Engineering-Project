@@ -144,7 +144,7 @@ public class OrderListController {
     			while(!mainController.getClient().client.flagServerAns) {
     				try {
     					Thread.sleep(100);
-    					System.out.println("waiitng for server");
+    					System.out.println("waiting for server");
     				} catch (InterruptedException e) {
     					// TODO Auto-generated catch block
     					e.printStackTrace();

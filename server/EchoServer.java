@@ -160,6 +160,10 @@ public class EchoServer extends AbstractServer
 					      insertuser.setString(8, new_user.email);  // ID
 					      insertuser.executeUpdate();
 					      con.close(); 
+					      client.sendToClient("#signupsuccessfully");
+				      }else
+				      {
+				    	  client.sendToClient("#useralreadyexist");
 				      }
 				  	} catch(Exception e) {
 				  		e.printStackTrace();

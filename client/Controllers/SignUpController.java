@@ -113,6 +113,7 @@ public class SignUpController {
     	UserRequest user_request = new UserRequest("#signup",  args);
 
     	System.out.println("sending request to server");
+    	/*
     	Platform.runLater(new Runnable() {
     	    @Override
     	    public void run() {
@@ -120,6 +121,33 @@ public class SignUpController {
     	    	System.out.println("entered");
     	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
     	    	System.out.println("finished_1");
+    	    }
+    	});*/
+    	
+    	Platform.runLater(new Runnable() {
+    	    @Override
+    	    public void run() {
+    	    	mainController.getClient().client.flagServerAns=false;
+    	    	mainController.getClient().client.useralreadyExist = false;
+    	    	mainController.getClient().client.handleMessageFromClientUI(user_request);
+    			while(!mainController.getClient().client.flagServerAns) {
+    				try {
+    					Thread.sleep(100);
+    					System.out.println("waiitng for server");
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				};
+    			}
+    			mainController.getClient().client.flagServerAns = false;
+    			if(mainController.getClient().client.useralreadyExist)
+    			{
+    	    		new Alert(Alert.AlertType.ERROR, "Error: User already exists").showAndWait();
+    			}else
+    			{
+    				new Alert(Alert.AlertType.INFORMATION, "Sign up successfully").showAndWait();
+    				mainController.getTabPane().getSelectionModel().select(1);
+    			}
     	    }
     	});
     	System.out.println("finished");

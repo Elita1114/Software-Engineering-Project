@@ -119,7 +119,8 @@ public class OrderListController {
     			}
     			*/
     			
-    			String client_email = mainController.getLoggedUser().email;
+    			String client_email = order.getCostumer_email();
+    			System.out.println("In order list controller, the email is " + client_email);
     			System.out.println(client_email);
 				String subject = "Order Delivery";
 				Date delivery_date = new Date(); 

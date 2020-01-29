@@ -102,7 +102,6 @@ public class ItemListViewCell extends ListCell<Item>{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
             System.out.println("updating item " + String.valueOf(item.getName()));
             Title.setText(String.valueOf(item.getName()));
@@ -141,8 +140,8 @@ public class ItemListViewCell extends ListCell<Item>{
             	  					// TODO Auto-generated catch block
             					e.printStackTrace();
             	  				}
-            	  				order_controller.fetchOrder();
             	  			}
+                	    	order_controller.fetchOrder();
                 	    }
                 	});
                 } });

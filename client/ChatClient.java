@@ -44,6 +44,7 @@ public class ChatClient extends AbstractClient
   public boolean flagServerAns;
   public boolean useralreadyExist;
   private boolean loggedalready;
+
   //Constructors ****************************************************
   
   /**
@@ -194,10 +195,13 @@ public class ChatClient extends AbstractClient
 		  flagServerAns=true;
 		  System.out.println("update User flag true\n");
 	  }
-	  else if(msg.toString().equals("#useralreadyExist")) {
+	  else if(msg.toString().equalsIgnoreCase("#useralreadyExist")) {
 		  useralreadyExist= true;
 		  flagServerAns=true;
 		  System.out.println("update User flag true\n");
+	  }
+	  else if(msg.toString().equalsIgnoreCase("#signupsuccessfully")) {
+		  flagServerAns=true;
 	  }
 	  else if(msg.toString().equals("#customItem")) {
 		  flagServerAns=true;

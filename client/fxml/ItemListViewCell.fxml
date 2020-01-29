@@ -40,6 +40,18 @@
             <Font name="Gisha" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnAdd" layoutX="284.0" layoutY="140.0" mnemonicParsing="false" onAction="#clickadd" prefHeight="25.0" prefWidth="99.0" text="Add to cart" />
+      <Button fx:id="btnAdd" layoutX="329.0" layoutY="182.0" mnemonicParsing="false" onAction="#clickadd" prefHeight="25.0" prefWidth="99.0" text="Add to cart" />
+      <Label layoutX="245.0" layoutY="134.0" text="sale:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="saleLabel" layoutX="361.0" layoutY="134.0" text="Label" />
+      <Label layoutX="241.0" layoutY="155.0" text="after sale:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="afterSaleLabel" layoutX="361.0" layoutY="158.0" text="Label" />
    </children>
 </AnchorPane>

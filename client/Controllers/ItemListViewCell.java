@@ -33,6 +33,9 @@ public class ItemListViewCell extends ListCell<Item>{
 	@FXML private ImageView ivIm1;
 	@FXML private AnchorPane pane;
 	@FXML public Button btnAdd;
+    @FXML private Label saleLabel;
+    @FXML private Label afterSaleLabel;
+    
 	OrderController order_controller;
 	private FXMLLoader mLLoader;
 
@@ -114,6 +117,8 @@ public class ItemListViewCell extends ListCell<Item>{
             	CatalogItem c_item = (CatalogItem) item;
             	Price.setText(String.valueOf(c_item.getPrice()));
             	ivIm1.setImage(new Image(c_item.getImagePath()));
+            	saleLabel.setText(String.valueOf(c_item.getSale()));
+            	afterSaleLabel.setText(String.valueOf((1-c_item.getSale())*c_item.getPrice()));
             }
             else {
             	if (item instanceof CatalogItem)

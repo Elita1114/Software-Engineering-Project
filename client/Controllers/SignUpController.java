@@ -91,7 +91,7 @@ public class SignUpController {
     	String phoneNumber = removeNonNumbers(removeSpaces(PhoneNumberText.getText()));
     	String email = removeSpaces(EmailText.getText());
     	int store = -1;
-    	if (storeselector.getText().substring(0,1).matches("[0-9]+") && storeselector.getText().substring(0,1).length() > 0) {
+    	if (is_numeritic(storeselector.getText().substring(0,1))) {
     		store = Integer.parseInt(storeselector.getText().substring(0,1));
     	}
     	
@@ -220,6 +220,11 @@ public class SignUpController {
     }
 
 
+    public static boolean is_numeritic(String str)
+    {
+		return (str.matches("[0-9]+"));
+    }
+    
     public static String removeSpaces(String str){
     	int i;
 		for(i = str.length()-1; i >= 0 && str.charAt(i) == ' '; --i);

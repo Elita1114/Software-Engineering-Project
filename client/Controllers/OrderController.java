@@ -3,6 +3,7 @@ package client.Controllers;
  * Sample Skeleton for 'Order.fxml' Controller Class
  */
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -189,8 +191,17 @@ public class OrderController {
     	{
     		address = addressText.getText();
     		recieverName = recieverText.getText();
-    		phoneNumber = phonenumberText.getText();
+    		phoneNumber = removeNonNumbers(removeSpaces(phonenumberText.getText()));
+
+    		try {
+        		checkInput(phoneNumber);
+        	} catch(IOException e) {
+        		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+        		return;
+        	}
     	}
+    	
+    	
     	Order my_order = new Order(order_items, date, letter, want_shipping, address, recieverName, phoneNumber);
     	System.out.println("Ordered:  " +order_items);
     	ArrayList<Object> args =  new ArrayList<Object>();
@@ -213,4 +224,35 @@ public class OrderController {
     	System.out.println("finished");
  
     }
+    
+    public static boolean is_numeritic(String str)
+    {
+		return (str.matches("[0-9]+"));
+    }
+
+    public static String removeSpaces(String str){
+    	int i;
+		for(i = str.length()-1; i >= 0 && str.charAt(i) == ' '; --i);
+		return str.substring(0, i+1);
+    }
+    
+    public static String removeNonNumbers(String str){
+    	String temp = "";
+		for(int i = 0; i < str.length(); ++i) 
+			if(str.charAt(i) >= '0' && str.charAt(i) <= '9')
+				temp += str.charAt(i);
+		return temp;
+    }
+  
+    private void checkInput(String phoneNumber) throws IOException {
+	    String error_message = "";
+	
+		if(phoneNumber.length()!=10 && phoneNumber.length()!=12) // Israeli
+			error_message += "Your phone number isn't right\n";
+				
+    	if(error_message.length() > 0)
+    		throw(new IOException(error_message));
+    }
+
+
 }

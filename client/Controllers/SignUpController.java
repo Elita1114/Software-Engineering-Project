@@ -194,13 +194,31 @@ public class SignUpController {
 		else if(cardNumber.length() == 0)
 			error_message += "No card number\n";
 		
+		boolean pass = true;
+		boolean passVal = true;
 		if(passwd == null)
+		{
 			error_message += "No Password\n";
+			pass = false;
+		}
 		else if(passwd.length() == 0)
+		{
 			error_message += "No Password\n";
-		else if(!(passwd.length()>=6))
+			pass = false;
+		}
+		else if(passValidate == null)
+		{
+			error_message += "No Password validation\n";
+			passVal = false;
+		}
+		else if(passValidate.length() == 0)
+		{
+			error_message += "No Password validation\n";
+			passVal = false;
+		}
+		if(!(passwd.length()>=6) && pass)
 			error_message += "Your password is too short\n";
-		else if(!passwd.equals(passValidate))
+		else if(pass && passVal && !passwd.equals(passValidate))
 			error_message += "Your enterd passwords are not equal\n";
 	
 		if(I_D.length()!=9)
@@ -209,7 +227,11 @@ public class SignUpController {
 		if(cardNumber.length()<11 || cardNumber.length()>19)
 			error_message += "Your card number isn't right\n";
 		
-		if(phoneNumber.length()!=10 && phoneNumber.length()!=12) // Israeli
+		if(phoneNumber == null)
+			error_message += "No phone number\n";
+		else if(phoneNumber.length() == 0)
+			error_message += "No phone number\n";
+		else if(phoneNumber.length()!=10 && phoneNumber.length()!=12) // Israeli
 			error_message += "Your phone number isn't right\n";
 				
 		if(!validEmail(email))

@@ -8,10 +8,12 @@ import common.UserRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -165,6 +167,10 @@ public class SelfMadeItemController {
 	  				}
 	  				
 	  			}
+	  			// possible error
+    	    	MainController.getClient().client.flagServerAns=false;
+    	    	Alert alert = new Alert(AlertType.CONFIRMATION, "Ordered Custom Item");
+  				alert.show();
     	    }
     	});
     }

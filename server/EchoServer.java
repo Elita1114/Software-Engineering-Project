@@ -407,7 +407,7 @@ public class EchoServer extends AbstractServer
 				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
 				      while(rs.next()) { 
-				    	  PreparedStatement productdetails = con.prepareStatement("SELECT `sale`,`color` FROM Products WHERE `type`=?");
+				    	  PreparedStatement productdetails = con.prepareStatement("SELECT `sale`,`color` FROM Products WHERE `id`=?");
 				    	  productdetails.setInt(1, rs.getInt("productID"));
 					      ResultSet pdetails = productdetails.executeQuery();
 					      pdetails.next();
@@ -480,11 +480,22 @@ public class EchoServer extends AbstractServer
 					      ArrayList<Item> itemList = new ArrayList<Item>();
 					      
 					      while(rs.next()) { 
-					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE `id`= ?");
+					    	  System.out.println("id: " + rs.getInt("productID"));
 					    	  prep_stmt.setInt(1, rs.getInt("productID"));
 					    	  ResultSet productsdetails = prep_stmt.executeQuery();
 					    	  productsdetails.next();
-					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), productsdetails.getFloat("sale"), productsdetails.getString("color")));
+					    	  //productsdetails.next();
+					    	  System.out.println(productsdetails);
+					    	  System.out.println(rs);
+					    	  System.out.println(rs.getInt("id"));
+					    	  System.out.println(rs.getString("name"));
+					    	  System.out.println(rs.getString("description"));
+					    	  System.out.println(rs.getInt("productID"));
+					    	  System.out.println( rs.getFloat("price"));
+					    	  System.out.println( productsdetails.getString("Color"));
+					    	  //System.out.println( productsdetails.getString("Color"));
+					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), productsdetails.getFloat("sale"), productsdetails.getString("Color")));
 					      }
 					      
 					      getcart = con.prepareStatement("select * from CustomItem WHERE `orderID`=?");

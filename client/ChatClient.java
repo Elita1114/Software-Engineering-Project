@@ -217,6 +217,7 @@ public class ChatClient extends AbstractClient
   {
 	  System.out.println("trying to send to server in handle ");
 	  try {
+		  System.out.println(user_request);
     	  sendToServer(user_request);
       }
       catch(IOException e){

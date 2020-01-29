@@ -81,16 +81,18 @@ public class SignUpController {
     
     @FXML
     void signUp(ActionEvent event) {
-    	String user_name = nameText.getText();
-    	String I_D = IDText.getText();
-    	String passwd = passText.getText();
-    	String passValidate = oassAgainText.getText();
-    	String cardNumber = CardNumberText.getText();
-    	int pay_method = PayingMethod.pay_per_order;
-    	String phoneNumber = PhoneNumberText.getText();
-    	String email = EmailText.getText();
-    	System.out.println(storeselector.getText().substring(0,1));
-    	int store = Integer.parseInt(storeselector.getText().substring(0,1));
+    	String user_name = removeSpaces(nameText.getText());
+		String I_D = removeNonNumbers(removeSpaces(IDText.getText()));    	
+    	String passwd = removeSpaces(passText.getText());
+    	String passValidate = removeSpaces(oassAgainText.getText());
+    	String cardNumber = removeNonNumbers(removeSpaces(CardNumberText.getText()));
+    	int pay_method = -1;
+    	String phoneNumber = removeNonNumbers(removeSpaces(PhoneNumberText.getText()));
+    	String email = removeSpaces(EmailText.getText());
+    	int store = -1;
+    	if (storeselector.getText().substring(0,1).matches("[0-9]+") && storeselector.getText().substring(0,1).length() > 0) {
+    		store = Integer.parseInt(storeselector.getText().substring(0,1));
+    	}
     	
     	if(PayPErOrderRadio.isSelected())
     		pay_method = PayingMethod.pay_per_order; 
@@ -100,7 +102,8 @@ public class SignUpController {
     		pay_method = PayingMethod.annual_subscription;
     	
     	try {
-    		checkInput(passwd, passValidate);
+    		checkInput(passwd, passValidate, user_name, I_D, cardNumber, 
+    	    		phoneNumber, email, pay_method, store);
     	} catch(IOException e) {
     		new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
     		return;
@@ -190,19 +193,79 @@ public class SignUpController {
 		appstage.setScene(scene);    	
 		appstage.show(); 
     }
+
     
-    
-    private void checkInput(String pass,  String secondPass) throws IOException {
-    	String error_message = "";
-    	if(!(pass.length()>1))
-    		error_message += "Your password is short\n";
-    	if(!pass.equals(secondPass))
-    		error_message += "Your two enterd passwords are not equal\n";
-  
+    private void checkInput(String passwd, String passValidate, String user_name, String I_D, String cardNumber, 
+    		String phoneNumber, String email, int pay_method, int store) throws IOException {
+	    String error_message = "";
+	    
+	    if(pay_method == -1)
+			error_message += "No pay method (subsciption)\n";
+	    
+	    if(store == -1)
+			error_message += "No store\n";
+	    
+	    if(user_name == null)
+				error_message += "No usename\n";
+		else if(user_name.length() == 0)
+			error_message += "No usename\n";
+		
+		if(I_D == null)
+			error_message += "No ID\n";
+		else if(I_D.length() == 0)
+			error_message += "No ID\n";
+		
+		if(cardNumber == null)
+			error_message += "No card number\n";
+		else if(cardNumber.length() == 0)
+			error_message += "No card number\n";
+		
+		if(passwd == null)
+			error_message += "No Password\n";
+		else if(passwd.length() == 0)
+			error_message += "No Password\n";
+		else if(!(passwd.length()>=6))
+			error_message += "Your password is too short\n";
+		else if(!passwd.equals(passValidate))
+			error_message += "Your enterd passwords are not equal\n";
+	
+		if(I_D.length()!=9)
+			error_message += "Your ID isn't right\n";
+		
+		if(cardNumber.length()<11 || cardNumber.length()>19)
+			error_message += "Your card number isn't right\n";
+		
+		if(phoneNumber.length()!=10 && phoneNumber.length()!=12) // Israeli
+			error_message += "Your phone number isn't right\n";
+				
+		if(!validEmail(email))
+			error_message += "Your email isn't right\n";
+	    	
     	if(error_message.length() > 0)
     		throw(new IOException(error_message));
-    		
     }
+
+
+    public static String removeSpaces(String str){
+    	int i;
+		for(i = str.length()-1; i >= 0 && str.charAt(i) == ' '; --i);
+		return str.substring(0, i+1);
+    }
+    
+    public static String removeNonNumbers(String str){
+    	String temp = "";
+		for(int i = 0; i < str.length(); ++i) 
+			if(str.charAt(i) >= '0' && str.charAt(i) <= '9')
+				temp += str.charAt(i);
+		return temp;
+    }
+    
+    public static boolean validEmail(String email) {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
+     }
+    
+    
 
     
     

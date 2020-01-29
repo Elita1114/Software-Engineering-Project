@@ -60,8 +60,9 @@ public class OrderListViewCell extends ListCell<Order>{
     public void initialize() {
     	if(!(MainController.getLoggedUser() instanceof Customer))
     		bttnCancel.setVisible(false);
-    	if(!(MainController.getLoggedUser() instanceof Employee))
+    	if(!(MainController.getLoggedUser() instanceof Employee || MainController.getLoggedUser() instanceof customerService))
     		bttnOrder.setVisible(false);
+    	
     }    
 	@Override
     protected void updateItem(Order item, boolean empty) {

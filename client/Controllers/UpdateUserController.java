@@ -7,6 +7,7 @@ import common.CatalogItem;
 import common.ChainManager;
 import common.Customer;
 import common.Employee;
+import common.PayingMethod;
 import common.Status;
 import common.StoreManager;
 import common.SystemAdministrator;
@@ -18,7 +19,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 
@@ -30,7 +33,8 @@ public class UpdateUserController {
 		mainController = mainController_;
 	}
     
-
+    @FXML
+    private ToggleGroup tgPayMethod;
     @FXML
     private TextField userNameField;
 
@@ -43,8 +47,7 @@ public class UpdateUserController {
     @FXML
     private Button findBtn;
 
-    @FXML
-    private TextField payMethod;
+
 
     @FXML
     private TextField passText;
@@ -64,30 +67,46 @@ public class UpdateUserController {
     @FXML
     private TextField paymentText;
 
+    @FXML
+    private TextField emailField;
+    
+    @FXML
+    private RadioButton PayPErOrderRadio;
+    @FXML
+    private RadioButton AnnualSubRadio;
+    @FXML
+    private RadioButton MonthlySubRadio;
 
     @FXML
     void update(ActionEvent event) {
     	User UpdatedUser;
-        String name= nameText.getText(), pass= passText.getText(), payment=paymentText.getText(), phoneNumber1=phoneNumber.getText(), ID1 =ID.getText();
-        int payMethod1= Integer.parseInt(payMethod.getText()), store= Integer.parseInt(storeText.getText()), user_id = userChange.user_id,status=Integer.parseInt(statusText.getText());
+    	int pay_method = PayingMethod.pay_per_order;
+        String name= nameText.getText(), pass= passText.getText(), payment=paymentText.getText(), phoneNumber1=phoneNumber.getText(), ID1 =ID.getText(), email=emailField.getText();
+        int store= Integer.parseInt(storeText.getText()), user_id = userChange.user_id,status=Integer.parseInt(statusText.getText());
+    	if(PayPErOrderRadio.isSelected())
+    		pay_method = PayingMethod.pay_per_order; 
+    	if(MonthlySubRadio.isSelected())
+    		pay_method = PayingMethod.monthly_subscription;
+    	if(AnnualSubRadio.isSelected())
+    		pay_method = PayingMethod.annual_subscription;
   	  switch(Integer.parseInt(statusText.getText())) {
   	  case 1:
-  		UpdatedUser = new StoreManager(user_id, name,pass, ID1, payment,payMethod1, phoneNumber1, store,Status.values()[status]);
+  		UpdatedUser = new StoreManager(user_id, name,pass, ID1, payment,pay_method, phoneNumber1, store,Status.values()[status],email);
   		  break;
   	  case 2:
-  		UpdatedUser = ChainManager.getInstance(user_id, name,pass, ID1, payment,payMethod1, phoneNumber1, store,Status.values()[status]);;
+  		UpdatedUser = ChainManager.getInstance(user_id, name,pass, ID1, payment,pay_method, phoneNumber1, store,Status.values()[status],email);
   		  break;
   	  case 3:
-  		UpdatedUser = new Employee(user_id, name,pass, ID1, payment,payMethod1, phoneNumber1, store,Status.values()[status]);;
+  		UpdatedUser = new Employee(user_id, name,pass, ID1, payment,pay_method, phoneNumber1, store,Status.values()[status],email);
   		  break;
   	  case 4:
-  		UpdatedUser =new customerService(user_id, name,pass, ID1, payment,payMethod1, phoneNumber1, store,Status.values()[status]);;
+  		UpdatedUser =new customerService(user_id, name,pass, ID1, payment,pay_method, phoneNumber1, store,Status.values()[status],email);
   		  break;
   	  case 5:
-  		UpdatedUser =new SystemAdministrator(user_id, name,pass, ID1, payment,payMethod1, phoneNumber1, store,Status.values()[status]);;
+  		UpdatedUser =new SystemAdministrator(user_id, name,pass, ID1, payment,pay_method, phoneNumber1, store,Status.values()[status],email);
   		  break;
   	  default:				    	
-  		UpdatedUser = new Customer(user_id, name,pass, ID1, payment,payMethod1, phoneNumber1, store,Status.values()[status]);;
+  		UpdatedUser = new Customer(user_id, name,pass, ID1, payment,pay_method, phoneNumber1, store,Status.values()[status],email);
   		  break;
   	  }
     	ArrayList<Object> args =  new ArrayList<Object>();
@@ -130,12 +149,13 @@ public class UpdateUserController {
 
     @FXML
     void find(ActionEvent event) {
-    	
         String username= userNameField.getText();
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(username);
     	UserRequest user_request = new UserRequest("#findUser",  args);
+    	
 
+    	
     	System.out.println("entered");
     	MainController.getClient().client.handleMessageFromClientUI(user_request);
     	System.out.println("finished_1");
@@ -175,8 +195,14 @@ public class UpdateUserController {
 			}
 		  	storeText.setText(String.valueOf(userChange.store));
 		  	phoneNumber.setText(String.valueOf(userChange.phone_number));
-		  	payMethod.setText(String.valueOf(userChange.pay_method));
+	    	if( PayingMethod.pay_per_order ==userChange.pay_method)
+	    		PayPErOrderRadio.setSelected(true);
+	    	if(PayingMethod.monthly_subscription ==userChange.pay_method)
+	    		MonthlySubRadio.setSelected(true);
+	    	if(PayingMethod.annual_subscription ==userChange.pay_method )
+	    		AnnualSubRadio.setSelected(true);
 		  	ID.setText(String.valueOf(userChange.id));
+		  	emailField.setText(String.valueOf(userChange.email));
 	  	}
 	  	else {
 				Alert alert = new Alert(AlertType.ERROR, "Username or store incorrect!");
@@ -187,8 +213,8 @@ public class UpdateUserController {
 				statusText.setText("");
 			  	storeText.setText("");
 			  	phoneNumber.setText("");
-			  	payMethod.setText("");
 			  	ID.setText("");
+			  	emailField.setText("");
 	  	}
 	  }
 }

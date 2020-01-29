@@ -14,7 +14,7 @@ public class User implements Serializable {
 	public int store;
 	public int user_id;
 	public Status status;
-	public String email = "messermanbenjamin@gmail.com";
+	public String email;
 
 
 	public User(int user_id_, String username, String password, String id, String credit_card_number, int pay_method,String phone_number, int store,Status status) {

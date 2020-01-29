@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 
 public class addItemController {
@@ -75,11 +76,14 @@ public class addItemController {
 	  				}
 	  				
 	  			}
+	  			success();
     	    }
     	});
     }
 
-    
+    private void success() {
+    	new Alert(AlertType.INFORMATION, "item added :)").showAndWait();
+    }
     
     private void checkInput(String nameText1,String descriptionText1,String colorText1,String pathText1,String priceText1,String saleText1,String typeText1) throws IOException {
     	String error_message = "";

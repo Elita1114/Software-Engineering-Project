@@ -16,17 +16,25 @@
       <TextField fx:id="passText" layoutX="143.0" layoutY="128.0" />
       <TextField fx:id="paymentText" layoutX="143.0" layoutY="175.0" />
       <TextField fx:id="statusText" layoutX="143.0" layoutY="224.0" />
-      <Button fx:id="signUpbtn" layoutX="135.0" layoutY="323.0" mnemonicParsing="false" onAction="#update" text="update" />
+      <Button fx:id="signUpbtn" layoutX="331.0" layoutY="364.0" mnemonicParsing="false" onAction="#update" text="update" />
       <TextField fx:id="storeText" layoutX="143.0" layoutY="271.0" />
       <Label layoutX="34.0" layoutY="279.0" text="Store:" />
       <Label layoutX="353.0" layoutY="35.0" text="user name:" />
       <TextField fx:id="userNameField" layoutX="443.0" layoutY="30.0" />
       <Button fx:id="findBtn" layoutX="491.0" layoutY="93.0" mnemonicParsing="false" onAction="#find" text="find" />
       <TextField fx:id="phoneNumber" layoutX="464.0" layoutY="174.0" />
-      <TextField fx:id="payMethod" layoutX="464.0" layoutY="217.0" />
       <Label layoutX="353.0" layoutY="179.0" text="phone number:" />
-      <Label layoutX="353.0" layoutY="219.0" text="pay method:" />
-      <Label layoutX="353.0" layoutY="269.0" text="ID:" />
-      <TextField fx:id="ID" layoutX="464.0" layoutY="264.0" />
-   </children>
+      <Label layoutX="57.0" layoutY="320.0" text="pay method:" />
+      <Label layoutX="353.0" layoutY="217.0" text="ID:" />
+      <TextField fx:id="ID" layoutX="464.0" layoutY="212.0" />
+      <Label layoutX="345.0" layoutY="269.0" text="email:" />
+      <TextField fx:id="emailField" layoutX="464.0" layoutY="264.0" />
+       <RadioButton fx:id="AnnualSubRadio" layoutX="175.0" layoutY="320.0" mnemonicParsing="false" text="Annual Subscription" GridPane.rowIndex="8">
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgPayMethod" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="MonthlySubRadio" layoutX="372.0" layoutY="320.0" mnemonicParsing="false" text="Monthly Subscripton" toggleGroup="$tgPayMethod" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <RadioButton fx:id="PayPErOrderRadio" layoutX="567.0" layoutY="320.0" mnemonicParsing="false" text="Pay Per Order" toggleGroup="$tgPayMethod" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+               </children>
 </AnchorPane>

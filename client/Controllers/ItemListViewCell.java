@@ -16,9 +16,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -40,6 +42,12 @@ public class ItemListViewCell extends ListCell<Item>{
 
     @FXML
     void clickadd(ActionEvent event) {
+       	if(MainController.getLoggedUser() == null)
+       	{
+       		Alert alert = new Alert(AlertType.INFORMATION, "You have to register first");
+			alert.show();
+			return;
+       	}
     	System.out.println("send add to cart");
     	ArrayList<Object> args =  new ArrayList<Object>();
     	args.add(MainController.getClient().client.getLoggedUser());
@@ -70,8 +78,6 @@ public class ItemListViewCell extends ListCell<Item>{
     
     @FXML
     public void initialize() {
-    	if(MainController.getLoggedUser() == null)
-    		btnAdd .setDisable(true);
     }
     
     public ItemListViewCell()
@@ -96,11 +102,11 @@ public class ItemListViewCell extends ListCell<Item>{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
             System.out.println("updating item " + String.valueOf(item.getName()));
             Title.setText(String.valueOf(item.getName()));
             Description.setText(String.valueOf(item.getDescription()));
+            System.out.println("color: "+ item.getColor());
             Color.setText(String.valueOf(item.getColor()));
             if (item instanceof CatalogItem && ((CatalogItem) item).getImagePath() != null)
             {
@@ -109,13 +115,12 @@ public class ItemListViewCell extends ListCell<Item>{
             	Price.setText(String.valueOf(c_item.getPrice()));
             	ivIm1.setImage(new Image(c_item.getImagePath()));
             }
-            else if (item instanceof CatalogItem)
-            {
-            	System.out.println("is a catalog item ");
-            	CatalogItem c_item = (CatalogItem) item;
-            	Price.setText(String.valueOf(c_item.getPrice()));
-            }
             else {
+            	if (item instanceof CatalogItem)
+            	{
+                	CatalogItem c_item = (CatalogItem) item;
+                	Price.setText(String.valueOf(c_item.getPrice()));
+            	}
             	order=1;
             	btnAdd.setText("Remove");
             	btnAdd.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent e) {
@@ -135,8 +140,8 @@ public class ItemListViewCell extends ListCell<Item>{
             	  					// TODO Auto-generated catch block
             					e.printStackTrace();
             	  				}
-            	  				order_controller.fetchOrder();
             	  			}
+                	    	order_controller.fetchOrder();
                 	    }
                 	});
                 } });

@@ -162,7 +162,7 @@ public class EchoServer extends AbstractServer
 					      con.close(); 
 				      }
 				  	} catch(Exception e) {
-				  		System.out.println(e);
+				  		e.printStackTrace();
 				  	}
 			  }
 			  else if (user_request.get_request_str().startsWith("#getCatalog"))
@@ -215,7 +215,7 @@ public class EchoServer extends AbstractServer
 					      
 					      client.sendToClient("getting catalog");
 					      while(rs.next()) {
-					    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path"),rs.getInt("type") , rs.getInt("store") , rs.getInt("sale")));
+					    	  itemList.add(new CatalogItem(rs.getString("name"),rs.getString("description"),rs.getString("Color"),rs.getFloat("price"),rs.getInt("id"),rs.getString("Image Path"),rs.getInt("type") , rs.getInt("store") , rs.getFloat("sale")));
 					    	  System.out.println("2");
 					    	  System.out.println("getting item");
 					      }
@@ -228,7 +228,7 @@ public class EchoServer extends AbstractServer
 					      
 					  } catch(Exception e) {
 						  System.out.println("a");
-						  System.out.println(e);
+						  e.printStackTrace();
 					  }
 					  return;
 			    }
@@ -250,22 +250,22 @@ public class EchoServer extends AbstractServer
 				    	  {
 					    	  switch(rs.getInt("status")) {
 						    	  case 1:
-						    		  loggedUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  case 2:
-						    		  loggedUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  case 3:
-						    		  loggedUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  case 4:
-						    		  loggedUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  case 5:
-						    		  loggedUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 						    	  default:				    	
-						    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+						    		  loggedUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 						    		  break;
 					    	  }
 					    	  PreparedStatement setlogged = con.prepareStatement("UPDATE `Users` SET `logged`=1 WHERE `uid`=?");
@@ -342,7 +342,7 @@ public class EchoServer extends AbstractServer
 			    	  client.sendToClient(order); 	
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  
@@ -369,7 +369,7 @@ public class EchoServer extends AbstractServer
 					  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#removefromcart"))
@@ -390,7 +390,7 @@ public class EchoServer extends AbstractServer
 					  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getcart"))
@@ -407,7 +407,7 @@ public class EchoServer extends AbstractServer
 				      ArrayList<Item> itemList = new ArrayList<Item>();
 				      
 				      while(rs.next()) { 
-				    	  PreparedStatement productdetails = con.prepareStatement("SELECT `sale`,`color` FROM Products WHERE `type`=?");
+				    	  PreparedStatement productdetails = con.prepareStatement("SELECT `sale`,`color` FROM Products WHERE `id`=?");
 				    	  productdetails.setInt(1, rs.getInt("productID"));
 					      ResultSet pdetails = productdetails.executeQuery();
 					      pdetails.next();
@@ -427,7 +427,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient(cart);  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getReports"))
@@ -454,7 +454,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient(reportlist);  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#getOrders"))
@@ -480,11 +480,22 @@ public class EchoServer extends AbstractServer
 					      ArrayList<Item> itemList = new ArrayList<Item>();
 					      
 					      while(rs.next()) { 
-					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE type = ?");
+					    	  PreparedStatement prep_stmt = con.prepareStatement("select * from Products WHERE `id`= ?");
+					    	  System.out.println("id: " + rs.getInt("productID"));
 					    	  prep_stmt.setInt(1, rs.getInt("productID"));
 					    	  ResultSet productsdetails = prep_stmt.executeQuery();
 					    	  productsdetails.next();
-					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), productsdetails.getFloat("sale"), productsdetails.getString("color")));
+					    	  //productsdetails.next();
+					    	  System.out.println(productsdetails);
+					    	  System.out.println(rs);
+					    	  System.out.println(rs.getInt("id"));
+					    	  System.out.println(rs.getString("name"));
+					    	  System.out.println(rs.getString("description"));
+					    	  System.out.println(rs.getInt("productID"));
+					    	  System.out.println( rs.getFloat("price"));
+					    	  System.out.println( productsdetails.getString("Color"));
+					    	  //System.out.println( productsdetails.getString("Color"));
+					    	  itemList.add(new CatalogItem(rs.getInt("id"), rs.getString("name"), rs.getString("description"),rs.getInt("productID"), rs.getFloat("price"), productsdetails.getFloat("sale"), productsdetails.getString("Color")));
 					      }
 					      
 					      getcart = con.prepareStatement("select * from CustomItem WHERE `orderID`=?");
@@ -494,7 +505,7 @@ public class EchoServer extends AbstractServer
 					    	  itemList.add(new CustomItem(rs.getInt("id"), "Custom Item", rs.getString("description"), -1, rs.getFloat("price"), rs.getString("color")));
 					      }
 					      
-					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID")));
+					      ordersList.add(new Order(itemList, orders.getDate("timeToTransport"), orders.getString("letter"), orders.getInt("wantshipping")==1? true:false, orders.getString("address"), orders.getString("reciever"), orders.getString("recieverPhone"), orders.getInt("orderID"), user.email));
 				      }
 				      con.close();  
 				      OrdersList orderlist= new OrdersList(ordersList);
@@ -502,7 +513,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient(orderlist);  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#setdelivered"))
@@ -518,7 +529,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient("#setdelivered");  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#deleteorder"))
@@ -555,7 +566,7 @@ public class EchoServer extends AbstractServer
 				      client.sendToClient("#deleteorder");  
 				  }catch(Exception e) {
 					  System.out.println("a");
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#updateComplaint")) {
@@ -577,7 +588,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient(new ReturnStatus("#updateComplaint", true));
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#addComplaint")) {
@@ -599,7 +610,7 @@ public class EchoServer extends AbstractServer
 					  con.close();
 					  
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }else if(user_request.get_request_str().equalsIgnoreCase("#dropCatalog")) {
 				  System.out.println("drop");
@@ -612,7 +623,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#dropCatalog");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#addCatalogItem")) {
@@ -634,7 +645,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#addCatalogItem");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#UpdateItem")) {
@@ -656,7 +667,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#UpdateItem");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }			 
 			  else if(user_request.get_request_str().equalsIgnoreCase("#delCatalogItem")) {
@@ -670,7 +681,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#delCatalogItem");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 			  else if(user_request.get_request_str().equalsIgnoreCase("#findUser")) {
@@ -687,22 +698,22 @@ public class EchoServer extends AbstractServer
 				      if(cuser == 1){
 				    	  switch(rs.getInt("status")) {
 				    	  case 1:
-				    		  foundUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser = new StoreManager(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  case 2:
-				    		  foundUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser = ChainManager.getInstance(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  case 3:
-				    		  foundUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser = new Employee(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  case 4:
-				    		  foundUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser =new customerService(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  case 5:
-				    		  foundUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser =new SystemAdministrator(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  default:				    	
-				    		  foundUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))]);
+				    		  foundUser = new Customer(rs.getInt("uid"), rs.getString("Username"), rs.getString("Password"), rs.getString("ID"), rs.getString("paymentdetails"), rs.getInt("pay_method"), rs.getString("phonenumber"), rs.getInt("store"),Status.values()[(rs.getInt("status"))], rs.getString("email"));
 				    		  break;
 				    	  }
 				    	ArrayList<Object> args =  new ArrayList<Object>();
@@ -716,7 +727,7 @@ public class EchoServer extends AbstractServer
 				      }
 				    	  
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 				  
 			  }
@@ -736,7 +747,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#useralreadyExist");
 				      }
 				      else {
-				    	  PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Users` SET `Username`=?,`Password`=?,`paymentdetails`=?,`status`=?,`store`=?,`phoneNumber`=?,`pay_method`=?,`ID`=? WHERE `uid`= ?");
+				    	  PreparedStatement updateItemSQL = con.prepareStatement("UPDATE `Users` SET `Username`=?,`Password`=?,`paymentdetails`=?,`status`=?,`store`=?,`phoneNumber`=?,`pay_method`=?,`ID`=?,`email`=? WHERE `uid`= ?");
 					      updateItemSQL.setString(1, updateUser.username);
 					      if(passChange) {
 					    	  //pass changed
@@ -767,13 +778,14 @@ public class EchoServer extends AbstractServer
 					      updateItemSQL.setString(6, updateUser.phone_number);
 					      updateItemSQL.setInt(7, updateUser.pay_method);
 					      updateItemSQL.setString(8, updateUser.id);
-					      updateItemSQL.setInt(9, updateUser.user_id);
+					      updateItemSQL.setString(9, updateUser.email);
+					      updateItemSQL.setInt(10, updateUser.user_id);
 					      
 					      updateItemSQL.executeUpdate();
 						  client.sendToClient("#UpdateUser");
 				      }
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }	else if(user_request.get_request_str().equalsIgnoreCase("#customItem")) {
 				  System.out.println("adding custom item");
@@ -797,7 +809,7 @@ public class EchoServer extends AbstractServer
 					  client.sendToClient("#customItem");
 					  con.close();
 				  }catch(Exception e) {
-					  System.out.println(e);
+					  e.printStackTrace();
 				  }
 			  }
 
@@ -818,7 +830,7 @@ public class EchoServer extends AbstractServer
 		      con.close();  
 		  }catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
 	  }
@@ -839,7 +851,7 @@ public class EchoServer extends AbstractServer
 		      client.sendToClient("UPDATED Successfully");
 		  }catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
 	  }
@@ -890,7 +902,7 @@ public class EchoServer extends AbstractServer
 		      
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -915,7 +927,7 @@ public class EchoServer extends AbstractServer
 		      
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -945,7 +957,7 @@ public class EchoServer extends AbstractServer
 		      
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -968,7 +980,7 @@ public class EchoServer extends AbstractServer
 		      
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -988,7 +1000,7 @@ public class EchoServer extends AbstractServer
 		      client.sendToClient(stores);   
 		  } catch(Exception e) {
 			  System.out.println("a");
-			  System.out.println(e);
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -1114,8 +1126,8 @@ public class EchoServer extends AbstractServer
 		    con.close();  
  
 		  } catch(Exception e) {
-			  System.out.println("b");
-			  System.out.println(e);
+			  
+			  e.printStackTrace();
 		  }
 		  return;
     }
@@ -1204,8 +1216,8 @@ public class EchoServer extends AbstractServer
 		    con.close();  
  
 		  } catch(Exception e) {
-			  System.out.println("b");
-			  System.out.println(e);
+			  
+			  e.printStackTrace();
 		  }
 		  return;
     }

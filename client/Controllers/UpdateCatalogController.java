@@ -39,7 +39,9 @@ public class UpdateCatalogController implements Initializable {
     private int x;
     private MainController mainController;
     
-    
+    public MainController getMainController() {
+    	return mainController;
+    }
     
     @FXML
     private Button btnAll; //0
@@ -120,11 +122,11 @@ public class UpdateCatalogController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	
-    	
+
     	Platform.runLater(() -> {
 
     		lvItems.setItems(itemObservableList);
-        	lvItems.setCellFactory(itemListView  -> new updateCatalog_ItemListViewCell());
+        	lvItems.setCellFactory(itemListView  -> new updateCatalog_ItemListViewCell(this));
 
         });
     	
@@ -133,7 +135,7 @@ public class UpdateCatalogController implements Initializable {
     public void updateCatalog() {
     	//lvItems.getItems().clear();
     	lvItems.setItems(itemObservableList);
-    	lvItems.setCellFactory(itemListView  -> new updateCatalog_ItemListViewCell());
+    	lvItems.setCellFactory(itemListView  -> new updateCatalog_ItemListViewCell(this));
     }
     
     

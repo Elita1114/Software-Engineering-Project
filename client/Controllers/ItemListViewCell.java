@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import common.CartItem;
 import common.CatalogItem;
 import common.ChainManager;
+import common.CustomItem;
 import common.Item;
 import common.Status;
 import common.User;
@@ -35,6 +36,9 @@ public class ItemListViewCell extends ListCell<Item>{
 	@FXML public Button btnAdd;
     @FXML private Label saleLabel;
     @FXML private Label afterSaleLabel;
+    @FXML private Label tvColor;
+    @FXML private Label sale1Field;
+    @FXML private Label afterSale1;
     
 	OrderController order_controller;
 	private FXMLLoader mLLoader;
@@ -130,6 +134,14 @@ public class ItemListViewCell extends ListCell<Item>{
                 	Price.setText(String.valueOf(c_item.getPrice()));  
                 	saleLabel.setText(String.valueOf(c_item.getSale()));
                 	afterSaleLabel.setText(String.valueOf((1-c_item.getSale())*c_item.getPrice()));
+            	}
+            	else if(item instanceof CustomItem){
+            		tvColor.setVisible(false);
+            		Price.setText(String.valueOf(item.getPrice()));
+            		sale1Field.setVisible(false);
+            		afterSale1.setVisible(false);
+                	saleLabel.setVisible(false);
+                	afterSaleLabel.setVisible(false);
             	}
             	order=1;
             	btnAdd.setText("Remove");
